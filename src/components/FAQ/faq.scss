@@ -1,0 +1,70 @@
+.faq{
+  &-header{
+    grid-template-columns: 1fr;
+
+    &-banner{
+      position: relative;
+      grid-column: set-columns(1,1);
+      height: 250px;
+      background-color: $blue;
+      background-image: url('../../assets/images/step-pattern.png');
+
+      .faq-header-content-container{
+        height: 100%;
+
+        .faq-title{
+          grid-column: set-columns(1,12);
+          display: flex;
+          padding: 20px;
+          align-items: center;
+
+          .title{
+            color: $white;
+            font-family: 'Futura', sans-serif;
+            font-size: 42px;
+            line-height: 1.2;
+            text-transform: uppercase;
+
+            @include tablet{
+              font-size: 44px;
+            }
+
+            @include mini-desktop{
+              font-size: 46px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-content-container{
+    margin-top: 80px;
+    margin-bottom: 40px;
+    padding: 0px 20px;
+
+    .faq-items{
+      grid-column: set-columns(1,12);
+      margin-bottom: 60px;
+
+      @include tablet{
+        grid-column: set-columns(1,10)
+      }
+
+      .questions{
+        color: $blue;
+        font-family: 'Futura', sans-serif;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+      }
+
+      .answers{
+        color: $black;
+        line-height: 1.5;
+        padding: 40px 20px;
+        background-color: #f1f1f1;
+      }
+    }
+  }
+}

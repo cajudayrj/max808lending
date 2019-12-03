@@ -1,0 +1,176 @@
+.login{
+  &-container{
+    &-content{
+      grid-column: set-columns(1,12);
+
+      .login-content{
+        padding: 60px 20px;
+
+        @include desktop{
+          padding: 60px 0px;
+        }
+
+        .login-form-container{
+          grid-template-columns: repeat(12, 1fr);
+
+          .login-form{
+            grid-column: set-columns(1,12);
+            box-shadow: 0px 2px 20px rgba(0,0,0,0.2);
+            padding: 40px 30px;
+            margin-bottom: 40px;
+
+            @include tablet{
+              grid-column: set-columns(1,7);
+            }
+
+            @include mini-desktop{
+              grid-column: set-columns(1,6);
+            }
+
+            .form-headline{
+              color: $blue;
+              font-family: 'Futura', sans-serif;
+              font-size: 26px;
+              text-transform: uppercase;
+              padding-bottom: 10px;
+              border-bottom: solid 2px #eeeeee;
+              margin-bottom: 30px;
+            }
+
+            .form{
+              input{
+                width: 100%;
+                margin-bottom: 10px;
+                padding: 15px 20px;
+                border: solid 1px #f1f1f1;
+                color: $black;
+              }
+
+              .login-btn{
+                background-color: $yellow;
+                color: $black;
+                text-transform: uppercase;
+                font-family: 'Futura', sans-serif;
+                border: none;
+                width: 100%;
+                font-size: 16px;
+                padding: 12px 20px 10px;
+                margin-top: 20px;
+                cursor: pointer;
+
+                &:hover{
+                  background-color: $blue;
+                  color: $white;
+                }
+              }
+
+              .notyet-borrower{
+                color: $black;
+                text-align: center;
+                font-size: 15px;
+                margin-top: 20px;
+
+                a{
+                  color: $blue;
+                  text-decoration: none;
+
+                  &:hover{
+                    text-decoration: underline;
+                  }
+                }
+              }
+
+              .response-message{
+                margin-top: 10px;
+                border: solid 1px #00adff;
+                background-color: #00adffc7;
+                padding: 20px 20px;
+                text-align: center;
+
+                p{
+                  color: $white;
+                  margin-bottom: 0;
+                  line-height: 1.2;
+                  font-size: 15px
+                }
+              }
+        
+              .response-message.warning{
+                border: solid 1px #ffe600;
+                background-color: #f5ec9bc7;
+                p{
+                  color: $black;
+                }
+              }
+        
+              .response-message.error{
+                border: solid 1px #b51e1e;
+                background-color: #b51e1ec7;
+              }
+            }
+          }
+
+          .login-information{
+            grid-column: set-columns(1,12);
+            padding: 0px;
+            margin-top: 0px;
+
+            @include tablet{
+              grid-column: set-columns(8,5);
+              padding-left: 40px;
+              margin-top: 60px;
+            }
+
+            .login-headline{
+              font-family: 'Futura', sans-serif;
+              font-size: 27px;
+              color: $blue;
+              line-height: 1.2;
+              text-transform: uppercase;
+              margin-bottom: 0px;
+
+              @include mini-desktop{
+                font-size: 36px;
+              }
+
+              @include desktop{
+                font-size: 42px;
+              }
+            }
+
+            .login-tagline{
+              font-family: 'Montserrat', sans-serif;
+              font-size: 18px;
+              color: $black;
+              margin-bottom: 20px;
+
+              @include mini-desktop{
+                font-size: 22px;
+                margin-bottom: 40px;
+              }
+
+              @include desktop{
+                font-size: 24px;
+              }
+            }
+
+            .login-benefits{
+              list-style-position: inside;
+              padding: 0px 25px;
+
+              li{
+                margin-bottom: 10px;
+                color: $black;
+                font-size: 15px;
+
+                @include mini-desktop{
+                  font-size: 18px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

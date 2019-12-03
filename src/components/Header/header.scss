@@ -1,0 +1,114 @@
+.header{
+  position: relative;
+  width: 100%;
+  border-bottom: solid 3px $yellow;
+
+  &-nav{
+
+    &__content{
+      padding: 10px 20px;
+      grid-column: set-columns(1,12);
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+
+      .max808logo-img{
+        max-width: 100px;
+      }
+
+      .nav-links{
+        display: none;
+        flex-direction: row;
+        list-style-type: none;
+        
+        @include tablet{
+          display: flex;
+        }
+
+        li{
+          a{
+            padding: 5px 10px;
+            margin: 0px 5px;
+            color: $black;
+            font-family: 'MontserratMedium', sans-serif;
+            text-decoration: none;
+            font-size: 13px;
+            text-transform: uppercase;
+            &:hover{
+              color: $blue;
+            }
+          }
+          a.current-page{
+            color: $blue;
+            font-family: 'MontserratSemiBold', sans-serif;
+          }
+        }
+      }
+
+      .toggle-menu{
+        display: block;
+        padding: 5px 8px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        border-radius: 3px;
+
+        &:hover{
+          #burger-menu{
+            fill: $blue;
+          }
+        }
+
+        @include tablet{
+          display: none;
+        }
+
+        #burger-menu{
+          fill: $black;
+          height: 25px;
+          width: 25px;
+        }
+      }
+
+      // user header
+      .header-actions{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        p{
+          font-family: "MontserratMedium", sans-serif;
+          margin-bottom: 0;
+          margin-right: 20px;
+          align-self: center;
+
+          a{
+            color: $blue;
+            text-decoration: none;
+            font-family: "MontserratMedium", sans-serif;
+
+            &:hover{
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .logout-btn{
+          padding: 10px 20px;
+          background-color: #ff3333;
+          color: $white;
+          font-family: "Montserrat", sans-serif;
+          cursor: pointer;
+          border: none;
+
+          &:hover{
+            background-color: #de2c2c;
+          }
+        }
+      }
+    }
+  }
+}

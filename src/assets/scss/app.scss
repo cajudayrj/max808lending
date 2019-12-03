@@ -1,0 +1,26 @@
+/*
+This will serve as the main scss.
+Import all necessary scss on this file.
+*/
+@import './variables.scss';
+@import './mixins.scss';
+@import './functions.scss';
+@import './global.scss';
+@import './fonts.scss';
+
+/* Components */
+@import '../../components/Header/header.scss';
+@import '../../components/Footer/footer.scss';
+@import '../../components/Homepage/homepage.scss';
+@import '../../components/FAQ/faq.scss';
+@import '../../components/Borrow/borrow.scss';
+@import '../../components/Login/login.scss';
+@import '../../components/Verify/verify.scss';
+
+
+/* User Components */
+@import '../../components/User/user.scss';
+@import '../../components/User/Dashboard/userDashboard.scss';
+
+/* User Activate */
+@import '../../components/User/UserActivateStep/userActivate.scss'

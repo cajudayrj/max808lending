@@ -1,0 +1,499 @@
+.user-activate{
+  .steps-container{
+    grid-column: set-columns(1,12);
+    margin: 80px 30px 60px;
+
+    .step-header{
+      font-family: "Futura", sans-serif;
+      color: $blue;
+      border-bottom: solid 1px #d3d3d3;
+      padding-bottom: 10px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .form-container{
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: 20px;
+
+      .form-title{
+        grid-column: set-columns(1,12);
+        color: $black-3;
+        font-size: 22px;
+        font-family: "MontserratBold", sans-serif;
+        padding: 12px 15px;
+        background-color: $gray;
+      }
+
+      .form-payslip, .form-inputs{
+        input[type="text"], input[type="date"], input[type="email"], select {
+          padding: 8px 15px;
+          border: solid 1px #d3d3d3;
+          width: 100%;
+          font-size: 15px;
+          border-radius: 5px;
+          background: $white;
+        }
+
+        input[type="date"] {
+          font-size: 13px;
+          height: 37px;
+        }
+
+        select{
+          height: 37px;
+        }
+
+        input[type="range"]{
+          -webkit-appearance: none;
+            width: 100%;
+            height: 32px;
+            background: #f7f7f7;
+            border: solid 1px #d3d3d3;
+            outline: none;
+            -webkit-transition: opacity .15s ease-in-out;
+            transition: opacity .15s ease-in-out;
+            border-radius: 37px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+          -webkit-appearance: none; /* Override default look */
+          appearance: none;
+          width: 55px; /* Set a specific slider handle width */
+          height: 37px; /* Slider handle height */
+          background: $blue; /* Green background */
+          cursor: pointer; /* Cursor on hover */
+          border-radius: 37px;
+        }
+
+        .input-label{
+          font-family: 'MontserratMedium', sans-serif;
+          color: $blue;
+          font-size: 13px;
+          margin-bottom: 6px;
+        }
+
+        .input-layout-container{
+          position: relative;
+          width: 100%;
+        }
+      }
+    }
+
+    .response-message{
+      margin-top: 10px;
+      border: solid 1px #00adff;
+      background-color: #00adffc7;
+      padding: 20px 20px;
+      text-align: center;
+
+      p{
+        color: $white;
+        margin-bottom: 0;
+        line-height: 1.2;
+        font-size: 15px
+      }
+    }
+
+    .response-message.warning{
+      border: solid 1px #ffe600;
+      background-color: #f5ec9bc7;
+      p{
+        color: $black;
+      }
+    }
+
+    .response-message.error{
+      border: solid 1px #b51e1e;
+      background-color: #b51e1ec7;
+    }
+
+    .submit-btn{
+      background-color: $yellow;
+      color: $black;
+      text-transform: uppercase;
+      font-family: 'Futura', sans-serif;
+      border: none;
+      font-size: 16px;
+      padding: 12px 50px 10px;
+      margin-top: 20px;
+      cursor: pointer;
+      display: block;
+      margin-left: auto;
+      width: 100%;
+
+      &:hover{
+        background-color: $blue;
+        color: $white;
+      }
+
+      @include tablet{
+        width: auto;
+      }
+    }
+  }
+
+  &-stepone-container, .steps-container{
+    .form-container{
+      .loan-label{
+        text-align: right;
+        color: #187cbc;
+        font-size: 22px;
+        font-family: "MontserratMedium";
+        margin-top: 10px;
+      }
+
+      .form-inputs.form-loan-amount{
+        grid-column: set-columns(1,12);
+        margin: 5px 0px 20px;
+
+        @include mini-tablet{
+        grid-column: set-columns(1,6);
+      }
+      }
+  
+      .form-inputs.form-loan-terms{
+        grid-column: set-columns(1,12);
+        margin: 5px 0px 20px;
+
+        @include mini-tablet{
+          grid-column: set-columns(7,6);
+        }
+      }
+  
+      .form-inputs.form-pi-fn{
+        grid-column: set-columns(1,12);
+
+        @include tablet{
+          grid-column: set-columns(1,4);
+        }
+      }
+  
+      .form-inputs.form-pi-mn{
+        grid-column: set-columns(1,12);
+        @include tablet{
+          grid-column: set-columns(5,4);
+        }
+      }
+  
+      .form-inputs.form-pi-ln{
+        grid-column: set-columns(1,12);
+        @include tablet{
+          grid-column: set-columns(9,4);
+        }
+      }
+
+      .form-inputs.form-pi-dob{
+        grid-column: set-columns(1,12);
+
+        @include mini-tablet{
+          grid-column: set-columns(1,6);
+        }
+
+        @include tablet{
+          grid-column: set-columns(1,3);
+        }
+      }
+      
+      .form-inputs.form-pi-g{
+        grid-column: set-columns(1,12);
+
+        @include mini-tablet{
+          grid-column: set-columns(7,6);
+        }
+
+        @include tablet{
+          grid-column: set-columns(4,3);
+        }
+      }
+
+      .form-inputs.form-pi-ms{
+        grid-column: set-columns(1,12);
+
+        @include mini-tablet{
+          grid-column: set-columns(1,6);
+        }
+
+        @include tablet{
+          grid-column: set-columns(7,3);
+        }
+      }
+
+      .form-inputs.form-pi-mobn{
+        grid-column: set-columns(1,12);
+
+        @include mini-tablet{
+          grid-column: set-columns(7,6);
+        }
+        @include tablet{
+          grid-column: set-columns(10,3);
+        }
+      }
+
+      .form-inputs.form-pi-add{
+        grid-column: set-columns(1,12);
+        @include tablet{
+          grid-column: set-columns(1,6);
+        }
+      }
+
+      .form-inputs.form-pi-tm{
+        grid-column: set-columns(1,12);
+
+        @include mini-tablet{
+          grid-column: set-columns(1,6);
+        }
+
+        @include tablet{
+          grid-column: set-columns(7,3);
+        }
+      }
+      
+      .form-inputs.form-pi-cp{
+        grid-column: set-columns(1,12);
+
+        @include mini-tablet{
+          grid-column: set-columns(7,6);
+        }
+
+        @include tablet{
+          grid-column: set-columns(10,3);
+        }
+      }
+
+      .form-inputs.form-pi-compn{
+        grid-column: set-columns(1,5);
+      }
+
+      .form-inputs.form-pi-compadd{
+        grid-column: set-columns(6,7);
+      }
+
+      .form-inputs.form-pi-comptel{
+        grid-column: set-columns(1,4);
+      }
+
+      .form-inputs.form-pi-pos{
+        grid-column: set-columns(5,4);
+      }
+
+      .form-inputs.form-pi-dop{
+        grid-column: set-columns(9,4);
+      }
+
+      .form-inputs.form-pi-pracc{
+        grid-column: set-columns(1,6);
+      }
+
+      .form-inputs.form-pi-chacc{
+        grid-column: set-columns(7,6);
+      }
+
+      .form-inputs.form-pi-exstloan{
+        grid-column: set-columns(1,12);
+      }
+
+      .form-inputs.form-pi-ofcmname{
+        grid-column: set-columns(1,12);
+
+        @include mini-tablet{
+          grid-column: set-columns(1,6);
+        }
+
+        @include tablet{
+          grid-column: set-columns(1,4);
+        }
+      }
+
+      .form-inputs.form-pi-ofcmdept{
+        grid-column: set-columns(1,12);
+
+        @include mini-tablet{
+          grid-column: set-columns(7,6);
+        }
+
+        @include tablet{
+          grid-column: set-columns(5,4);
+        }
+      }
+
+      .form-inputs.form-pi-ofcmpos{
+        grid-column: set-columns(1,12);
+
+        @include mini-tablet{
+          grid-column: set-columns(1,6);
+        }
+
+        @include tablet{
+          grid-column: set-columns(9,4);
+        }
+      }
+
+      .form-inputs.form-pi-ofcmemail{
+        grid-column: set-columns(1,12);
+
+        @include mini-tablet{
+          grid-column: set-columns(7,6);
+        }
+
+        @include tablet{
+          grid-column: set-columns(1,4);
+        }
+      }
+
+      .form-inputs.form-pi-ofcmmobnum{
+        grid-column: set-columns(1,12);
+
+        @include mini-tablet{
+          grid-column: set-columns(1,6);
+        }
+
+        @include tablet{
+          grid-column: set-columns(5,4);
+        }
+      }
+    }
+  }
+
+  &-steptwo-container, .steps-container{
+    .file-formats{
+      color: #ef5959;
+      font-size: 14px;
+    }
+
+    .form-container{
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: 20px;
+
+      .form-title{
+        grid-column: set-columns(1,12);
+        color: $black-3;
+        font-size: 22px;
+        font-family: "MontserratBold", sans-serif;
+        padding: 12px 15px;
+        background-color: $gray;
+      }
+
+      .form-payslip-1{
+        grid-column: set-columns(1,12);
+
+        @include tablet{
+          grid-column: set-columns(1,6);
+        }
+      }
+
+      .form-payslip-2{
+        grid-column: set-columns(1,12);
+        
+        @include tablet{
+          grid-column: set-columns(7,6);
+        }
+      }
+
+      .form-payslip, .form-inputs{
+        margin-bottom: 20px;
+
+        .input-label{
+          font-family: 'MontserratMedium', sans-serif;
+          color: $blue;
+          font-size: 13px;
+          margin-bottom: 6px;
+        }
+
+        .input-layout-container{
+          position: relative;
+          width: 100%;
+
+          label{
+            border: solid 1px #d3d3d3;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 15px;
+            margin-bottom: 20px;
+
+            .file-name{
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+              flex: 1;
+
+              p{
+                color: $black;
+                margin: 0;
+                font-size: 13px;
+              }
+            }
+              
+            button{
+              align-self: flex-end;
+              padding: 10px 15px;
+              color: $black;
+              background: #f2f2f2;
+              border:none;
+              pointer-events: none;
+              margin-left: 20px;
+            }
+          }
+
+          input[type="file"]{
+            display: none;
+          }
+
+          .image-preview{
+            overflow: hidden;
+            width: 100%;
+            border: solid 1px #d3d3d3;
+            background-color: #f1f1f1;
+            position: relative;
+            margin-bottom: 25px;
+
+            img{
+              width: 100%;
+              height: 300px;
+              max-height: 300px;
+              object-fit: cover;
+              display: block;
+            }
+
+            .removeImg{
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              background: #e03c3c;
+              color: #ffffff;
+              padding: 0px 7px;
+              font-size: 20px;
+              border: none;
+              border-radius: 50%;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+
+    .submit-documents{
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+
+      &-btn{
+        padding: 12px 20px 10px;
+        font-size: 16px;
+        font-family: "Futura", sans-serif;
+        background-color: $yellow;
+        color: $black;
+        border: none;
+        cursor: pointer;
+
+        &:hover{
+          background-color: $blue;
+          color: $white;
+        }
+      }
+    }
+  }
+}

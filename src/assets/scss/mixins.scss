@@ -1,0 +1,83 @@
+/*
+RESPONSIVE PROPERTY HANDLER
+handles the per-breakpoint property for mobile-first approach
+note: requires a key-less 'breakpoints' scss map
+        e.g. $breakpoints_keyless: ( 0px, 480px, 768px, 992px, 1200px );
+usage:
+    @include respond((
+    display: flex,
+    margin: (2px, 3px, 4px, 5px),
+    padding: (3rem, 4rem, 5rem, 6rem),
+    ));
+*/
+
+@mixin respond($args) {
+	@for $bp from 1 through length($breakpoints_keyless) {
+
+		// loop through all the breakpoints
+		@media screen and (min-width: #{nth($breakpoints_keyless, $bp)}) {
+
+			// set media query
+			@each $propname,
+			$propvalues in $args {
+
+				// loop through all the properties
+				@if $bp <=length($propvalues) {
+					// check if the number of values is less than the number of breakpoints
+					$value: unquote(#{nth($propvalues, $bp)});
+
+					@if ($propname !=null) {
+						#{$propname}: $value; // apply value to the property
+					}
+				}
+			}
+		}
+	}
+}
+
+//-----------------------------------------------------------------------
+//  BREAKPOINTS
+//  usage:
+//    @include breakpoint($width) {
+//      ...your styles here
+//    }
+//-----------------------------------------------------------------------
+
+// USING: $breakpoints_keyless: (0, 480px, 750px, 1280px, 1440px);
+@mixin breakpoint($breakpoint) {
+	@if map-has-key($breakpoints, $breakpoint) {
+		@media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+			@content;
+		}
+	}
+
+	@else {
+		@media (min-width: $breakpoint) {
+			@content;
+		}
+	}
+}
+
+@mixin mini-tablet {
+	@include breakpoint($mini-tablet) {
+		@content;
+	}
+}
+
+@mixin tablet {
+	@include breakpoint($tablet) {
+		@content;
+	}
+}
+
+@mixin mini-desktop {
+	@include breakpoint($mini-desktop) {
+		@content;
+	}
+}
+
+@mixin desktop {
+	@include breakpoint($desktop) {
+		@content;
+	}
+}

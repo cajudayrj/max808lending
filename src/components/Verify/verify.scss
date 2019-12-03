@@ -1,0 +1,18 @@
+.verify{
+  &-message-container{
+    padding: 20px;
+    margin: 80px 0px 60px;
+    grid-column: set-columns(1,12);
+
+    h4{
+      color: $blue;
+      font-family: 'Futura', sans-serif;
+    }
+
+    p{
+      color: $black;
+      font-size: 18px;
+      font-family: 'Montserrat', sans-serif;
+    }
+  }
+}

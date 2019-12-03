@@ -1,0 +1,17 @@
+/*------------------------------------------------------------------*\
+  Grid Column
+  example usages: grid-column: set-columns(1, 2);
+  result: grid-column: 1 / span 2;
+  \*------------------------------------------------------------------*/
+  @function set-columns($start, $span) {
+    @return $start / span #{$span};
+  }
+  
+  /*------------------------------------------------------------------*\
+    Width
+    example usages: width: grid-span(10, 10);
+    result: width: 100%;
+    \*------------------------------------------------------------------*/
+  @function grid-span($span, $total) {
+    @return ($span / $total) * 100%;
+  }
