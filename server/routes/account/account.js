@@ -28,8 +28,8 @@ const transporter = nodemailer.createTransport({
   secure: false,
   ignoreTLS: true,
   auth: {
-    user: process.env.EMAIL_USER_CONTACT,
-    pass: process.env.EMAIL_PASS_CONTACT,
+    user: process.env.EMAIL_USER_ADMIN,
+    pass: process.env.EMAIL_PASS_ADMIN,
   }
 })
 
@@ -98,7 +98,7 @@ router.post('/register', async (req, res) => {
 
   // Construct Mail
   const mailOptions = {
-    from: 'Max808 Lending Corporation <contactus@max808lending.com>',
+    from: 'Max808 Lending Corporation <admin@max808lending.com>',
     to: req.body.email,
     subject: 'Max808 Lending Corporation - Registration Successful',
     html: `
@@ -241,9 +241,12 @@ router.put('/activate/step-one', userMiddleware, async (req, res) => {
   if (validation.error) return res.json(validation);
 
   const loans = {
+    id: `ln${new Date().valueOf()}`,
+    loanDate: req.body.loanDate,
     userId: req.user.id,
     loanAmount: parseInt(req.body.loanAmount),
     loanTerms: parseInt(req.body.loanTerms),
+    loanStatus: 'Pending',
   }
 
   const userUpdate = {

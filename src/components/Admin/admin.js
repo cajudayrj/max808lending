@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import UserHeader from '../Header/userHeader';
-import Footer from '../../Footer/footer';
-import ActivateAccountRoutes from '../Routes/activateAccountRoutes';
+import Footer from '../Footer/footer';
 
-const ActivateAccount = () => {
+import UserHeader from '../User/Header/userHeader';
+import AdminRoutes from './Routes/adminRoutes';
+
+const Admin = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
   const history = useHistory();
   const [logoutModal, setLogoutModal] = useState(false);
@@ -33,7 +34,7 @@ const ActivateAccount = () => {
   return (
     <div className="main-user-component-container">
       <UserHeader id={userData.id} token={userData.authToken} handleLogout={handleLogout} />
-      <ActivateAccountRoutes />
+      <AdminRoutes handleLogout={handleLogout} />
       <Footer />
       <div className="logout-modal-container" ref={modal}>
         <div className="logout-bg-overlay" onClick={handleLogout}></div>
@@ -47,4 +48,4 @@ const ActivateAccount = () => {
   )
 }
 
-export default ActivateAccount;
+export default Admin;

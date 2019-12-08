@@ -1,0 +1,116 @@
+.main-dashboard{
+  display: grid;
+  grid-template-columns: repeat(12,1fr);
+  column-gap: 20px;
+
+  .header-title{
+    grid-column: set-columns(1,12);
+    font-size: 20px;
+    color: #666666;
+    font-family: "Futura", sans-serif;
+    text-transform: uppercase;
+  }
+
+  .main-loan-info{
+    grid-column: set-columns(1,12);
+    background-color: $white;
+    box-shadow: 0px 0px 10px -4px rgba(0, 0, 0, 0.3);
+    padding: 40px 30px 20px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    border: solid 1px $gray;
+    border-top: solid 3px $blue;
+
+    .d-grid{
+      grid-template-columns: repeat(12, 1fr);
+
+      .loan-detail{
+        display: flex;
+        flex-direction: column;
+        grid-column: span 12;
+
+        @include mini-tablet{
+          grid-column: span 6;
+        }
+
+        @include tablet{
+          margin-bottom: 5px;
+        }
+
+        @include mini-desktop{
+          grid-column: span 4;
+        }
+  
+        .labels{
+          color: #555555;
+          font-size: 11px;
+          margin-bottom: 5px;
+          font-family: "FuturaMedium", sans-serif;
+          text-transform: uppercase;
+        }
+    
+        .values{
+          color: $blue;
+          font-family: "MontserratMedium", sans-serif;
+          font-size: 18px;
+          margin-top: auto;
+
+          @include tablet{
+            font-size: 19px;
+          }
+  
+          @include mini-desktop{
+            font-size: 20px;
+          }
+    
+          span{
+            font-size: 18px;
+            margin-left: -2px;
+          }
+        }
+      }
+
+      .loan-status-message{
+        grid-column: set-columns(1,12);
+        padding: 15px 15px 10px;
+        background: #119ef921;
+        color: $blue;
+        
+        p{
+          margin-bottom: 5px;
+        }
+      }
+
+      .loan-status-message.warning{
+        background: #f9a91121;
+
+        p{
+          color: #7d4524;
+        }
+      }
+
+      .ln-status{
+        .values{
+          font-family: "Futura", sans-serif;
+          text-transform: uppercase;
+        }
+
+        .values.declined{
+          color: #ff3333;
+        }
+
+        .values.active{
+          color: #57b768;
+        }
+      }
+    }
+  }
+
+  .other-loan-info{
+    grid-column: set-columns(7,6);
+    background-color: $white;
+    box-shadow: 0px 0px 10px -4px rgba(0, 0, 0, 0.3);
+    padding: 30px 30px 20px;
+  }
+}

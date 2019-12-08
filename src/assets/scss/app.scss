@@ -21,6 +21,14 @@ Import all necessary scss on this file.
 /* User Components */
 @import '../../components/User/user.scss';
 @import '../../components/User/Dashboard/userDashboard.scss';
+@import '../../components/User/MainDashboard/mainDashboard.scss';
 
 /* User Activate */
-@import '../../components/User/UserActivateStep/userActivate.scss'
+@import '../../components/User/UserActivateStep/userActivate.scss';
+
+/* Admin Components */
+@import '../../components/Admin/MainAdminDashboard/mainAdminDashboard.scss';
+@import '../../components/Admin/AllLoans/allLoans.scss';
+
+/* Loan Component */
+@import '../../components/Admin/Loan/loan.scss';

@@ -92,6 +92,7 @@ const ActivateStepOne = () => {
     const data = {
       loanAmount,
       loanTerms,
+      loanDate: moment(new Date()).format('YYYY-MM-DD'),
       fname,
       mname,
       lname,

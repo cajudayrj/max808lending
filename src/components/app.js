@@ -8,6 +8,7 @@ import Verify from './Verify/verify';
 import PrivateRoute from '../assets/helpers/privateRoute';
 import User from './User/user';
 import ActivateAccount from './User/ActivateAccount/activateAccount';
+import Admin from './Admin/admin';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route exact path="/verify-account/:verifyToken" component={Verify} />
         <PrivateRoute path="/dashboard" component={User} />
         <PrivateRoute path="/activate-account" component={ActivateAccount} />
+        <PrivateRoute path="/admin" component={Admin} />
         <Route component={() => <p>Not Found</p>} />
       </Switch>
     </Router>

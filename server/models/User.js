@@ -64,6 +64,11 @@ const updatePersonalDetails = async (con, id, data) => {
   return rows;
 }
 
+const userCount = async (con) => {
+  const [rows] = await con.execute(`SELECT COUNT(id) as userCount FROM Users`, [], queryCallback);
+  return rows;
+}
+
 module.exports = {
   find,
   findEmail,
@@ -72,4 +77,5 @@ module.exports = {
   verify,
   setAccountStatus,
   updatePersonalDetails,
+  userCount,
 };

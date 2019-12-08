@@ -6,7 +6,7 @@ import serverUrl from '../../../serverUrl';
 
 const UserHeader = ({ id, token, handleLogout }) => {
   const history = useHistory();
-  const [username, setUsername] = useState('User');
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     axios(`${serverUrl}/user/${id}`, {
@@ -17,7 +17,7 @@ const UserHeader = ({ id, token, handleLogout }) => {
     })
       .then(res => {
         if (res.data.success) {
-          setUsername(res.data.user.username)
+          setUser(res.data.user)
         } else {
           window.localStorage.removeItem('userData');
           history.push('/');
@@ -30,9 +30,9 @@ const UserHeader = ({ id, token, handleLogout }) => {
     <header className="header">
       <nav className="header-nav max808-container">
         <div className="header-nav__content">
-          <NavLink to="/dashboard"><img className="max808logo-img" src={require('../../../assets/images/max808logo.png')} alt="max808-logo" /></NavLink>
+          <NavLink to={`/${user.userLevel === 1 ? 'admin' : 'dashboard'}`}><img className="max808logo-img" src={require('../../../assets/images/max808logo.png')} alt="max808-logo" /></NavLink>
           <div className="header-actions">
-            <p>Welcome, <NavLink to="/dashboard/my-account">{username}!</NavLink></p>
+            <p>Welcome, <NavLink to={`/${user.userLevel === 1 ? 'admin' : 'dashboard'}/my-account`}>{user.username}!</NavLink></p>
             <button type="button" className="logout-btn" onClick={handleLogout}>Logout</button>
           </div>
         </div>

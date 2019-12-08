@@ -18,7 +18,9 @@ const UserDashboard = ({ handleLogout }) => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    handleRedirects(history);
+    if (userData.userLevel !== 2) {
+      handleRedirects(history);
+    }
     axios(`${serverUrl}/user/${userData.id}`, {
       method: "GET",
       headers: {

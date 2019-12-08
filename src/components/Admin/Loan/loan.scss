@@ -1,0 +1,195 @@
+.loan{
+  margin: 0 auto;
+  padding: 30px 20px;
+  grid-template-columns: 500px 1fr;
+  column-gap: 20px;
+  position: relative;
+
+  &__info-summary{
+    background: $white;
+    box-shadow: 0px 0px 10px -4px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    padding: 25px 30px 20px;
+    position: sticky;
+    top: 10px;
+    margin-bottom: auto;
+
+    .cash-loan-details{
+      padding-bottom: 15px;
+      border-bottom: solid 1px $gray;
+      margin-bottom: 25px;
+
+      p{
+        margin: 0;
+        text-transform: uppercase;
+        color: $black;
+        font-family: "MontserratBold", sans-serif;
+        font-size: 18px;
+      }
+    }
+
+    .summary{
+      margin-bottom: 20px;
+      border-bottom: solid 1px $gray;
+      padding-bottom: 10px;
+      .info{
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        column-gap: 20px;
+        margin-bottom: 5px;
+
+        .label{
+          font-size: 12px;
+          margin-bottom: 5px;
+          font-family: "MontserratMedium", sans-serif;
+          color: $black-2;
+          line-height: 1.2;
+          padding: 7px 0px;
+        }
+
+        .value{
+          color: $blue;
+          font-size: 14px;
+          font-family: "MontserratMedium", sans-serif;
+          margin-bottom: 0px;
+          padding: 7px 10px;
+          background: #edf7ff;
+        } 
+      }
+    }
+
+    .computation{
+      &-label{
+        text-transform: uppercase;
+        color: $black;
+        font-family: "MontserratBold", sans-serif;
+        font-size: 15px;
+        margin-bottom: 10px;
+      }
+
+      &-container{
+        padding: 30px 30px 20px;
+        background: #fffae7;
+
+        .computations{
+          color: $black;
+          display: flex;
+          justify-content: space-between;
+
+          .label{
+            font-size: 12px;
+            font-family: "MontserratMedium", sans-serif;
+          }
+
+          .value{
+            font-family: "MontserratMedium", sans-serif;
+            font-size: 14px;
+            color: $blue;
+          }
+        }
+
+        .computations.loan-proceeds{
+          border-top: solid 1px $black;
+          padding-top: 15px;
+
+          .value{
+            font-family: "MontserratBold", sans-serif;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+
+    .computation.approved{
+      .computation-container{
+        .computations{
+          .label{
+            font-family: "MontserratBold", sans-serif;
+            text-transform: uppercase;
+          }
+
+          .value{
+            font-family: "MontserratBold", sans-serif;
+          }
+        }
+        .computations.sub-comp{
+          padding: 0px 0px 0px 20px;
+
+          .label{
+            font-family: "MontserratMedium", sans-serif;
+            margin-bottom: 8px;
+            text-transform: capitalize;
+          }
+
+          .value{
+            margin-bottom: 8px;
+            font-family: "MontserratMedium", sans-serif;
+          }
+        }
+      }
+    }
+
+    .approval-btns{
+      margin: 25px 0px 10px;
+      display: flex;
+      justify-content: flex-end;
+
+      button{
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none;
+        text-transform: uppercase;
+        font-family: "MontserratBold", sans-serif;
+        font-size: 14px;
+      }
+
+      .approve-btn{
+        background: $blue;
+        color: $white;
+        margin-right: 5px;
+      }
+
+      .reject-btn{
+        background: #ff6868;
+        color: $white;
+      }
+    }
+  }
+}
+
+.loan-approve-modal{
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: none;
+  opacity: 0;
+}
+
+.loan-approve-modal.opened{
+  display: flex;
+}
+
+.loan-approve-modal.visible{
+  opacity: 1;
+}
+
+.not-found{
+  padding: 60px 20px;
+
+  h1{
+    grid-column: 1/-1;
+    color: $black;
+    font-family: "MontserratBold", sans-serif;
+    text-transform: uppercase;
+  }
+
+  .back-to-dashboard{
+    text-decoration: none;
+    grid-column: 1/-1;
+    margin-top: 20px;
+    color: $blue;
+  }
+}

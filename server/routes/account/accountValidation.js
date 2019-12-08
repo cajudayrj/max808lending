@@ -4,6 +4,7 @@ const stepOneValidation = data => {
   const schema = Joi.object({
     loanAmount: Joi.number().required(),
     loanTerms: Joi.number().required(),
+    loanDate: Joi.date().required(),
     fname: Joi.string().required().label("First Name"),
     mname: Joi.allow(null).label("Middle Name"),
     lname: Joi.string().required().label("Last Name"),
