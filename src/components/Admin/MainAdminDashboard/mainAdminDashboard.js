@@ -11,6 +11,7 @@ import { ReactComponent as ApprovedLoan } from '../../../assets/svg/approved-loa
 import { ReactComponent as AcceptedLoan } from '../../../assets/svg/accepted-loan.svg';
 import { ReactComponent as RejectedLoan } from '../../../assets/svg/rejected-loan.svg';
 import { ReactComponent as AllLoans } from '../../../assets/svg/all-loan.svg';
+import { ReactComponent as FullyPaid } from '../../../assets/svg/fullpaid-loan.svg';
 
 const MainAdminDashboard = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
@@ -24,7 +25,6 @@ const MainAdminDashboard = () => {
     })
       .then(({ data }) => {
         setCounts(data);
-        console.log(data);
       })
       .catch(err => console.log(err));
   }, [userData.authToken])
@@ -56,6 +56,15 @@ const MainAdminDashboard = () => {
             <div className="count-desc">
               <p className="count">{counts.activeLoanCount}</p>
               <p className="label">Active Loans</p>
+            </div>
+          </div>
+        </NavLink>
+        <NavLink className="active-loans-count" to="/admin/fully-paid-loans">
+          <div className="items">
+            <FullyPaid />
+            <div className="count-desc">
+              <p className="count">{counts.fullpaidLoanCount}</p>
+              <p className="label">Fully Paid Loans</p>
             </div>
           </div>
         </NavLink>
@@ -91,7 +100,7 @@ const MainAdminDashboard = () => {
             <RejectedLoan />
             <div className="count-desc">
               <p className="count">{counts.rejectedLoanCount}</p>
-              <p className="label">Rejected Loans</p>
+              <p className="label">Rejected / User Refused Loans</p>
             </div>
           </div>
         </NavLink>

@@ -7,6 +7,7 @@ import handleRedirects from '../../../assets/helpers/handleRedirects';
 //SVG
 import { ReactComponent as Loan } from '../../../assets/svg/all-loan.svg';
 import { ReactComponent as ActiveLoan } from '../../../assets/svg/active-loan.svg';
+import { ReactComponent as FullPaid } from '../../../assets/svg/fullpaid-loan.svg';
 import { ReactComponent as PendingLoan } from '../../../assets/svg/pending-loan.svg';
 import { ReactComponent as ApprovedLoan } from '../../../assets/svg/approved-loan.svg';
 import { ReactComponent as AcceptedLoan } from '../../../assets/svg/accepted-loan.svg';
@@ -48,6 +49,7 @@ const AdminDashboard = ({ handleLogout }) => {
               <NavLink exact activeClassName="current-page" to="/admin"><Dashboard /> Dashboard</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/loans"><Loan /> All Loans</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/active-loans"><ActiveLoan /> Active Loans</NavLink>
+              <NavLink exact activeClassName="current-page" to="/admin/fully-paid-loans"><FullPaid /> Fully Paid Loans</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/pending-loans"><PendingLoan /> Pending Loans</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/approved-loans"><ApprovedLoan /> Approved Loans</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/accepted-loans"><AcceptedLoan /> User Accepted Loans</NavLink>

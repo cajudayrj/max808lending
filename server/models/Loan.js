@@ -1,4 +1,5 @@
 const queryCallback = require('../connection/queryCallback');
+const moment = require('moment');
 
 const addNew = async (con, data) => {
   const query = `INSERT INTO Loans (id, user_id, amount, terms, loanDate, loanStatus) VALUES (?,?,?,?,?,?)`;
@@ -46,12 +47,34 @@ const loanCount = async (con, status) => {
   return rows;
 }
 
+const rejectedCount = async (con) => {
+  const query =
+    `SELECT COUNT(id) as loanCount FROM Loans WHERE (loanStatus = ? OR loanStatus = ?)`
+
+  const [rows] = await con.execute(query, ['Rejected', 'Refused'], queryCallback);
+  return rows;
+}
+
+const all = async (con) => {
+  const query = `
+    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
+    FROM Loans l, Users u 
+    WHERE l.user_id = u.id
+    ORDER BY l.id
+    DESC;
+  `;
+  const [rows] = await con.execute(query, [], queryCallback);
+  return rows;
+}
+
 const pendingLoans = async (con) => {
   const query = `
     SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Pending'
-    AND l.user_id = u.id;
+    AND l.user_id = u.id
+    ORDER BY l.id
+    DESC;
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
@@ -62,7 +85,9 @@ const activeLoans = async (con) => {
     SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Active'
-    AND l.user_id = u.id;
+    AND l.user_id = u.id
+    ORDER BY l.id
+    DESC;
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
@@ -73,7 +98,9 @@ const acceptedLoans = async (con) => {
     SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Accepted'
-    AND l.user_id = u.id;
+    AND l.user_id = u.id
+    ORDER BY l.id
+    DESC;
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
@@ -84,7 +111,22 @@ const approvedLoans = async (con) => {
     SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Approved'
-    AND l.user_id = u.id;
+    AND l.user_id = u.id
+    ORDER BY l.id
+    DESC;
+  `;
+  const [rows] = await con.execute(query, [], queryCallback);
+  return rows;
+}
+
+const fullyPaidLoans = async (con) => {
+  const query = `
+    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.loanPaid, l.penaltyCharge, l.terms, l.loanDate, l.loanStatus 
+    FROM Loans l, Users u 
+    WHERE l.loanStatus = 'Fully Paid'
+    AND l.user_id = u.id
+    ORDER BY l.id
+    DESC;
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
@@ -94,10 +136,99 @@ const rejectedLoans = async (con) => {
   const query = `
     SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
     FROM Loans l, Users u 
-    WHERE l.loanStatus = 'Rejected'
-    AND l.user_id = u.id;
+    WHERE (l.loanStatus = 'Rejected' OR l.loanStatus = 'Refused')
+    AND l.user_id = u.id
+    ORDER BY l.id
+    DESC;
   `;
   const [rows] = await con.execute(query, [], queryCallback);
+  return rows;
+}
+
+const approveRequest = async (con, data, id) => {
+  const query = `
+    UPDATE Loans SET
+    amount = ?,
+    terms = ?,
+    financeCharge = ?,
+    processingFee = ?,
+    serviceFee = ?,
+    loanProceeds = ?,
+    approvedDate = ?,
+    dueDate = ?,
+    loanStatus = ?,
+    loanBalance = ?
+    WHERE id = ?
+  `;
+  const variables = [
+    data.amount,
+    data.terms,
+    data.financeCharge,
+    2,
+    data.serviceFee,
+    data.loanProceeds,
+    data.approvedDate,
+    data.dueDate,
+    'Approved',
+    data.amount,
+    id
+  ];
+
+  const [rows] = await con.execute(query, variables, queryCallback);
+
+  return rows;
+}
+
+const rejectRequest = async (con, id) => {
+  const query = `
+    UPDATE Loans SET
+    loanStatus = ?
+    WHERE id = ?
+  `;
+
+  const [rows] = await con.execute(query, ['Rejected', id], queryCallback);
+
+  return rows;
+}
+
+const setToActive = async (con, id) => {
+  const query = `
+    UPDATE Loans SET
+    loanStatus = ?,
+    acceptedDate = ?
+    WHERE id = ?
+  `;
+
+  const today = moment().format('YYYY-MM-DD');
+  const [rows] = await con.execute(query, ['Active', today, id], queryCallback);
+
+  return rows;
+}
+
+const updatePaidPenaltyBalance = async (con, id, data) => {
+  const query = `
+    UPDATE Loans SET
+    loanBalance = ?,
+    penaltyCharge = ?,
+    loanPaid = ?
+    WHERE id = ?
+  `;
+  const [rows] = await con.execute(query, [data.totalBalance, data.totalPenalty, data.totalPaid, id], queryCallback);
+
+  return rows;
+}
+
+const updatePaidPenaltyBalanceStatus = async (con, id, data, status) => {
+  const query = `
+    UPDATE Loans SET
+    loanBalance = ?,
+    penaltyCharge = ?,
+    loanPaid = ?,
+    loanStatus = ?
+    WHERE id = ?
+  `;
+  const [rows] = await con.execute(query, [data.totalBalance, data.totalPenalty, data.totalPaid, status, id], queryCallback);
+
   return rows;
 }
 
@@ -106,9 +237,17 @@ module.exports = {
   getAllData,
   getLatest,
   loanCount,
+  rejectedCount,
+  all,
   pendingLoans,
   activeLoans,
   approvedLoans,
+  fullyPaidLoans,
   acceptedLoans,
   rejectedLoans,
+  approveRequest,
+  rejectRequest,
+  setToActive,
+  updatePaidPenaltyBalance,
+  updatePaidPenaltyBalanceStatus,
 }

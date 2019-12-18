@@ -8,6 +8,7 @@ import RejectedLoans from '../RejectedLoans/rejectedLoans';
 import ApprovedLoans from '../ApprovedLoans/approvedLoans';
 import AcceptedLoans from '../AcceptedLoans/acceptedLoans';
 import NotFound from '../Loan/notFound';
+import FullyPaidLoans from '../FullyPaidLoans/fullyPaidLoans';
 
 const AdminDashboardRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AdminDashboardRoutes = () => {
       <Route exact path="/admin/loans" component={AllLoans} />
       <Route exact path="/admin/pending-loans" component={PendingLoans} />
       <Route exact path="/admin/active-loans" component={ActiveLoans} />
+      <Route exact path="/admin/fully-paid-loans" component={FullyPaidLoans} />
       <Route exact path="/admin/approved-loans" component={ApprovedLoans} />
       <Route exact path="/admin/accepted-loans" component={AcceptedLoans} />
       <Route exact path="/admin/rejected-loans" component={RejectedLoans} />

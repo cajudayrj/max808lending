@@ -32,3 +32,9 @@ Import all necessary scss on this file.
 
 /* Loan Component */
 @import '../../components/Admin/Loan/loan.scss';
+
+/* Tab Contents */
+@import '../../components/Admin/Loan/TabContents/tabContentLoanPayment.scss';
+@import '../../components/Admin/Loan/TabContents/tabContentBorrowerInfo.scss';
+@import '../../components/Admin/Loan/TabContents/tabContentBorrowerDocs.scss';
+@import '../../components/Admin/Loan/TabContents/tabContentBorrowerRefs.scss';

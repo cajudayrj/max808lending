@@ -5,28 +5,27 @@ import moment from 'moment';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
 
-const AllLoans = () => {
+const FullyPaidLoans = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
   const history = useHistory();
-  const [allLoans, setAllLoans] = useState([]);
+  const [fullyPaidLoans, setFullyPaidLoans] = useState([]);
 
   useEffect(() => {
     if (userData.userLevel !== 1) {
       handleRedirects(history);
       return;
     }
-    axios(`${serverUrl}/loans/all`, {
+    axios(`${serverUrl}/loans/fully-paid`, {
       method: 'GET',
       headers: {
         "auth_token": userData.authToken
       }
     })
       .then(({ data }) => {
-        const { allLoans } = data;
-        setAllLoans(allLoans);
+        const { fullyPaidLoans } = data;
+        setFullyPaidLoans(fullyPaidLoans);
       })
-      .catch(err => console.log(err));
-  }, [history, userData.authToken, userData.userLevel])
+  }, [fullyPaidLoans, history, userData.authToken, userData.userLevel])
 
   const monify = (amount) => {
     return amount.toLocaleString(undefined, {
@@ -36,8 +35,8 @@ const AllLoans = () => {
   }
 
   return (
-    <div className="admin-loans-dashboard pending-loan-dashboard">
-      <h1 className="header-title">All Loans</h1>
+    <div className="admin-loans-dashboard approved-loan-dashboard">
+      <h1 className="header-title">Fully Paid Loans</h1>
       <div className="loans-table">
         <table>
           <thead>
@@ -45,22 +44,24 @@ const AllLoans = () => {
               <th>Loan ID</th>
               <th>Borrower</th>
               <th>Amount</th>
-              <th>Terms</th>
-              <th>Loan Request Date</th>
+              <th>Penalties</th>
+              <th>Total Payment</th>
+              <th>Loan Date</th>
               <th>Status</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {
-              allLoans.length > 0 ?
-                allLoans.map((loan, key) => {
+              fullyPaidLoans.length > 0 ?
+                fullyPaidLoans.map((loan, key) => {
                   return (
                     <tr key={key}>
                       <td>{loan.id}</td>
                       <td>{loan.firstName} {loan.lastName}</td>
                       <td>&#8369;{monify(loan.amount)}</td>
-                      <td>{loan.terms} days</td>
+                      <td>&#8369;{monify(loan.penaltyCharge)}</td>
+                      <td>&#8369;{monify(loan.loanPaid)}</td>
                       <td>{moment(loan.loanDate).format('MMMM DD, YYYY')}</td>
                       <td>{loan.loanStatus}</td>
                       <td><Link to={`/admin/loan/${loan.id}`} >View</Link></td>
@@ -69,7 +70,7 @@ const AllLoans = () => {
                 })
                 :
                 <tr>
-                  <td className="no-loans" colSpan={7}>No loans found.</td>
+                  <td className="no-loans" colSpan={7}>No fully paid loans found.</td>
                 </tr>
             }
           </tbody>
@@ -79,4 +80,4 @@ const AllLoans = () => {
   )
 }
 
-export default AllLoans;
+export default FullyPaidLoans;

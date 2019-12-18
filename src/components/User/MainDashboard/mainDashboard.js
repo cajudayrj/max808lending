@@ -95,8 +95,8 @@ const MainDashboard = () => {
                     :
                     status === 'Approved' ?
                       <>
-                        <p>Congratulations! Your loan request has been approved. Loan summary computation is listed above.</p>
-                        <p>You can either accept or reject the terms set by Max808 Lending Corp.</p>
+                        <p>Congratulations! Your loan request has been approved. Loan summary computation is listed above.
+                        You can either accept or reject the terms set by Max808 Lending Corp.</p>
                       </>
                       :
                       status === 'Accepted' ?

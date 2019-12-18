@@ -13,6 +13,9 @@
     position: sticky;
     top: 10px;
     margin-bottom: auto;
+    max-height: 95vh;
+    overflow: hidden;
+    overflow-y: auto;
 
     .cash-loan-details{
       padding-bottom: 15px;
@@ -112,6 +115,9 @@
             font-family: "MontserratBold", sans-serif;
           }
         }
+        .computations.after-charges{
+          margin-top: 8px;
+        }
         .computations.sub-comp{
           padding: 0px 0px 0px 20px;
 
@@ -147,11 +153,48 @@
         background: $blue;
         color: $white;
         margin-right: 5px;
+
+        &:hover{
+          background: #0c69a5;
+        }
       }
 
       .reject-btn{
         background: #ff6868;
         color: $white;
+
+        &:hover{
+          background: #df4c4c;
+        }
+      }
+    }
+  }
+
+  &__main-info{
+    .loan-tabs{
+      display: flex;
+      flex-direction: row;
+      border-bottom: solid 1px $gray;
+
+      button{
+        flex: 1;
+        padding: 13px 8px;
+        text-transform: uppercase;
+        border: solid 1px $gray;
+        border-top: solid 3px $blue;
+        font-family: "MontserratBold", sans-serif;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        margin-right: 3px;
+        border-bottom: none;
+        cursor: pointer;
+
+        &:hover{
+          background: $gray;
+        }
+      }
+      button.active{
+        background: $gray;
       }
     }
   }
@@ -166,6 +209,130 @@
   width: 100vw;
   display: none;
   opacity: 0;
+  transition: all .3s ease-in-out;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  .modal-overlay{
+    pointer-events: none;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.3);
+  }
+
+  .modal-content{
+    background-color: $white;
+    padding: 25px 20px 20px;
+    z-index: 11;
+    width: 500px;
+
+    .modal-header{
+      display: flex;
+      justify-content: space-between;
+      border-bottom: solid 1px $gray;
+      padding-bottom: 13px;
+
+      .modal-title{
+        color: $blue;
+        font-family: "MontserratBold", sans-serif;
+        font-size: 20px;
+        margin-bottom: 0px;
+        text-transform: uppercase;
+      }
+
+      span{
+        cursor: pointer;
+        background: #ff6868;
+        padding: 1px 8px;
+        color: $white;
+        font-size: 20px;
+
+        &:hover{
+          background: #df4c4c;
+        }
+      }
+    }
+
+    .fields{
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      margin-top: 10px;
+
+      .label{
+        font-family: "MontserratMedium", sans-serif;
+        font-size: 14px;
+        align-self: flex-end;
+      }
+
+      input[type="text"], input[type="date"], input[type="email"], select {
+        padding: 8px 15px;
+        border: solid 1px #d3d3d3;
+        width: 100%;
+        font-size: 15px;
+        border-radius: 5px;
+        background: $white;
+      }
+    }
+
+    .fields.proceeds{
+      .label{
+        font-family: "MontserratBold", sans-serif;
+      }
+
+      input[type="text"], input[type="date"], input[type="email"], select {
+        color: $blue;
+        font-family: "MontserratBold", sans-serif;
+        font-size: 18px;
+      }
+    }
+
+    .separator{
+      margin: 30px 0px;
+      height: 1px;
+      background: $black-3;
+      width: 100%;
+      display: block;
+    }
+
+    .loan-charges-btns{
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      margin-top: 20px;
+
+      button{
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none;
+        text-transform: uppercase;
+        font-family: "MontserratBold", sans-serif;
+        font-size: 14px;
+      }
+
+      .confirm-btn{
+        background: $blue;
+        color: $white;
+        margin-right: 5px;
+
+        &:hover{
+          background: #0c69a5;
+        }
+      }
+
+      .cancel-btn{
+        background: #ff6868;
+        color: $white;
+
+        &:hover{
+          background: #df4c4c;
+        }
+      }
+    }
+  }
 }
 
 .loan-approve-modal.opened{
@@ -174,6 +341,10 @@
 
 .loan-approve-modal.visible{
   opacity: 1;
+
+  .modal-overlay{
+    pointer-events: all;
+  }
 }
 
 .not-found{

@@ -1,0 +1,265 @@
+.loan-tab-contents__payment{
+
+  button{
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    text-transform: uppercase;
+    font-family: "MontserratBold", sans-serif;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .approve{
+    background: $blue;
+    color: $white;
+    margin-right: 5px;
+
+    &:hover{
+      background: #0c69a5;
+    }
+  }
+
+  .set-active{
+    padding: 13px;
+    font-size: 17px;
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.3);
+    margin-top: -10px;
+  }
+
+  .set-full-paid{
+    margin-left: auto;
+    display: block;
+    padding: 13px 40px;
+  }
+
+  .success{
+    background: $green;
+    color: $white;
+
+    &:hover{
+      background: #389c4a;
+    }
+  }
+
+  .cancel{
+    background: #ff6868;
+    color: $white;
+
+    &:hover{
+      background: #df4c4c;
+    }
+  }
+
+  .loan-rejected{
+    margin: 0;
+    padding: 12px;
+    text-align: center;
+    background: #df4c4c42;
+    color: $red-hovered;
+    border: solid 1px $red-hovered;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: "MontserratBold", sans-serif;
+  }
+
+  .loan-accepted{
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+    background: #57b7696b;
+    color: $green-hovered;
+    border: solid 1px $green-hovered;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: "MontserratBold", sans-serif;
+  }
+
+  .loan-approved{
+    margin: 0;
+    padding: 12px;
+    text-align: center;
+    background: #1fa4f76b;
+    color: $blue;
+    border: solid 1px $blue;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: "MontserratBold", sans-serif;
+  }
+
+  .loan-payment-boxes{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+
+    @include tablet{
+      grid-template-columns: 1fr;
+    }
+
+    &__box{
+      padding: 20px 20px 10px;
+      border: solid 1px $gray;
+      border-left: solid 3px $blue;
+      box-shadow: 0px 2px 3px 2px rgba(0,0,0,0.1);
+
+      .payment-heading-label{
+        h4{
+          text-transform: uppercase;
+          font-size: 22px;
+          color: $green-hovered;
+          padding-bottom: 15px;
+          border-bottom: solid 2px $gray;
+          margin-bottom: 15px;
+          font-family: "MontserratBold", sans-serif;
+        }
+      }
+
+      .separator{
+        margin: 15px 0px;
+        height: 1px;
+        width: 100%;
+        background: $gray;
+      }
+
+      .edit-box{
+        display: flex;
+        justify-content: flex-end;
+
+        button{
+          padding: 10px 20px;
+          cursor: pointer;
+          border: none;
+          text-transform: uppercase;
+          font-family: "MontserratBold", sans-serif;
+          font-size: 14px;
+          margin-bottom: 5px;
+        }
+  
+        .edit-save{
+          background: $blue;
+          color: $white;
+          margin-right: 5px;
+  
+          &:hover{
+            background: #0c69a5;
+          }
+        }
+  
+        .cancel{
+          background: #ff6868;
+          color: $white;
+  
+          &:hover{
+            background: #df4c4c;
+          }
+        }
+      }
+
+      .inputs-labels{
+        margin-bottom: 20px;
+
+        input[type="text"], input[type="date"], input[type="email"], select {
+          padding: 8px 15px;
+          border: solid 1px #d3d3d3;
+          width: 100%;
+          font-size: 15px;
+          border-radius: 5px;
+          background: $white;
+        }
+
+        select{
+          height: 37px;
+        }
+
+        .label{
+          color: $black-2;
+          text-transform: uppercase;
+          font-family: "MontserratBold", sans-serif;
+          font-size: 12px;
+          margin-bottom: 10px;
+        }
+
+        .payment-date{
+          color: $blue;
+          font-size: 16px;
+          text-transform: uppercase;
+          font-family: "MontserratBold", sans-serif;
+          margin-bottom: 5px;
+        }
+
+        .value{
+          color: $blue;
+          font-family: "MontserratBold", sans-serif;
+          font-size: 20px;
+        }
+
+        .value.status{
+          text-transform: uppercase;
+        }
+
+        .value.status.paid{
+          color: $green;
+        }
+
+        .value.status.pastdue{
+          color: #ff3333;
+        }
+
+        .value.penalty{
+          color: #ff3333;
+        }
+      }
+    }
+
+    .approve-decline-pending-loan{
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 40px;
+      margin-bottom: 20px;
+
+      button{
+        padding: 20px 30px;
+        cursor: pointer;
+        border: none;
+        text-transform: uppercase;
+        font-family: "MontserratBold", sans-serif;
+        font-size: 14px;
+      }
+
+      .approve{
+        background: $blue;
+        color: $white;
+        margin-right: 5px;
+
+        &:hover{
+          background: #0c69a5;
+        }
+      }
+
+      .reject{
+        background: #ff6868;
+        color: $white;
+
+        &:hover{
+          background: #df4c4c;
+        }
+      }
+    }
+  }
+
+  .loan-payment-boxes.current{
+    .loan-payment-boxes__box{
+      .inputs-labels{
+        .value{
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
+.loan-tab-contents__payment.hidden{
+  display: none;
+}

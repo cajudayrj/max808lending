@@ -14,7 +14,8 @@ router.get('/admin-dashboard-count', adminMiddleware, async (req, res) => {
   const approvedLoans = await Loan.loanCount(con, 'approved');
   const activeLoans = await Loan.loanCount(con, 'active');
   const acceptedLoans = await Loan.loanCount(con, 'accepted');
-  const rejectedLoans = await Loan.loanCount(con, 'rejected');
+  const rejectedLoans = await Loan.rejectedCount(con);
+  const fullpaidLoans = await Loan.loanCount(con, 'fully paid');
 
   const data = {
     userCount: user[0].userCount,
@@ -24,6 +25,7 @@ router.get('/admin-dashboard-count', adminMiddleware, async (req, res) => {
     activeLoanCount: activeLoans[0].loanCount,
     acceptedLoanCount: acceptedLoans[0].loanCount,
     rejectedLoanCount: rejectedLoans[0].loanCount,
+    fullpaidLoanCount: fullpaidLoans[0].loanCount,
   }
   return res.json(data);
 })

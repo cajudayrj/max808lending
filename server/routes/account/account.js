@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const siteUrl = require('../../connection/siteUrl');
 
 // middlewares
 const userMiddleware = require('../middleware/middleware');
@@ -103,8 +104,8 @@ router.post('/register', async (req, res) => {
     subject: 'Max808 Lending Corporation - Registration Successful',
     html: `
     <h4>Greetings, ${req.body.username}!</h4>
-    <p>Thank you for your registration on our website. To verify and login to your account, please click this <a href="${process.env.SITE_URL}:3000/verify-account/${accountVerificationToken}">link</a>.</p>
-    <p>Or go to: ${process.env.SITE_URL}:3000/verify-account/${accountVerificationToken}</p>
+    <p>Thank you for your registration on our website. To verify and login to your account, please click this <a href="${siteUrl}/verify-account/${accountVerificationToken}">link</a>.</p>
+    <p>Or go to: ${siteUrl}/verify-account/${accountVerificationToken}</p>
     <p></p>
     <br><br>
     <p>Regards,</p>
@@ -123,7 +124,7 @@ router.post('/register', async (req, res) => {
         }
       }
 
-      res.json(error);
+      return res.json(error);
     }
   });
 
