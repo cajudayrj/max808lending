@@ -14,17 +14,16 @@ const MainDashboard = () => {
   const [acceptedDate, setAcceptedDate] = useState('');
   const [durationDate, setDurationDate] = useState('');
   const [status, setStatus] = useState('');
-  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     axios(`${serverUrl}/loans/get-latest`, {
       method: "GET",
       headers: {
-        "auth_token": userData.authToken
+        "auth_token": userData.authToken,
       }
     })
       .then(result => {
-        console.log(result);
+        console.log(userData);
         const res = result.data[0];
         setLoanId(res.id);
         setAmount(res.amount);
@@ -34,12 +33,9 @@ const MainDashboard = () => {
         setAcceptedDate(res.acceptedDate ? moment(res.approvedDate).format('MMMM D, YYYY') : '-');
         setDurationDate(res.dueDate ? moment(res.dueDate).format('MMMM D, YYYY') : '-');
         setStatus(res.loanStatus);
-        setLoaded(true);
       })
 
-    return () => setLoaded(false);
-
-  }, [userData.authToken, userData.id]);
+  }, [userData, userData.authToken, userData.id]);
 
   const monify = (amount) => {
     return amount.toLocaleString(undefined, {
@@ -47,7 +43,6 @@ const MainDashboard = () => {
       maximumFractionDigits: 2
     })
   }
-  if (!loaded) return null;
 
   return (
     <div className="main-dashboard dashboard-container">
