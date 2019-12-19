@@ -34,7 +34,7 @@ router.get('/find/:id', userMiddleware, async (req, res) => {
 })
 
 router.get('/get-latest', async (req, res) => {
-  console.log(req.headers);
+  console.log(req.user);
   const loans = await Loan.getLatest(con, req.user.id);
   return res.json(loans);
 })
