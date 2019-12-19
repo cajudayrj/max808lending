@@ -116,8 +116,8 @@ const Footer = () => {
         <div className="contact-info">
           <Link to="/"><img src={require('../../assets/images/max808logo-footer.png')} alt="max808logo-footer" className="logo-footer" /></Link>
           <p className="other-info-label">Email Address</p>
-          <a href="mailto:marketing@max808lending.com" className="other-info-detail">marketing@max808lending.com</a>
-          <a href="mailto:support@max808lending.com" className="other-info-detail">support@max808lending.com</a>
+          <a href="mailto:contactus@max808lending.com" className="other-info-detail">contactus@max808lending.com</a>
+          <a href="mailto:admin@max808lending.com" className="other-info-detail">admin@max808lending.com</a>
           <p className="other-info-label social-media-label">Social Media</p>
           <div className="social-media-svg">
             <a href="/"><Facebook /></a>
