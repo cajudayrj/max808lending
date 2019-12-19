@@ -48,10 +48,7 @@ const Login = () => {
 
     axios(`${serverUrl}/account/login`, {
       method: 'POST',
-      data,
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      }
+      data
     })
       .then(res => {
         const { data } = res;
