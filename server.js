@@ -8,6 +8,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
+})
+
 // routes
 const contactUs = require('./server/routes/contact/contact');
 const account = require('./server/routes/account/account');
