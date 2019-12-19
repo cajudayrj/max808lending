@@ -23,7 +23,6 @@ const MainDashboard = () => {
       }
     })
       .then(result => {
-        console.log(userData);
         const res = result.data[0];
         setLoanId(res.id);
         setAmount(res.amount);

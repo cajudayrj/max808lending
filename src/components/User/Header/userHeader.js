@@ -16,6 +16,7 @@ const UserHeader = ({ id, token, handleLogout }) => {
       }
     })
       .then(res => {
+        console.log(res);
         if (res.data.success) {
           setUser(res.data.user)
           return;
