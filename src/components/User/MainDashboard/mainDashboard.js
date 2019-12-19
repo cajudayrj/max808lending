@@ -34,6 +34,8 @@ const MainDashboard = () => {
         setDurationDate(res.dueDate ? moment(res.dueDate).format('MMMM D, YYYY') : '-');
         setStatus(res.loanStatus);
       })
+
+    return () => console.log('unmounted');
   }, [userData.authToken, userData.id]);
 
   const monify = (amount) => {
