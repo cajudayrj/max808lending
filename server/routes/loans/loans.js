@@ -33,7 +33,8 @@ router.get('/find/:id', userMiddleware, async (req, res) => {
   return res.json(data);
 })
 
-router.get('/get-latest', userMiddleware, async (req, res) => {
+router.get('/get-latest', async (req, res) => {
+  console.log(req.headers);
   const loans = await Loan.getLatest(con, req.user.id);
   return res.json(loans);
 })
