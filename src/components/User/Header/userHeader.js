@@ -19,7 +19,7 @@ const UserHeader = ({ id, token, handleLogout }) => {
         if (res.data.success) {
           setUser(res.data.user)
         } else {
-          window.localStorage.removeItem('userData');
+          // window.localStorage.removeItem('userData');
           history.push('/');
         }
       })
