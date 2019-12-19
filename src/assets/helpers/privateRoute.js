@@ -7,7 +7,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={
-        props => window.localStorage.getItem('userData') ? (
+        props => JSON.parse(window.localStorage.getItem('userData')) ? (
           <Component {...props} />
         ) : (
             <Redirect to={{
