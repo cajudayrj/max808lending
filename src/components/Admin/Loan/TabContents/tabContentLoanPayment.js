@@ -235,7 +235,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       axios(`${serverUrl}/loans/loan-payments/${loanId}`, {
         method: "GET",
         headers: {
-          "auth_token": userData.authToken,
+          "Authorization": `Bearer ${userData.authToken}`,
         }
       })
         .then(result => {
@@ -566,7 +566,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       method: "PUT",
       data,
       headers: {
-        "auth_token": userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(result => {
@@ -774,7 +774,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       method: "PUT",
       data,
       headers: {
-        "auth_token": userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(result => {

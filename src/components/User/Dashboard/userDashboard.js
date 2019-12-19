@@ -24,7 +24,7 @@ const UserDashboard = ({ handleLogout }) => {
     axios(`${serverUrl}/user/${userData.id}`, {
       method: "GET",
       headers: {
-        "auth_token": userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(response => {

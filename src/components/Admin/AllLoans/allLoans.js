@@ -18,7 +18,7 @@ const AllLoans = () => {
     axios(`${serverUrl}/loans/all`, {
       method: 'GET',
       headers: {
-        "auth_token": userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(({ data }) => {

@@ -18,7 +18,7 @@ const RejectedLoans = () => {
     axios(`${serverUrl}/loans/rejected`, {
       method: 'GET',
       headers: {
-        "auth_token": userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(({ data }) => {

@@ -64,7 +64,7 @@ const ActivateStepThree = () => {
       method: 'POST',
       data: userDocuments,
       headers: {
-        'auth_token': userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(response => {

@@ -19,7 +19,7 @@ const MainDashboard = () => {
     axios(`${serverUrl}/loans/get-latest`, {
       method: "GET",
       headers: {
-        "auth_token": userData.authToken,
+        "Authorization": `Bearer ${userData.authToken}`,
       }
     })
       .then(result => {

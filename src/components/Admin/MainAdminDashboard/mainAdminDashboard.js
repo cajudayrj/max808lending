@@ -20,7 +20,7 @@ const MainAdminDashboard = () => {
     axios(`${serverUrl}/admin/admin-dashboard-count`, {
       method: 'GET',
       headers: {
-        'auth_token': userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(({ data }) => {

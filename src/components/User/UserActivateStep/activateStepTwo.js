@@ -47,7 +47,7 @@ const ActivateStepTwo = () => {
       method: 'POST',
       data,
       headers: {
-        'auth_token': userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(result => {

@@ -37,7 +37,7 @@ const Loan = ({ match }) => {
     axios(`${serverUrl}/loans/find/${match.params.id}`, {
       method: "GET",
       headers: {
-        "auth_token": userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(result => {
@@ -188,7 +188,7 @@ const Loan = ({ match }) => {
       method: "POST",
       data: loanData,
       headers: {
-        "auth_token": userData.authToken,
+        "Authorization": `Bearer ${userData.authToken}`,
       }
     })
       .then(result => {
@@ -211,7 +211,7 @@ const Loan = ({ match }) => {
     axios(`${serverUrl}/loans/reject/${loanResult.id}`, {
       method: "PUT",
       headers: {
-        "auth_token": userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(result => {
@@ -247,7 +247,7 @@ const Loan = ({ match }) => {
         dueDate: loanResult.dueDate
       },
       headers: {
-        "auth_token": userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(result => {

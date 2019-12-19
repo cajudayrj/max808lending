@@ -12,7 +12,7 @@ const UserHeader = ({ id, token, handleLogout }) => {
     axios(`${serverUrl}/user/${id}`, {
       method: "GET",
       headers: {
-        "auth_token": token
+        "Authorization": `Bearer ${token}`
       }
     })
       .then(res => {

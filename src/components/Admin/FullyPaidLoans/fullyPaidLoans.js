@@ -18,7 +18,7 @@ const FullyPaidLoans = () => {
     axios(`${serverUrl}/loans/fully-paid`, {
       method: 'GET',
       headers: {
-        "auth_token": userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(({ data }) => {

@@ -18,7 +18,7 @@ const AcceptedLoans = () => {
     axios(`${serverUrl}/loans/accepted`, {
       method: 'GET',
       headers: {
-        "auth_token": userData.authToken
+        "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(({ data }) => {
