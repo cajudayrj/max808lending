@@ -32,4 +32,23 @@ router.get('/:id', userMiddleware, async (req, res) => {
   return res.json(data);
 })
 
+router.get('/info/:id', userMiddleware, async (req, res) => {
+  const userId = req.params.id;
+  const userInfo = await User.getInfo(con, userId);
+
+  if (userInfo.length > 0) {
+    const user = {
+      success: true,
+      user: userInfo[0]
+    }
+    return res.json(user);
+  } else {
+    const error = {
+      success: false,
+      message: "No user found!",
+    }
+    return res.json(error)
+  }
+})
+
 module.exports = router;

@@ -216,7 +216,7 @@ const ActivateStepOne = () => {
             <input type="text" value={address} onChange={handleAddress} />
           </div>
           <div className="form-inputs form-pi-tm">
-            <p className="input-label">Town / Municipality</p>
+            <p className="input-label">City / Municipality</p>
             <select defaultValue={townMunicipality} onChange={handleTownMunicipality}>
               {
                 towns.map((town, i) => <option key={i} value={town}>{town}</option>)
@@ -224,7 +224,7 @@ const ActivateStepOne = () => {
             </select>
           </div>
           <div className="form-inputs form-pi-cp">
-            <p className="input-label">City / Province</p>
+            <p className="input-label">State / Province</p>
             <select defaultValue={cityProvince} onChange={handleCityProvince}>
               {
                 Object.keys(citiesData).map((city, i) => <option key={i} value={city}>{city}</option>)
