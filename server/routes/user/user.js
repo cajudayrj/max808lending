@@ -51,4 +51,42 @@ router.get('/info/:id', userMiddleware, async (req, res) => {
   }
 })
 
+router.get('/references/:id', userMiddleware, async (req, res) => {
+  const userId = req.params.id;
+  const userInfo = await User.getReferences(con, userId);
+
+  if (userInfo.length > 0) {
+    const user = {
+      success: true,
+      user: userInfo[0]
+    }
+    return res.json(user);
+  } else {
+    const error = {
+      success: false,
+      message: "No user found!",
+    }
+    return res.json(error)
+  }
+})
+
+router.get('/documents/:id', userMiddleware, async (req, res) => {
+  const userId = req.params.id;
+  const userInfo = await User.getDocuments(con, userId);
+
+  if (userInfo.length > 0) {
+    const user = {
+      success: true,
+      user: userInfo[0]
+    }
+    return res.json(user);
+  } else {
+    const error = {
+      success: false,
+      message: "No user found!",
+    }
+    return res.json(error)
+  }
+})
+
 module.exports = router;

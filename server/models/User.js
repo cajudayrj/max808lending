@@ -80,6 +80,29 @@ const getInfo = async (con, id) => {
   return rows;
 }
 
+const getReferences = async (con, id) => {
+  const query = `
+    SELECT u.*, 
+    ur.officemateName, ur.officemateDepartment, ur.officematePosition, ur.officemateMobileNum, ur.officemateEmail,
+    ur.friendName, ur.friendMobileNum, ur.friendEmail,
+    ur.familyName, ur.familyMobileNum, ur.familyEmail
+    FROM Users u, UserReferences ur WHERE u.id = ur.user_id AND u.id = ?`;
+
+  const [rows] = await con.execute(query, [id], queryCallback);
+  return rows;
+}
+
+const getDocuments = async (con, id) => {
+  const query = `
+    SELECT u.*, 
+    ud.payslipOne, ud.payslipTwo, ud.validIdOne, ud.validIdTwo,
+    ud.coe, ud.billingStatement, ud.bankTransaction
+    FROM Users u, UserDocuments ud WHERE u.id = ud.user_id AND u.id = ?`;
+
+  const [rows] = await con.execute(query, [id], queryCallback);
+  return rows;
+}
+
 module.exports = {
   find,
   findEmail,
@@ -90,4 +113,6 @@ module.exports = {
   updatePersonalDetails,
   userCount,
   getInfo,
+  getReferences,
+  getDocuments,
 };
