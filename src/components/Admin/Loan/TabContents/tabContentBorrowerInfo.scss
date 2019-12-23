@@ -1,3 +1,35 @@
 .loan-tab-contents__borrower-info.hidden{
   display: none;
 }
+
+.loan-tab-contents__borrower-info{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  padding-top: 20px;
+  row-gap: 10px;
+  column-gap: 10px;
+
+  .title-info{
+    margin-top: 20px;
+    grid-column: span 4;
+    color: $black-2;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px $gray;
+  }
+
+  .info-grid{
+    .title{
+      margin-bottom: 5px;
+      color: $blue;
+      font-family: "MontserratBold", sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .value{
+      font-family: "MontserratMedium", sans-serif;
+      color: $black-2;
+    }
+  }
+}

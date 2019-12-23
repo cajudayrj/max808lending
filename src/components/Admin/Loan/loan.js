@@ -446,13 +446,13 @@ const Loan = ({ match }) => {
               />
             </div>
             <div ref={borrowerInfoRef} className="loan-tab-contents__borrower-info hidden">
-              <TabContentBorrowerInfo />
+              <TabContentBorrowerInfo userId={loanResult.user_id} />
             </div>
             <div ref={borrowerDocsRef} className="loan-tab-contents__borrower-documents hidden">
-              <TabContentBorrowerDocs />
+              <TabContentBorrowerDocs userId={loanResult.user_id} />
             </div>
             <div ref={borrowerRefsRef} className="loan-tab-contents__borrower-references hidden">
-              <TabContentBorrowerRefs />
+              <TabContentBorrowerRefs userId={loanResult.user_id} />
             </div>
           </div>
         </div>

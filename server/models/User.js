@@ -69,6 +69,17 @@ const userCount = async (con) => {
   return rows;
 }
 
+const getInfo = async (con, id) => {
+  const query = `
+    SELECT u.*, 
+    ui.officeName, ui.officeAddress, ui.officePosition, ui.officeTelephone,
+    ui.dateOfPayout, ui.officePayrollAccount, ui.bankCheckingAccount, ui.existingLoan
+    FROM Users u, UserInformation ui WHERE u.id = ui.user_id AND u.id = ?`;
+
+  const [rows] = await con.execute(query, [id], queryCallback);
+  return rows;
+}
+
 module.exports = {
   find,
   findEmail,
@@ -78,4 +89,5 @@ module.exports = {
   setAccountStatus,
   updatePersonalDetails,
   userCount,
+  getInfo,
 };
