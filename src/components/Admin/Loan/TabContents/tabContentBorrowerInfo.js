@@ -21,9 +21,9 @@ const TabContentBorrowerInfo = ({ userId }) => {
         if (res.success) {
           setUser(res.user);
           setLoading(false);
-        } else {
-          console.log(res.message);
         }
+
+        return;
       })
   }, [userData.authToken, userId])
   if (loading) return <h1>Loading...</h1>
@@ -52,6 +52,10 @@ const TabContentBorrowerInfo = ({ userId }) => {
         <p className="value">{user.email}</p>
       </div>
       <div className="info-grid">
+        <p className="title">Mobile Number:</p>
+        <p className="value">{user.mobileNum}</p>
+      </div>
+      <div className="info-grid">
         <p className="title">Address:</p>
         <p className="value">{user.address}</p>
       </div>
@@ -70,10 +74,6 @@ const TabContentBorrowerInfo = ({ userId }) => {
       <div className="info-grid">
         <p className="title">Gender:</p>
         <p className="value">{user.gender}</p>
-      </div>
-      <div className="info-grid">
-        <p className="title">Mobile Number:</p>
-        <p className="value">{user.mobileNum}</p>
       </div>
       <h3 className="title-info">Other Information</h3>
       <div className="info-grid">
