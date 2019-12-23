@@ -25,3 +25,7 @@ yarn-error.log*
 
 # file uploads
 /server/uploads
+
+# URL's
+/src/serverUrl.js
+/server/connection/siteUrl.js
