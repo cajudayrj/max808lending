@@ -40,8 +40,8 @@ const getLatest = async (con, id) => {
 
 const loanCount = async (con, status) => {
   const query = (status !== 'all') ?
-    `SELECT COUNT(id) as loanCount FROM Loans WHERE loanStatus LIKE '${status}%'`
-    : `SELECT COUNT(id) as loanCount FROM Loans`;
+    `SELECT COUNT(l.id) as loanCount FROM Loans l, Users u WHERE l.loanStatus LIKE '${status}%' AND l.user_id = u.id AND u.accountStatus = 'active'`
+    : `SELECT COUNT(l.id) as loanCount FROM Loans l, Users u WHERE l.user_id = u.id AND u.accountStatus = 'active'`;
 
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
@@ -73,6 +73,7 @@ const pendingLoans = async (con) => {
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Pending'
     AND l.user_id = u.id
+    AND u.accountStatus = 'active'
     ORDER BY l.id
     DESC;
   `;
