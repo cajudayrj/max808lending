@@ -60,6 +60,7 @@ const all = async (con) => {
     SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
     FROM Loans l, Users u 
     WHERE l.user_id = u.id
+    AND u.accountStatus = 'active'
     ORDER BY l.id
     DESC;
   `;
