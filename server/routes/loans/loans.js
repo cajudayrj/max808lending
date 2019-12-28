@@ -346,4 +346,27 @@ router.put('/set-fully-paid/:id', adminMiddleware, async (req, res) => {
   }
 })
 
+router.put('/accept-refuse/:id', userMiddleware, async (req, res) => {
+  const loanId = req.params.id;
+  const { loanAction } = req.body;
+  const acceptRefuseDate = moment(new Date()).format('YYYY-MM-DD');
+
+  const acceptRefuseLoan = await Loan.acceptRefuse(con, loanId, loanAction, acceptRefuseDate);
+  const fail = {
+    success: false,
+    message: "There's an error in processing your request."
+  }
+
+  if (acceptRefuseLoan.affectedRows > 0) {
+    const newData = await Loan.get(con, loanId, req.user.id);
+    const data = {
+      success: true,
+      loanData: newData[0]
+    }
+    return res.json(data);
+  } else {
+    return res.json(fail);
+  }
+})
+
 module.exports = router;

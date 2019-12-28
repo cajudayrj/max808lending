@@ -457,7 +457,7 @@ const Loan = ({ match }) => {
           </div>
         </div>
       </div>
-      <div className="loan-approve-modal" ref={approveModalRef}>
+      <div className="loan-modal" ref={approveModalRef}>
         <div className="modal-overlay" onClick={toggleSetCharges}></div>
         <div className="modal-content">
           <div className="modal-header">
