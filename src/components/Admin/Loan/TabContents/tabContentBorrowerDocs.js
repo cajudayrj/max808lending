@@ -90,7 +90,7 @@ const TabContentBorrowerDocs = ({ userId }) => {
         <p className="title">Bank Transaction:</p>
         <img src={`${serverUrl}/uploads/${user.bankTransaction}`} alt={user.bankTransaction} onClick={() => toggleViewImg('Bank Transaction', user.bankTransaction)} />
       </div>
-      <div className="loan-approve-modal" ref={viewImgRef}>
+      <div className="loan-modal" ref={viewImgRef}>
         <div className="modal-overlay" onClick={() => toggleViewImg('', '')}></div>
         <div className="modal-content img">
           <div className="modal-header">

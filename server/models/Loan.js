@@ -1,6 +1,18 @@
 const queryCallback = require('../connection/queryCallback');
 const moment = require('moment');
 
+const get = async (con, id, userid) => {
+  const query = `
+  SELECT * FROM Loans WHERE id = ? AND user_id = ?
+  ORDER BY id DESC
+  LIMIT 1
+  `;
+  const variables = [id, userid];
+
+  const [rows] = await con.execute(query, variables, queryCallback);
+  return rows;
+}
+
 const addNew = async (con, data) => {
   const query = `INSERT INTO Loans (id, user_id, amount, terms, loanDate, loanStatus) VALUES (?,?,?,?,?,?)`;
   const variables = [data.id, data.userId, data.loanAmount, data.loanTerms, data.loanDate, data.loanStatus];
@@ -234,7 +246,21 @@ const updatePaidPenaltyBalanceStatus = async (con, id, data, status) => {
   return rows;
 }
 
+const acceptRefuse = async (con, id, action, date) => {
+  const query = `
+    UPDATE Loans SET
+    loanStatus = ?,
+    acceptedDate = ?
+    WHERE id = ?
+  `;
+
+  const [rows] = await con.execute(query, [action, date, id], queryCallback);
+
+  return rows;
+}
+
 module.exports = {
+  get,
   addNew,
   getAllData,
   getLatest,
@@ -252,4 +278,5 @@ module.exports = {
   setToActive,
   updatePaidPenaltyBalance,
   updatePaidPenaltyBalanceStatus,
+  acceptRefuse,
 }

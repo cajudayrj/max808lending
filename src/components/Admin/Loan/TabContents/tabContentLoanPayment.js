@@ -2806,7 +2806,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
             : null
         }
       </div>
-      <div className="loan-approve-modal" ref={approveRef}>
+      <div className="loan-modal" ref={approveRef}>
         <div className="modal-overlay" onClick={toggleApproveModal}></div>
         <div className="modal-content">
           <div className="modal-header">
@@ -2818,7 +2818,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
           </div>
         </div>
       </div>
-      <div className="loan-approve-modal" ref={rejectRef}>
+      <div className="loan-modal" ref={rejectRef}>
         <div className="modal-overlay" onClick={toggleRejectModal}></div>
         <div className="modal-content">
           <div className="modal-header">
@@ -2830,7 +2830,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
           </div>
         </div>
       </div>
-      <div className="loan-approve-modal" ref={setActiveRef}>
+      <div className="loan-modal" ref={setActiveRef}>
         <div className="modal-overlay" onClick={toggleSetActiveModal}></div>
         <div className="modal-content">
           <div className="modal-header">
@@ -2842,7 +2842,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
           </div>
         </div>
       </div>
-      <div className="loan-approve-modal" ref={updateLoanRef}>
+      <div className="loan-modal" ref={updateLoanRef}>
         <div className="modal-overlay" onClick={toggleUpdateLoanModal}></div>
         <div className="modal-content">
           <div className="modal-header">
@@ -2854,7 +2854,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
           </div>
         </div>
       </div>
-      <div className="loan-approve-modal" ref={fullyPaidRef}>
+      <div className="loan-modal" ref={fullyPaidRef}>
         <div className="modal-overlay" onClick={toggleFullyPaidModal}></div>
         <div className="modal-content">
           <div className="modal-header">

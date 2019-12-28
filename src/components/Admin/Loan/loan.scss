@@ -200,7 +200,7 @@
   }
 }
 
-.loan-approve-modal{
+.loan-modal{
   position: fixed;
   z-index: 10;
   top: 0;
@@ -353,11 +353,11 @@
   }
 }
 
-.loan-approve-modal.opened{
+.loan-modal.opened{
   display: flex;
 }
 
-.loan-approve-modal.visible{
+.loan-modal.visible{
   opacity: 1;
 
   .modal-overlay{
