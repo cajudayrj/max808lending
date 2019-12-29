@@ -1,5 +1,5 @@
 const queryCallback = require('../connection/queryCallback');
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 const get = async (con, id, userid) => {
   const query = `
@@ -213,7 +213,7 @@ const setToActive = async (con, id) => {
     WHERE id = ?
   `;
 
-  const today = moment().format('YYYY-MM-DD');
+  const today = moment().tz('Asia/Manila').format('YYYY-MM-DD');
   const [rows] = await con.execute(query, ['Active', today, id], queryCallback);
 
   return rows;

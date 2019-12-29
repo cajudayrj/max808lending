@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userMiddleware = require('../middleware/middleware');
 const adminMiddleware = require('../middleware/adminMiddleware');
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 // Setup Nodemailer
 const nodemailer = require('nodemailer');
@@ -147,7 +147,7 @@ router.post('/approve/:id', adminMiddleware, async (req, res) => {
       <p>Processing Fee: <span style="color:#187cbc">&#8369;${loanCharges.amount * (2 / 100)}</span></p>
       <p>Service Fee: <span style="color:#187cbc">&#8369;${loanCharges.amount * (loanCharges.serviceFee / 100)}</span></p>
       <p>Terms: <span style="color:#187cbc">${loanCharges.terms} days</p>
-      <p>Due Date: <span style="color:#187cbc">${moment(loanCharges.dueDate).format('MMMM DD, YYYY')}</span></p>
+      <p>Due Date: <span style="color:#187cbc">${moment(loanCharges.dueDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</span></p>
       <p>Loan Proceeds / Receivable Amount: <span style="color:#187cbc"><b>&#8369;${loanCharges.loanProceeds}</b></span></p>
     </div>
     <br />
@@ -241,7 +241,7 @@ router.put('/to-active/:id', adminMiddleware, async (req, res) => {
           <p>Finance Charge: <span style="color:#187cbc">&#8369;${req.body.amount * (req.body.financeCharge / 100)}</span></p>
           <p>Processing Fee: <span style="color:#187cbc">&#8369;${req.body.amount * (2 / 100)}</span></p>
           <p>Service Fee: <span style="color:#187cbc">&#8369;${req.body.amount * (req.body.serviceFee / 100)}</span></p>
-          <p>Due Date: <span style="color:#187cbc">${moment(req.body.dueDate).format('MMMM DD, YYYY')}</span></p>
+          <p>Due Date: <span style="color:#187cbc">${moment(req.body.dueDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</span></p>
           <p><b>Loan Proceeds: <span style="color:#187cbc">&#8369;${req.body.loanProceeds}</span></b></p>
           <p><b>Total Loan Payable Amount: <span style="color:#187cbc">&#8369;${req.body.amount}</span></b></p>
           </div>
@@ -349,7 +349,7 @@ router.put('/set-fully-paid/:id', adminMiddleware, async (req, res) => {
 router.put('/accept-refuse/:id', userMiddleware, async (req, res) => {
   const loanId = req.params.id;
   const { loanAction } = req.body;
-  const acceptRefuseDate = moment(new Date()).format('YYYY-MM-DD');
+  const acceptRefuseDate = moment(new Date()).tz('Asia/Manila').format('YYYY-MM-DD');
 
   const acceptRefuseLoan = await Loan.acceptRefuse(con, loanId, loanAction, acceptRefuseDate);
   const fail = {
@@ -382,7 +382,7 @@ router.post('/apply-new', userMiddleware, async (req, res) => {
 
   const loans = {
     id: `ln${new Date().valueOf()}`,
-    loanDate: moment(new Date()).format('YYYY-MM-DD'),
+    loanDate: moment(new Date()).tz('Asia/Manila').format('YYYY-MM-DD'),
     userId: req.user.id,
     loanAmount: parseInt(req.body.amount),
     loanTerms: parseInt(req.body.terms),
