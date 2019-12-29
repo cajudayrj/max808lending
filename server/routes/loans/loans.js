@@ -369,4 +369,42 @@ router.put('/accept-refuse/:id', userMiddleware, async (req, res) => {
   }
 })
 
+/**
+ *  Apply New Loan
+ */
+
+/**
+* 
+*  Route for step one account activation
+*/
+
+router.post('/apply-new', userMiddleware, async (req, res) => {
+
+  const loans = {
+    id: `ln${new Date().valueOf()}`,
+    loanDate: moment(new Date()).format('YYYY-MM-DD'),
+    userId: req.user.id,
+    loanAmount: parseInt(req.body.amount),
+    loanTerms: parseInt(req.body.terms),
+    loanStatus: 'Pending',
+  }
+
+  const insertError = {
+    success: false,
+    message: "There's an error in requesting new loan. Please try again."
+  }
+
+  const loan = await Loan.addNew(con, loans);
+  if (loan.affectedRows > 0) {
+    const data = {
+      success: true,
+      message: "Successfully requested for new loan"
+    };
+
+    return res.json(data);
+  } else {
+    return res.json(insertError);
+  }
+})
+
 module.exports = router;

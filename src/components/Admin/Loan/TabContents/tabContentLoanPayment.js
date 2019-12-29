@@ -118,10 +118,14 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
   const fullyPaidRef = useRef(null);
 
   const monify = (amount) => {
-    return amount.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    })
+    if (amount) {
+      return amount.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    } else {
+      return '0.00';
+    }
   }
 
   useEffect(() => {

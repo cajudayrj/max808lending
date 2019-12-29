@@ -269,10 +269,14 @@ const Loan = ({ match }) => {
   if (!hasResult) return <NotFound />;
 
   const monify = (amount) => {
-    return amount.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    })
+    if (amount) {
+      return amount.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    } else {
+      return '0.00';
+    }
   }
 
   return (
