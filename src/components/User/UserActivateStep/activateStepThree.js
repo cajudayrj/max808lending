@@ -37,8 +37,11 @@ const ActivateStepThree = () => {
   }, []); // eslint-disable-line
 
   const handleDocumentSubmit = (e) => {
-    setMessage('');
     e.preventDefault();
+
+    if (submitStatus === 'Submitting...') return;
+
+    setMessage('');
     if (
       !payslipOne ||
       !payslipTwo ||
@@ -60,7 +63,7 @@ const ActivateStepThree = () => {
     userDocuments.append('coe', coe);
     userDocuments.append('billingStatement', billingStatement);
     userDocuments.append('bankTransaction', bankTransaction);
-    setSubmitStatus('Submitting');
+    setSubmitStatus('Submitting...');
 
     axios(`${serverUrl}/documents`, {
       method: 'POST',
