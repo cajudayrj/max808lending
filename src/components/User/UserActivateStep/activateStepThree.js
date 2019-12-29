@@ -30,6 +30,7 @@ const ActivateStepThree = () => {
   const [bankTransactionPreview, setBankTransactionPreview] = useState(null);
 
   const [message, setMessage] = useState('');
+  const [submitStatus, setSubmitStatus] = useState('Submit Documents');
 
   useEffect(() => {
     handleRedirects(history);
@@ -59,6 +60,7 @@ const ActivateStepThree = () => {
     userDocuments.append('coe', coe);
     userDocuments.append('billingStatement', billingStatement);
     userDocuments.append('bankTransaction', bankTransaction);
+    setSubmitStatus('Submitting');
 
     axios(`${serverUrl}/documents`, {
       method: 'POST',
@@ -76,10 +78,12 @@ const ActivateStepThree = () => {
           history.push('/activate-account/step-four');
         } else {
           setMessage(res.error.message)
+          setSubmitStatus('Submit Documents');
         }
       })
       .catch(err => {
         setMessage("There's an error uploading files. Please refresh page.")
+        setSubmitStatus('Submit Documents');
       })
   }
 
@@ -373,7 +377,7 @@ const ActivateStepThree = () => {
           </div>
         </div>
         <div className="submit-documents">
-          <button type="button" onClick={handleDocumentSubmit} className="submit-documents-btn">Submit Documents</button>
+          <button type="button" onClick={handleDocumentSubmit} className="submit-documents-btn">{submitStatus}</button>
         </div>
         {
           message !== '' ?
