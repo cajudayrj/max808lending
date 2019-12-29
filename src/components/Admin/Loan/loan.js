@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
 import NotFound from './notFound';
@@ -170,7 +170,7 @@ const Loan = ({ match }) => {
       amount,
       loanProceeds,
       dueDate: requestData[0],
-      approvedDate: moment(today).format('YYYY-MM-DD'),
+      approvedDate: moment(today).tz('Asia/Manila').format('YYYY-MM-DD'),
     }
 
     const userDetails = {
@@ -301,15 +301,15 @@ const Loan = ({ match }) => {
             </div>
             <div className="info">
               <p className="label">Loan Request Date:</p>
-              <p className="value">{moment(loanResult.loanDate).format('MMMM DD, YYYY')}</p>
+              <p className="value">{moment(loanResult.loanDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
             </div>
             <div className="info">
               <p className="label">Loan Effectivity Date:</p>
-              <p className="value">{loanResult.acceptedDate ? moment(loanResult.acceptedDate).format('MMMM DD, YYYY') : '-'}</p>
+              <p className="value">{loanResult.acceptedDate ? moment(loanResult.acceptedDate).tz('Asia/Manila').format('MMMM DD, YYYY') : '-'}</p>
             </div>
             <div className="info">
               <p className="label">Loan Due Date:</p>
-              <p className="value">{loanResult.dueDate ? moment(loanResult.dueDate).format('MMMM DD, YYYY') : '-'}</p>
+              <p className="value">{loanResult.dueDate ? moment(loanResult.dueDate).tz('Asia/Manila').format('MMMM DD, YYYY') : '-'}</p>
             </div>
             <div className="info">
               <p className="label">Loan Status:</p>

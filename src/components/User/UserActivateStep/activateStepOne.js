@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import citiesData from '../../../assets/helpers/cities';
 import serverUrl from '../../../serverUrl';
 import handleRedirects from '../../../assets/helpers/handleRedirects';
@@ -21,7 +21,7 @@ const ActivateStepOne = () => {
   const [mname, setMname] = useState('');
   const [lname, setLname] = useState('');
 
-  const [birthday, setBirthday] = useState(moment().format('YYYY-MM-DD'));
+  const [birthday, setBirthday] = useState(moment().tz('Asia/Manila').format('YYYY-MM-DD'));
   const [gender, setGender] = useState('Male');
   const [maritalStatus, setMaritalStatus] = useState('Single');
   const [address, setAddress] = useState('');
@@ -92,7 +92,7 @@ const ActivateStepOne = () => {
     const data = {
       loanAmount,
       loanTerms,
-      loanDate: moment(new Date()).format('YYYY-MM-DD'),
+      loanDate: moment(new Date()).tz('Asia/Manila').format('YYYY-MM-DD'),
       fname,
       mname,
       lname,
@@ -184,7 +184,7 @@ const ActivateStepOne = () => {
             <p className="input-label">Date of Birth</p>
             <input
               type="date"
-              max={moment().format('YYYY-MM-DD')}
+              max={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
               defaultValue={birthday}
               onKeyDown={e => e.preventDefault()}
               onChange={handleBirthday}

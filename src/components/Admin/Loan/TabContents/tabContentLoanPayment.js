@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../../serverUrl';
 
@@ -162,73 +162,73 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
 
       for (let i = 1; i <= boxes; i++) {
         if (i === 1) {
-          const dateDeadline = moment(today).add((15 * i), 'd').format('YYYY-MM-DD');
+          const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setFirstAmount(eachBoxAmount);
           setFirstDate(dateDeadline);
         }
 
         if (i === 2) {
-          const dateDeadline = moment(today).add((15 * i), 'd').format('YYYY-MM-DD');
+          const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setSecondAmount(eachBoxAmount);
           setSecondDate(dateDeadline);
         }
 
         if (i === 3) {
-          const dateDeadline = moment(today).add((15 * i), 'd').format('YYYY-MM-DD');
+          const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setThirdAmount(eachBoxAmount);
           setThirdDate(dateDeadline);
         }
 
         if (i === 4) {
-          const dateDeadline = moment(today).add((15 * i), 'd').format('YYYY-MM-DD');
+          const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setFourthAmount(eachBoxAmount);
           setFourthDate(dateDeadline);
         }
 
         if (i === 5) {
-          const dateDeadline = moment(today).add((15 * i), 'd').format('YYYY-MM-DD');
+          const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setFifthAmount(eachBoxAmount);
           setFifthDate(dateDeadline);
         }
 
         if (i === 6) {
-          const dateDeadline = moment(today).add((15 * i), 'd').format('YYYY-MM-DD');
+          const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setSixthAmount(eachBoxAmount);
           setSixthDate(dateDeadline);
         }
 
         if (i === 7) {
-          const dateDeadline = moment(today).add((15 * i), 'd').format('YYYY-MM-DD');
+          const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setSeventhAmount(eachBoxAmount);
           setSeventhDate(dateDeadline);
         }
 
         if (i === 8) {
-          const dateDeadline = moment(today).add((15 * i), 'd').format('YYYY-MM-DD');
+          const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setEighthAmount(eachBoxAmount);
           setEighthDate(dateDeadline);
         }
 
         if (i === 9) {
-          const dateDeadline = moment(today).add((15 * i), 'd').format('YYYY-MM-DD');
+          const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setNinthAmount(eachBoxAmount);
           setNinthDate(dateDeadline);
         }
 
         if (i === 10) {
-          const dateDeadline = moment(today).add((15 * i), 'd').format('YYYY-MM-DD');
+          const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setTenthAmount(eachBoxAmount);
           setTenthDate(dateDeadline);
         }
 
         if (i === 11) {
-          const dateDeadline = moment(today).add((15 * i), 'd').format('YYYY-MM-DD');
+          const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setEleventhAmount(eachBoxAmount);
           setEleventhDate(dateDeadline);
         }
 
         if (i === 12) {
-          const dateDeadline = moment(today).add((15 * i), 'd').format('YYYY-MM-DD');
+          const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setTwelfthAmount(eachBoxAmount);
           setTwelfthDate(dateDeadline);
         }
@@ -248,84 +248,84 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
           const loan = res[0];
           setLoanTermData(loan);
 
-          setFirstDate(moment(loan.firstPaymentDate).format('YYYY-MM-DD'))
+          setFirstDate(moment(loan.firstPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setFirstAmount(loan.firstPaymentAmount);
           setFirstBalance(loan.firstPaymentBalance);
           setFirstPaid(loan.firstPaymentPaid);
           setFirstPenalty(loan.firstPaymentPenalty);
           setFirstStatus(loan.firstPaymentStatus);
 
-          setSecondDate(moment(loan.secondPaymentDate).format('YYYY-MM-DD'))
+          setSecondDate(moment(loan.secondPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setSecondAmount(loan.secondPaymentAmount);
           setSecondBalance(loan.secondPaymentBalance);
           setSecondPaid(loan.secondPaymentPaid);
           setSecondPenalty(loan.secondPaymentPenalty);
           setSecondStatus(loan.secondPaymentStatus);
 
-          setThirdDate(moment(loan.thirdPaymentDate).format('YYYY-MM-DD'))
+          setThirdDate(moment(loan.thirdPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setThirdAmount(loan.thirdPaymentAmount);
           setThirdBalance(loan.thirdPaymentBalance);
           setThirdPaid(loan.thirdPaymentPaid);
           setThirdPenalty(loan.thirdPaymentPenalty);
           setThirdStatus(loan.thirdPaymentStatus);
 
-          setFourthDate(moment(loan.fourthPaymentDate).format('YYYY-MM-DD'))
+          setFourthDate(moment(loan.fourthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setFourthAmount(loan.fourthPaymentAmount);
           setFourthBalance(loan.fourthPaymentBalance);
           setFourthPaid(loan.fourthPaymentPaid);
           setFourthPenalty(loan.fourthPaymentPenalty);
           setFourthStatus(loan.fourthPaymentStatus);
 
-          setFifthDate(moment(loan.fifthPaymentDate).format('YYYY-MM-DD'))
+          setFifthDate(moment(loan.fifthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setFifthAmount(loan.fifthPaymentAmount);
           setFifthBalance(loan.fifthPaymentBalance);
           setFifthPaid(loan.fifthPaymentPaid);
           setFifthPenalty(loan.fifthPaymentPenalty);
           setFifthStatus(loan.fifthPaymentStatus);
 
-          setSixthDate(moment(loan.sixthPaymentDate).format('YYYY-MM-DD'))
+          setSixthDate(moment(loan.sixthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setSixthAmount(loan.sixthPaymentAmount);
           setSixthBalance(loan.sixthPaymentBalance);
           setSixthPaid(loan.sixthPaymentPaid);
           setSixthPenalty(loan.sixthPaymentPenalty);
           setSixthStatus(loan.sixthPaymentStatus);
 
-          setSeventhDate(moment(loan.seventhPaymentDate).format('YYYY-MM-DD'))
+          setSeventhDate(moment(loan.seventhPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setSeventhAmount(loan.seventhPaymentAmount);
           setSeventhBalance(loan.seventhPaymentBalance);
           setSeventhPaid(loan.seventhPaymentPaid);
           setSeventhPenalty(loan.seventhPaymentPenalty);
           setSeventhStatus(loan.seventhPaymentStatus);
 
-          setEighthDate(moment(loan.eighthPaymentDate).format('YYYY-MM-DD'))
+          setEighthDate(moment(loan.eighthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setEighthAmount(loan.eighthPaymentAmount);
           setEighthBalance(loan.eighthPaymentBalance);
           setEighthPaid(loan.eighthPaymentPaid);
           setEighthPenalty(loan.eighthPaymentPenalty);
           setEighthStatus(loan.eighthPaymentStatus);
 
-          setNinthDate(moment(loan.ninthPaymentDate).format('YYYY-MM-DD'))
+          setNinthDate(moment(loan.ninthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setNinthAmount(loan.ninthPaymentAmount);
           setNinthBalance(loan.ninthPaymentBalance);
           setNinthPaid(loan.ninthPaymentPaid);
           setNinthPenalty(loan.ninthPaymentPenalty);
           setNinthStatus(loan.ninthPaymentStatus);
 
-          setTenthDate(moment(loan.tenthPaymentDate).format('YYYY-MM-DD'))
+          setTenthDate(moment(loan.tenthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setTenthAmount(loan.tenthPaymentAmount);
           setTenthBalance(loan.tenthPaymentBalance);
           setTenthPaid(loan.tenthPaymentPaid);
           setTenthPenalty(loan.tenthPaymentPenalty);
           setTenthStatus(loan.tenthPaymentStatus);
 
-          setEleventhDate(moment(loan.eleventhPaymentDate).format('YYYY-MM-DD'))
+          setEleventhDate(moment(loan.eleventhPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setEleventhAmount(loan.eleventhPaymentAmount);
           setEleventhBalance(loan.eleventhPaymentBalance);
           setEleventhPaid(loan.eleventhPaymentPaid);
           setEleventhPenalty(loan.eleventhPaymentPenalty);
           setEleventhStatus(loan.eleventhPaymentStatus);
 
-          setTwelfthDate(moment(loan.twelfthPaymentDate).format('YYYY-MM-DD'))
+          setTwelfthDate(moment(loan.twelfthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setTwelfthAmount(loan.twelfthPaymentAmount);
           setTwelfthBalance(loan.twelfthPaymentBalance);
           setTwelfthPaid(loan.twelfthPaymentPaid);
@@ -581,84 +581,84 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
           const loan = res.loanData;
           setLoanTermData(loan);
 
-          setFirstDate(moment(loan.firstPaymentDate).format('YYYY-MM-DD'))
+          setFirstDate(moment(loan.firstPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setFirstAmount(loan.firstPaymentAmount);
           setFirstBalance(loan.firstPaymentBalance);
           setFirstPaid(loan.firstPaymentPaid);
           setFirstPenalty(loan.firstPaymentPenalty);
           setFirstStatus(loan.firstPaymentStatus);
 
-          setSecondDate(moment(loan.secondPaymentDate).format('YYYY-MM-DD'))
+          setSecondDate(moment(loan.secondPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setSecondAmount(loan.secondPaymentAmount);
           setSecondBalance(loan.secondPaymentBalance);
           setSecondPaid(loan.secondPaymentPaid);
           setSecondPenalty(loan.secondPaymentPenalty);
           setSecondStatus(loan.secondPaymentStatus);
 
-          setThirdDate(moment(loan.thirdPaymentDate).format('YYYY-MM-DD'))
+          setThirdDate(moment(loan.thirdPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setThirdAmount(loan.thirdPaymentAmount);
           setThirdBalance(loan.thirdPaymentBalance);
           setThirdPaid(loan.thirdPaymentPaid);
           setThirdPenalty(loan.thirdPaymentPenalty);
           setThirdStatus(loan.thirdPaymentStatus);
 
-          setFourthDate(moment(loan.fourthPaymentDate).format('YYYY-MM-DD'))
+          setFourthDate(moment(loan.fourthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setFourthAmount(loan.fourthPaymentAmount);
           setFourthBalance(loan.fourthPaymentBalance);
           setFourthPaid(loan.fourthPaymentPaid);
           setFourthPenalty(loan.fourthPaymentPenalty);
           setFourthStatus(loan.fourthPaymentStatus);
 
-          setFifthDate(moment(loan.fifthPaymentDate).format('YYYY-MM-DD'))
+          setFifthDate(moment(loan.fifthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setFifthAmount(loan.fifthPaymentAmount);
           setFifthBalance(loan.fifthPaymentBalance);
           setFifthPaid(loan.fifthPaymentPaid);
           setFifthPenalty(loan.fifthPaymentPenalty);
           setFifthStatus(loan.fifthPaymentStatus);
 
-          setSixthDate(moment(loan.sixthPaymentDate).format('YYYY-MM-DD'))
+          setSixthDate(moment(loan.sixthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setSixthAmount(loan.sixthPaymentAmount);
           setSixthBalance(loan.sixthPaymentBalance);
           setSixthPaid(loan.sixthPaymentPaid);
           setSixthPenalty(loan.sixthPaymentPenalty);
           setSixthStatus(loan.sixthPaymentStatus);
 
-          setSeventhDate(moment(loan.seventhPaymentDate).format('YYYY-MM-DD'))
+          setSeventhDate(moment(loan.seventhPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setSeventhAmount(loan.seventhPaymentAmount);
           setSeventhBalance(loan.seventhPaymentBalance);
           setSeventhPaid(loan.seventhPaymentPaid);
           setSeventhPenalty(loan.seventhPaymentPenalty);
           setSeventhStatus(loan.seventhPaymentStatus);
 
-          setEighthDate(moment(loan.eighthPaymentDate).format('YYYY-MM-DD'))
+          setEighthDate(moment(loan.eighthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setEighthAmount(loan.eighthPaymentAmount);
           setEighthBalance(loan.eighthPaymentBalance);
           setEighthPaid(loan.eighthPaymentPaid);
           setEighthPenalty(loan.eighthPaymentPenalty);
           setEighthStatus(loan.eighthPaymentStatus);
 
-          setNinthDate(moment(loan.ninthPaymentDate).format('YYYY-MM-DD'))
+          setNinthDate(moment(loan.ninthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setNinthAmount(loan.ninthPaymentAmount);
           setNinthBalance(loan.ninthPaymentBalance);
           setNinthPaid(loan.ninthPaymentPaid);
           setNinthPenalty(loan.ninthPaymentPenalty);
           setNinthStatus(loan.ninthPaymentStatus);
 
-          setTenthDate(moment(loan.tenthPaymentDate).format('YYYY-MM-DD'))
+          setTenthDate(moment(loan.tenthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setTenthAmount(loan.tenthPaymentAmount);
           setTenthBalance(loan.tenthPaymentBalance);
           setTenthPaid(loan.tenthPaymentPaid);
           setTenthPenalty(loan.tenthPaymentPenalty);
           setTenthStatus(loan.tenthPaymentStatus);
 
-          setEleventhDate(moment(loan.eleventhPaymentDate).format('YYYY-MM-DD'))
+          setEleventhDate(moment(loan.eleventhPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setEleventhAmount(loan.eleventhPaymentAmount);
           setEleventhBalance(loan.eleventhPaymentBalance);
           setEleventhPaid(loan.eleventhPaymentPaid);
           setEleventhPenalty(loan.eleventhPaymentPenalty);
           setEleventhStatus(loan.eleventhPaymentStatus);
 
-          setTwelfthDate(moment(loan.twelfthPaymentDate).format('YYYY-MM-DD'))
+          setTwelfthDate(moment(loan.twelfthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setTwelfthAmount(loan.twelfthPaymentAmount);
           setTwelfthBalance(loan.twelfthPaymentBalance);
           setTwelfthPaid(loan.twelfthPaymentPaid);
@@ -789,84 +789,84 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
           const loan = res.loanData;
           setLoanTermData(loan);
 
-          setFirstDate(moment(loan.firstPaymentDate).format('YYYY-MM-DD'))
+          setFirstDate(moment(loan.firstPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setFirstAmount(loan.firstPaymentAmount);
           setFirstBalance(loan.firstPaymentBalance);
           setFirstPaid(loan.firstPaymentPaid);
           setFirstPenalty(loan.firstPaymentPenalty);
           setFirstStatus(loan.firstPaymentStatus);
 
-          setSecondDate(moment(loan.secondPaymentDate).format('YYYY-MM-DD'))
+          setSecondDate(moment(loan.secondPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setSecondAmount(loan.secondPaymentAmount);
           setSecondBalance(loan.secondPaymentBalance);
           setSecondPaid(loan.secondPaymentPaid);
           setSecondPenalty(loan.secondPaymentPenalty);
           setSecondStatus(loan.secondPaymentStatus);
 
-          setThirdDate(moment(loan.thirdPaymentDate).format('YYYY-MM-DD'))
+          setThirdDate(moment(loan.thirdPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setThirdAmount(loan.thirdPaymentAmount);
           setThirdBalance(loan.thirdPaymentBalance);
           setThirdPaid(loan.thirdPaymentPaid);
           setThirdPenalty(loan.thirdPaymentPenalty);
           setThirdStatus(loan.thirdPaymentStatus);
 
-          setFourthDate(moment(loan.fourthPaymentDate).format('YYYY-MM-DD'))
+          setFourthDate(moment(loan.fourthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setFourthAmount(loan.fourthPaymentAmount);
           setFourthBalance(loan.fourthPaymentBalance);
           setFourthPaid(loan.fourthPaymentPaid);
           setFourthPenalty(loan.fourthPaymentPenalty);
           setFourthStatus(loan.fourthPaymentStatus);
 
-          setFifthDate(moment(loan.fifthPaymentDate).format('YYYY-MM-DD'))
+          setFifthDate(moment(loan.fifthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setFifthAmount(loan.fifthPaymentAmount);
           setFifthBalance(loan.fifthPaymentBalance);
           setFifthPaid(loan.fifthPaymentPaid);
           setFifthPenalty(loan.fifthPaymentPenalty);
           setFifthStatus(loan.fifthPaymentStatus);
 
-          setSixthDate(moment(loan.sixthPaymentDate).format('YYYY-MM-DD'))
+          setSixthDate(moment(loan.sixthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setSixthAmount(loan.sixthPaymentAmount);
           setSixthBalance(loan.sixthPaymentBalance);
           setSixthPaid(loan.sixthPaymentPaid);
           setSixthPenalty(loan.sixthPaymentPenalty);
           setSixthStatus(loan.sixthPaymentStatus);
 
-          setSeventhDate(moment(loan.seventhPaymentDate).format('YYYY-MM-DD'))
+          setSeventhDate(moment(loan.seventhPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setSeventhAmount(loan.seventhPaymentAmount);
           setSeventhBalance(loan.seventhPaymentBalance);
           setSeventhPaid(loan.seventhPaymentPaid);
           setSeventhPenalty(loan.seventhPaymentPenalty);
           setSeventhStatus(loan.seventhPaymentStatus);
 
-          setEighthDate(moment(loan.eighthPaymentDate).format('YYYY-MM-DD'))
+          setEighthDate(moment(loan.eighthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setEighthAmount(loan.eighthPaymentAmount);
           setEighthBalance(loan.eighthPaymentBalance);
           setEighthPaid(loan.eighthPaymentPaid);
           setEighthPenalty(loan.eighthPaymentPenalty);
           setEighthStatus(loan.eighthPaymentStatus);
 
-          setNinthDate(moment(loan.ninthPaymentDate).format('YYYY-MM-DD'))
+          setNinthDate(moment(loan.ninthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setNinthAmount(loan.ninthPaymentAmount);
           setNinthBalance(loan.ninthPaymentBalance);
           setNinthPaid(loan.ninthPaymentPaid);
           setNinthPenalty(loan.ninthPaymentPenalty);
           setNinthStatus(loan.ninthPaymentStatus);
 
-          setTenthDate(moment(loan.tenthPaymentDate).format('YYYY-MM-DD'))
+          setTenthDate(moment(loan.tenthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setTenthAmount(loan.tenthPaymentAmount);
           setTenthBalance(loan.tenthPaymentBalance);
           setTenthPaid(loan.tenthPaymentPaid);
           setTenthPenalty(loan.tenthPaymentPenalty);
           setTenthStatus(loan.tenthPaymentStatus);
 
-          setEleventhDate(moment(loan.eleventhPaymentDate).format('YYYY-MM-DD'))
+          setEleventhDate(moment(loan.eleventhPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setEleventhAmount(loan.eleventhPaymentAmount);
           setEleventhBalance(loan.eleventhPaymentBalance);
           setEleventhPaid(loan.eleventhPaymentPaid);
           setEleventhPenalty(loan.eleventhPaymentPenalty);
           setEleventhStatus(loan.eleventhPaymentStatus);
 
-          setTwelfthDate(moment(loan.twelfthPaymentDate).format('YYYY-MM-DD'))
+          setTwelfthDate(moment(loan.twelfthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
           setTwelfthAmount(loan.twelfthPaymentAmount);
           setTwelfthBalance(loan.twelfthPaymentBalance);
           setTwelfthPaid(loan.twelfthPaymentPaid);
@@ -909,7 +909,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
 
     switch (box) {
       case 'first':
-        setFirstDate(moment(loan.firstPaymentDate).format('YYYY-MM-DD'))
+        setFirstDate(moment(loan.firstPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
         setFirstAmount(loan.firstPaymentAmount);
         setFirstBalance(loan.firstPaymentBalance);
         setFirstPaid(loan.firstPaymentPaid);
@@ -918,7 +918,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
         setFirstEditMode(false);
         return;
       case 'second':
-        setSecondDate(moment(loan.secondPaymentDate).format('YYYY-MM-DD'))
+        setSecondDate(moment(loan.secondPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
         setSecondAmount(loan.secondPaymentAmount);
         setSecondBalance(loan.secondPaymentBalance);
         setSecondPaid(loan.secondPaymentPaid);
@@ -927,7 +927,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
         setSecondEditMode(false);
         return;
       case 'third':
-        setThirdDate(moment(loan.thirdPaymentDate).format('YYYY-MM-DD'))
+        setThirdDate(moment(loan.thirdPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
         setThirdAmount(loan.thirdPaymentAmount);
         setThirdBalance(loan.thirdPaymentBalance);
         setThirdPaid(loan.thirdPaymentPaid);
@@ -936,7 +936,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
         setThirdEditMode(false);
         return;
       case 'fourth':
-        setFourthDate(moment(loan.fourthPaymentDate).format('YYYY-MM-DD'))
+        setFourthDate(moment(loan.fourthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
         setFourthAmount(loan.fourthPaymentAmount);
         setFourthBalance(loan.fourthPaymentBalance);
         setFourthPaid(loan.fourthPaymentPaid);
@@ -945,7 +945,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
         setFourthEditMode(false);
         return;
       case 'fifth':
-        setFifthDate(moment(loan.fifthPaymentDate).format('YYYY-MM-DD'))
+        setFifthDate(moment(loan.fifthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
         setFifthAmount(loan.fifthPaymentAmount);
         setFifthBalance(loan.fifthPaymentBalance);
         setFifthPaid(loan.fifthPaymentPaid);
@@ -954,7 +954,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
         setFifthEditMode(false);
         return;
       case 'sixth':
-        setSixthDate(moment(loan.sixthPaymentDate).format('YYYY-MM-DD'))
+        setSixthDate(moment(loan.sixthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
         setSixthAmount(loan.sixthPaymentAmount);
         setSixthBalance(loan.sixthPaymentBalance);
         setSixthPaid(loan.sixthPaymentPaid);
@@ -963,7 +963,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
         setSixthEditMode(false);
         return;
       case 'seventh':
-        setSeventhDate(moment(loan.seventhPaymentDate).format('YYYY-MM-DD'))
+        setSeventhDate(moment(loan.seventhPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
         setSeventhAmount(loan.seventhPaymentAmount);
         setSeventhBalance(loan.seventhPaymentBalance);
         setSeventhPaid(loan.seventhPaymentPaid);
@@ -972,7 +972,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
         setSeventhEditMode(false);
         return;
       case 'eighth':
-        setEighthDate(moment(loan.eighthPaymentDate).format('YYYY-MM-DD'))
+        setEighthDate(moment(loan.eighthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
         setEighthAmount(loan.eighthPaymentAmount);
         setEighthBalance(loan.eighthPaymentBalance);
         setEighthPaid(loan.eighthPaymentPaid);
@@ -982,7 +982,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
         return;
       case 'ninth':
         setNinthEditMode(false);
-        setNinthDate(moment(loan.ninthPaymentDate).format('YYYY-MM-DD'))
+        setNinthDate(moment(loan.ninthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
         setNinthAmount(loan.ninthPaymentAmount);
         setNinthBalance(loan.ninthPaymentBalance);
         setNinthPaid(loan.ninthPaymentPaid);
@@ -990,7 +990,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
         setNinthStatus(loan.ninthPaymentStatus);
         return;
       case 'tenth':
-        setTenthDate(moment(loan.tenthPaymentDate).format('YYYY-MM-DD'))
+        setTenthDate(moment(loan.tenthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
         setTenthAmount(loan.tenthPaymentAmount);
         setTenthBalance(loan.tenthPaymentBalance);
         setTenthPaid(loan.tenthPaymentPaid);
@@ -999,7 +999,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
         setTenthEditMode(false);
         return;
       case 'eleventh':
-        setEleventhDate(moment(loan.eleventhPaymentDate).format('YYYY-MM-DD'))
+        setEleventhDate(moment(loan.eleventhPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
         setEleventhAmount(loan.eleventhPaymentAmount);
         setEleventhBalance(loan.eleventhPaymentBalance);
         setEleventhPaid(loan.eleventhPaymentPaid);
@@ -1008,7 +1008,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
         setEleventhEditMode(false);
         return;
       case 'twelfth':
-        setTwelfthDate(moment(loan.twelfthPaymentDate).format('YYYY-MM-DD'))
+        setTwelfthDate(moment(loan.twelfthPaymentDate).tz('Asia/Manila').format('YYYY-MM-DD'))
         setTwelfthAmount(loan.twelfthPaymentAmount);
         setTwelfthBalance(loan.twelfthPaymentBalance);
         setTwelfthPaid(loan.twelfthPaymentPaid);
@@ -1617,11 +1617,11 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
               </div>
               <div className="inputs-labels">
                 <p className="label">Due Date:</p>
-                <p className="payment-date">{moment(firstDate).format('MMMM DD, YYYY')}</p>
+                <p className="payment-date">{moment(firstDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || firstEditMode ?
                     <input type="date" value={firstDate}
-                      min={moment().format('YYYY-MM-DD')}
+                      min={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
                       onChange={e => setFirstDate(e.target.value)}
                       onKeyDown={e => e.preventDefault()}
                     />
@@ -1717,11 +1717,11 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
               </div>
               <div className="inputs-labels">
                 <p className="label">Due Date:</p>
-                <p className="payment-date">{moment(secondDate).format('MMMM DD, YYYY')}</p>
+                <p className="payment-date">{moment(secondDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || secondEditMode ?
                     <input type="date" value={secondDate}
-                      min={moment().format('YYYY-MM-DD')}
+                      min={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
                       onChange={e => setSecondDate(e.target.value)}
                       onKeyDown={e => e.preventDefault()}
                     />
@@ -1816,11 +1816,11 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
               </div>
               <div className="inputs-labels">
                 <p className="label">Due Date:</p>
-                <p className="payment-date">{moment(thirdDate).format('MMMM DD, YYYY')}</p>
+                <p className="payment-date">{moment(thirdDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || thirdEditMode ?
                     <input type="date" value={thirdDate}
-                      min={moment().format('YYYY-MM-DD')}
+                      min={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
                       onChange={e => setThirdDate(e.target.value)}
                       onKeyDown={e => e.preventDefault()}
                     />
@@ -1915,11 +1915,11 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
               </div>
               <div className="inputs-labels">
                 <p className="label">Due Date:</p>
-                <p className="payment-date">{moment(fourthDate).format('MMMM DD, YYYY')}</p>
+                <p className="payment-date">{moment(fourthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || fourthEditMode ?
                     <input type="date" value={fourthDate}
-                      min={moment().format('YYYY-MM-DD')}
+                      min={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
                       onChange={e => setFourthDate(e.target.value)}
                       onKeyDown={e => e.preventDefault()}
                     />
@@ -2014,11 +2014,11 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
               </div>
               <div className="inputs-labels">
                 <p className="label">Due Date:</p>
-                <p className="payment-date">{moment(fifthDate).format('MMMM DD, YYYY')}</p>
+                <p className="payment-date">{moment(fifthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || fifthEditMode ?
                     <input type="date" value={fifthDate}
-                      min={moment().format('YYYY-MM-DD')}
+                      min={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
                       onChange={e => setFifthDate(e.target.value)}
                       onKeyDown={e => e.preventDefault()}
                     />
@@ -2113,11 +2113,11 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
               </div>
               <div className="inputs-labels">
                 <p className="label">Due Date:</p>
-                <p className="payment-date">{moment(sixthDate).format('MMMM DD, YYYY')}</p>
+                <p className="payment-date">{moment(sixthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || sixthEditMode ?
                     <input type="date" value={sixthDate}
-                      min={moment().format('YYYY-MM-DD')}
+                      min={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
                       onChange={e => setSixthDate(e.target.value)}
                       onKeyDown={e => e.preventDefault()}
                     />
@@ -2212,11 +2212,11 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
               </div>
               <div className="inputs-labels">
                 <p className="label">Due Date:</p>
-                <p className="payment-date">{moment(seventhDate).format('MMMM DD, YYYY')}</p>
+                <p className="payment-date">{moment(seventhDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || seventhEditMode ?
                     <input type="date" value={seventhDate}
-                      min={moment().format('YYYY-MM-DD')}
+                      min={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
                       onChange={e => setSeventhDate(e.target.value)}
                       onKeyDown={e => e.preventDefault()}
                     />
@@ -2315,11 +2315,11 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
               </div>
               <div className="inputs-labels">
                 <p className="label">Due Date:</p>
-                <p className="payment-date">{moment(eighthDate).format('MMMM DD, YYYY')}</p>
+                <p className="payment-date">{moment(eighthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || eighthEditMode ?
                     <input type="date" value={eighthDate}
-                      min={moment().format('YYYY-MM-DD')}
+                      min={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
                       onChange={e => setEighthDate(e.target.value)}
                       onKeyDown={e => e.preventDefault()}
                     />
@@ -2414,11 +2414,11 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
               </div>
               <div className="inputs-labels">
                 <p className="label">Due Date:</p>
-                <p className="payment-date">{moment(ninthDate).format('MMMM DD, YYYY')}</p>
+                <p className="payment-date">{moment(ninthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || ninthEditMode ?
                     <input type="date" value={ninthDate}
-                      min={moment().format('YYYY-MM-DD')}
+                      min={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
                       onChange={e => setNinthDate(e.target.value)}
                       onKeyDown={e => e.preventDefault()}
                     />
@@ -2513,11 +2513,11 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
               </div>
               <div className="inputs-labels">
                 <p className="label">Due Date:</p>
-                <p className="payment-date">{moment(tenthDate).format('MMMM DD, YYYY')}</p>
+                <p className="payment-date">{moment(tenthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || tenthEditMode ?
                     <input type="date" value={tenthDate}
-                      min={moment().format('YYYY-MM-DD')}
+                      min={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
                       onChange={e => setTenthDate(e.target.value)}
                       onKeyDown={e => e.preventDefault()}
                     />
@@ -2612,11 +2612,11 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
               </div>
               <div className="inputs-labels">
                 <p className="label">Due Date:</p>
-                <p className="payment-date">{moment(eleventhDate).format('MMMM DD, YYYY')}</p>
+                <p className="payment-date">{moment(eleventhDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || eleventhEditMode ?
                     <input type="date" value={eleventhDate}
-                      min={moment().format('YYYY-MM-DD')}
+                      min={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
                       onChange={e => setEleventhDate(e.target.value)}
                       onKeyDown={e => e.preventDefault()}
                     />
@@ -2711,11 +2711,11 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
               </div>
               <div className="inputs-labels">
                 <p className="label">Due Date:</p>
-                <p className="payment-date">{moment(twelfthDate).format('MMMM DD, YYYY')}</p>
+                <p className="payment-date">{moment(twelfthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || twelfthEditMode ?
                     <input type="date" value={twelfthDate}
-                      min={moment().format('YYYY-MM-DD')}
+                      min={moment().tz('Asia/Manila').format('YYYY-MM-DD')}
                       onChange={e => setTwelfthDate(e.target.value)}
                       onKeyDown={e => e.preventDefault()}
                     />

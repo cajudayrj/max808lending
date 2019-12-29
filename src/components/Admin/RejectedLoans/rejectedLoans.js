@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import handleRedirects from '../../../assets/helpers/handleRedirects';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
 
@@ -64,7 +64,7 @@ const RejectedLoans = () => {
                       <td>{loan.firstName} {loan.lastName}</td>
                       <td>&#8369;{monify(loan.amount)}</td>
                       <td>{loan.terms} days</td>
-                      <td>{moment(loan.loanDate).format('MMMM DD, YYYY')}</td>
+                      <td>{moment(loan.loanDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                       <td>{loan.loanStatus}</td>
                       <td><Link to={`/admin/loan/${loan.id}`} >View</Link></td>
                     </tr>

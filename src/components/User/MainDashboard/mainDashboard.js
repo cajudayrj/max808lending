@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 const MainDashboard = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
@@ -46,10 +46,10 @@ const MainDashboard = () => {
         setLoanId(res.id);
         setAmount(res.amount);
         setTerms(res.terms);
-        setLoanDate(moment(res.loanDate).format('MMMM D, YYYY'));
-        setApprovedDate(res.approvedDate ? moment(res.approvedDate).format('MMMM D, YYYY') : '-');
-        setAcceptedDate(res.acceptedDate ? moment(res.acceptedDate).format('MMMM D, YYYY') : '-');
-        setDurationDate(res.dueDate ? moment(res.dueDate).format('MMMM D, YYYY') : '-');
+        setLoanDate(moment(res.loanDate).tz('Asia/Manila').format('MMMM D, YYYY'));
+        setApprovedDate(res.approvedDate ? moment(res.approvedDate).tz('Asia/Manila').format('MMMM D, YYYY') : '-');
+        setAcceptedDate(res.acceptedDate ? moment(res.acceptedDate).tz('Asia/Manila').format('MMMM D, YYYY') : '-');
+        setDurationDate(res.dueDate ? moment(res.dueDate).tz('Asia/Manila').format('MMMM D, YYYY') : '-');
         setStatus(res.loanStatus);
 
         if ((res.loanStatus !== 'Pending') || (res.loanStatus !== 'Rejected')) {
@@ -176,10 +176,10 @@ const MainDashboard = () => {
         setLoanId(res.id);
         setAmount(res.amount);
         setTerms(res.terms);
-        setLoanDate(moment(res.loanDate).format('MMMM D, YYYY'));
-        setApprovedDate(res.approvedDate ? moment(res.approvedDate).format('MMMM D, YYYY') : '-');
-        setAcceptedDate(res.acceptedDate ? moment(res.acceptedDate).format('MMMM D, YYYY') : '-');
-        setDurationDate(res.dueDate ? moment(res.dueDate).format('MMMM D, YYYY') : '-');
+        setLoanDate(moment(res.loanDate).tz('Asia/Manila').format('MMMM D, YYYY'));
+        setApprovedDate(res.approvedDate ? moment(res.approvedDate).tz('Asia/Manila').format('MMMM D, YYYY') : '-');
+        setAcceptedDate(res.acceptedDate ? moment(res.acceptedDate).tz('Asia/Manila').format('MMMM D, YYYY') : '-');
+        setDurationDate(res.dueDate ? moment(res.dueDate).tz('Asia/Manila').format('MMMM D, YYYY') : '-');
         setStatus(res.loanStatus);
 
         if ((res.loanStatus !== 'Pending') || (res.loanStatus !== 'Rejected')) {
@@ -351,7 +351,7 @@ const MainDashboard = () => {
                             <tr>
                               <td>1st Payment</td>
                               <td>&#8369;{monify(loanPayments.firstPaymentAmount)}</td>
-                              <td>{moment(loanPayments.firstPaymentDate).format('MMMM DD, YYYY')}</td>
+                              <td>{moment(loanPayments.firstPaymentDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
@@ -370,7 +370,7 @@ const MainDashboard = () => {
                             <tr>
                               <td>2nd Payment</td>
                               <td>&#8369;{monify(loanPayments.secondPaymentAmount)}</td>
-                              <td>{moment(loanPayments.secondPaymentDate).format('MMMM DD, YYYY')}</td>
+                              <td>{moment(loanPayments.secondPaymentDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
@@ -389,7 +389,7 @@ const MainDashboard = () => {
                             <tr>
                               <td>3rd Payment</td>
                               <td>&#8369;{monify(loanPayments.thirdPaymentAmount)}</td>
-                              <td>{moment(loanPayments.thirdPaymentDate).format('MMMM DD, YYYY')}</td>
+                              <td>{moment(loanPayments.thirdPaymentDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
@@ -408,7 +408,7 @@ const MainDashboard = () => {
                             <tr>
                               <td>4th Payment</td>
                               <td>&#8369;{monify(loanPayments.fourthPaymentAmount)}</td>
-                              <td>{moment(loanPayments.fourthPaymentDate).format('MMMM DD, YYYY')}</td>
+                              <td>{moment(loanPayments.fourthPaymentDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
@@ -427,7 +427,7 @@ const MainDashboard = () => {
                             <tr>
                               <td>5th Payment</td>
                               <td>&#8369;{monify(loanPayments.fifthPaymentAmount)}</td>
-                              <td>{moment(loanPayments.fifthPaymentDate).format('MMMM DD, YYYY')}</td>
+                              <td>{moment(loanPayments.fifthPaymentDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
@@ -446,7 +446,7 @@ const MainDashboard = () => {
                             <tr>
                               <td>6th Payment</td>
                               <td>&#8369;{monify(loanPayments.sixthPaymentAmount)}</td>
-                              <td>{moment(loanPayments.sixthPaymentDate).format('MMMM DD, YYYY')}</td>
+                              <td>{moment(loanPayments.sixthPaymentDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
@@ -465,7 +465,7 @@ const MainDashboard = () => {
                             <tr>
                               <td>7th Payment</td>
                               <td>&#8369;{monify(loanPayments.seventhPaymentAmount)}</td>
-                              <td>{moment(loanPayments.seventhPaymentDate).format('MMMM DD, YYYY')}</td>
+                              <td>{moment(loanPayments.seventhPaymentDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
@@ -484,7 +484,7 @@ const MainDashboard = () => {
                             <tr>
                               <td>8th Payment</td>
                               <td>&#8369;{monify(loanPayments.eighthPaymentAmount)}</td>
-                              <td>{moment(loanPayments.eighthPaymentDate).format('MMMM DD, YYYY')}</td>
+                              <td>{moment(loanPayments.eighthPaymentDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
@@ -503,7 +503,7 @@ const MainDashboard = () => {
                             <tr>
                               <td>9th Payment</td>
                               <td>&#8369;{monify(loanPayments.ninthPaymentAmount)}</td>
-                              <td>{moment(loanPayments.ninthPaymentDate).format('MMMM DD, YYYY')}</td>
+                              <td>{moment(loanPayments.ninthPaymentDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
@@ -522,7 +522,7 @@ const MainDashboard = () => {
                             <tr>
                               <td>10th Payment</td>
                               <td>&#8369;{monify(loanPayments.tenthPaymentAmount)}</td>
-                              <td>{moment(loanPayments.tenthPaymentDate).format('MMMM DD, YYYY')}</td>
+                              <td>{moment(loanPayments.tenthPaymentDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
@@ -541,7 +541,7 @@ const MainDashboard = () => {
                             <tr>
                               <td>11th Payment</td>
                               <td>&#8369;{monify(loanPayments.eleventhPaymentAmount)}</td>
-                              <td>{moment(loanPayments.eleventhPaymentDate).format('MMMM DD, YYYY')}</td>
+                              <td>{moment(loanPayments.eleventhPaymentDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
@@ -560,7 +560,7 @@ const MainDashboard = () => {
                             <tr>
                               <td>12th Payment</td>
                               <td>&#8369;{monify(loanPayments.twelfthPaymentAmount)}</td>
-                              <td>{moment(loanPayments.twelfthPaymentDate).format('MMMM DD, YYYY')}</td>
+                              <td>{moment(loanPayments.twelfthPaymentDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>

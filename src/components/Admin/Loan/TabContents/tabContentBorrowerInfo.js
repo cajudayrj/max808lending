@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../../serverUrl';
 
@@ -69,7 +69,7 @@ const TabContentBorrowerInfo = ({ userId }) => {
       </div>
       <div className="info-grid">
         <p className="title">Birthday:</p>
-        <p className="value">{moment(user.birthday).format('MMMM DD, YYYY')}</p>
+        <p className="value">{moment(user.birthday).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
       </div>
       <div className="info-grid">
         <p className="title">Gender:</p>
