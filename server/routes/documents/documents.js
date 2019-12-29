@@ -34,7 +34,7 @@ const con = require('../../connection/con');
 
 router.post('/', userMiddleware, async (req, res) => {
   upload(req, res, async (err) => {
-    if (err) res.json(err);
+    if (err) return res.json(err);
     const documentData = { ...req.files }
     const userDocuments = {
       userId: req.user.id,
