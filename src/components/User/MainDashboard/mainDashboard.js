@@ -24,9 +24,15 @@ const MainDashboard = () => {
 
   const [refuseModal, setRefuseModal] = useState(false);
   const [acceptModal, setAcceptModal] = useState(false);
+  const [newLoanModal, setNewLoanModal] = useState(false);
+
+  // new loan states
+  const [newLoanAmount, setNewLoanAmount] = useState(5000);
+  const [newLoanTerms, setNewLoanTerms] = useState(15);
 
   const refuseRef = useRef(null);
   const acceptRef = useRef(null);
+  const newLoanRef = useRef(null);
 
   useEffect(() => {
     axios(`${serverUrl}/loans/get-latest`, {
@@ -114,6 +120,47 @@ const MainDashboard = () => {
     }, 400)
   }
 
+  const toggleNewLoanModal = e => {
+    e.preventDefault();
+    setNewLoanModal(!newLoanModal);
+    if (!newLoanModal) {
+      newLoanRef.current.classList.add('opened');
+      setTimeout(() => {
+        newLoanRef.current.classList.add('visible');
+      }, 100)
+    } else {
+      newLoanRef.current.classList.remove('visible');
+      setTimeout(() => {
+        newLoanRef.current.classList.remove('opened');
+      }, 300)
+    }
+  }
+
+  const confirmNewLoan = e => {
+    toggleNewLoanModal(e);
+    setTimeout(() => {
+      axios(`${serverUrl}/loans/apply-new`, {
+        method: "POST",
+        data: {
+          amount: newLoanAmount,
+          terms: newLoanTerms
+        },
+        headers: {
+          "Authorization": `Bearer ${userData.authToken}`
+        }
+      })
+        .then(result => {
+          const res = result.data;
+
+          if (res.success) {
+            window.location.reload();
+          } else {
+            console.log(res.message);
+          }
+        })
+    }, 400)
+  }
+
   const handleAcceptRefuse = action => {
     axios(`${serverUrl}/loans/accept-refuse/${loanId}`, {
       method: "PUT",
@@ -157,10 +204,14 @@ const MainDashboard = () => {
   }
 
   const monify = (amount) => {
-    return amount.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    })
+    if (amount) {
+      return amount.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    } else {
+      return '0.00';
+    }
   }
 
   return (
@@ -235,9 +286,8 @@ const MainDashboard = () => {
                   `
         values ${(status === 'Rejected') || (status === 'Refused')
                     ? 'declined'
-                    : status === 'Active'
-                      ? 'active'
-                      : ''}
+                    : (status === 'Active') || (status === 'Fully Paid')
+                      ? 'active' : ''}
         `}>{status}</p>
             </div>
             {
@@ -249,7 +299,7 @@ const MainDashboard = () => {
                       <p className="value">&#8369;{monify(amount * (financeCharge / 100))}</p>
                     </div>
                     <div className="title-value">
-                      <p className="title">Processing Fee &#40;{serviceFee}%&#41;: </p>
+                      <p className="title">Processing Fee &#40;2%&#41;: </p>
                       <p className="value">&#8369;{monify(amount * (2 / 100))}</p>
                     </div>
                     <div className="title-value">
@@ -300,14 +350,14 @@ const MainDashboard = () => {
                           loanPayments.firstPaymentAmount !== 0 ?
                             <tr>
                               <td>1st Payment</td>
-                              <td>&#8369;{loanPayments.firstPaymentAmount}</td>
+                              <td>&#8369;{monify(loanPayments.firstPaymentAmount)}</td>
                               <td>{moment(loanPayments.firstPaymentDate).format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{loanPayments.firstPaymentPenalty}</td>
-                                    <td>&#8369;{loanPayments.firstPaymentPaid}</td>
-                                    <td>&#8369;{loanPayments.firstPaymentBalance}</td>
+                                    <td>&#8369;{monify(loanPayments.firstPaymentPenalty)}</td>
+                                    <td>&#8369;{monify(loanPayments.firstPaymentPaid)}</td>
+                                    <td>&#8369;{monify(loanPayments.firstPaymentBalance)}</td>
                                     <td>{loanPayments.firstPaymentStatus}</td>
                                   </>
                                   : null
@@ -319,14 +369,14 @@ const MainDashboard = () => {
                           loanPayments.secondPaymentAmount !== 0 ?
                             <tr>
                               <td>2nd Payment</td>
-                              <td>&#8369;{loanPayments.secondPaymentAmount}</td>
+                              <td>&#8369;{monify(loanPayments.secondPaymentAmount)}</td>
                               <td>{moment(loanPayments.secondPaymentDate).format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{loanPayments.secondPaymentPenalty}</td>
-                                    <td>&#8369;{loanPayments.secondPaymentPaid}</td>
-                                    <td>&#8369;{loanPayments.secondPaymentBalance}</td>
+                                    <td>&#8369;{monify(loanPayments.secondPaymentPenalty)}</td>
+                                    <td>&#8369;{monify(loanPayments.secondPaymentPaid)}</td>
+                                    <td>&#8369;{monify(loanPayments.secondPaymentBalance)}</td>
                                     <td>{loanPayments.secondPaymentStatus}</td>
                                   </>
                                   : null
@@ -338,14 +388,14 @@ const MainDashboard = () => {
                           loanPayments.thirdPaymentAmount !== 0 ?
                             <tr>
                               <td>3rd Payment</td>
-                              <td>&#8369;{loanPayments.thirdPaymentAmount}</td>
+                              <td>&#8369;{monify(loanPayments.thirdPaymentAmount)}</td>
                               <td>{moment(loanPayments.thirdPaymentDate).format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{loanPayments.thirdPaymentPenalty}</td>
-                                    <td>&#8369;{loanPayments.thirdPaymentPaid}</td>
-                                    <td>&#8369;{loanPayments.thirdPaymentBalance}</td>
+                                    <td>&#8369;{monify(loanPayments.thirdPaymentPenalty)}</td>
+                                    <td>&#8369;{monify(loanPayments.thirdPaymentPaid)}</td>
+                                    <td>&#8369;{monify(loanPayments.thirdPaymentBalance)}</td>
                                     <td>{loanPayments.thirdPaymentStatus}</td>
                                   </>
                                   : null
@@ -357,14 +407,14 @@ const MainDashboard = () => {
                           loanPayments.fourthPaymentAmount !== 0 ?
                             <tr>
                               <td>4th Payment</td>
-                              <td>&#8369;{loanPayments.fourthPaymentAmount}</td>
+                              <td>&#8369;{monify(loanPayments.fourthPaymentAmount)}</td>
                               <td>{moment(loanPayments.fourthPaymentDate).format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{loanPayments.fourthPaymentPenalty}</td>
-                                    <td>&#8369;{loanPayments.fourthPaymentPaid}</td>
-                                    <td>&#8369;{loanPayments.fourthPaymentBalance}</td>
+                                    <td>&#8369;{monify(loanPayments.fourthPaymentPenalty)}</td>
+                                    <td>&#8369;{monify(loanPayments.fourthPaymentPaid)}</td>
+                                    <td>&#8369;{monify(loanPayments.fourthPaymentBalance)}</td>
                                     <td>{loanPayments.fourthPaymentStatus}</td>
                                   </>
                                   : null
@@ -376,14 +426,14 @@ const MainDashboard = () => {
                           loanPayments.fifthPaymentAmount !== 0 ?
                             <tr>
                               <td>5th Payment</td>
-                              <td>&#8369;{loanPayments.fifthPaymentAmount}</td>
+                              <td>&#8369;{monify(loanPayments.fifthPaymentAmount)}</td>
                               <td>{moment(loanPayments.fifthPaymentDate).format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{loanPayments.fifthPaymentPenalty}</td>
-                                    <td>&#8369;{loanPayments.fifthPaymentPaid}</td>
-                                    <td>&#8369;{loanPayments.fifthPaymentBalance}</td>
+                                    <td>&#8369;{monify(loanPayments.fifthPaymentPenalty)}</td>
+                                    <td>&#8369;{monify(loanPayments.fifthPaymentPaid)}</td>
+                                    <td>&#8369;{monify(loanPayments.fifthPaymentBalance)}</td>
                                     <td>{loanPayments.fifthPaymentStatus}</td>
                                   </>
                                   : null
@@ -395,14 +445,14 @@ const MainDashboard = () => {
                           loanPayments.sixthPaymentAmount !== 0 ?
                             <tr>
                               <td>6th Payment</td>
-                              <td>&#8369;{loanPayments.sixthPaymentAmount}</td>
+                              <td>&#8369;{monify(loanPayments.sixthPaymentAmount)}</td>
                               <td>{moment(loanPayments.sixthPaymentDate).format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{loanPayments.sixthPaymentPenalty}</td>
-                                    <td>&#8369;{loanPayments.sixthPaymentPaid}</td>
-                                    <td>&#8369;{loanPayments.sixthPaymentBalance}</td>
+                                    <td>&#8369;{monify(loanPayments.sixthPaymentPenalty)}</td>
+                                    <td>&#8369;{monify(loanPayments.sixthPaymentPaid)}</td>
+                                    <td>&#8369;{monify(loanPayments.sixthPaymentBalance)}</td>
                                     <td>{loanPayments.sixthPaymentStatus}</td>
                                   </>
                                   : null
@@ -414,14 +464,14 @@ const MainDashboard = () => {
                           loanPayments.seventhPaymentAmount !== 0 ?
                             <tr>
                               <td>7th Payment</td>
-                              <td>&#8369;{loanPayments.seventhPaymentAmount}</td>
+                              <td>&#8369;{monify(loanPayments.seventhPaymentAmount)}</td>
                               <td>{moment(loanPayments.seventhPaymentDate).format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{loanPayments.seventhPaymentPenalty}</td>
-                                    <td>&#8369;{loanPayments.seventhPaymentPaid}</td>
-                                    <td>&#8369;{loanPayments.seventhPaymentBalance}</td>
+                                    <td>&#8369;{monify(loanPayments.seventhPaymentPenalty)}</td>
+                                    <td>&#8369;{monify(loanPayments.seventhPaymentPaid)}</td>
+                                    <td>&#8369;{monify(loanPayments.seventhPaymentBalance)}</td>
                                     <td>{loanPayments.seventhPaymentStatus}</td>
                                   </>
                                   : null
@@ -433,14 +483,14 @@ const MainDashboard = () => {
                           loanPayments.eighthPaymentAmount !== 0 ?
                             <tr>
                               <td>8th Payment</td>
-                              <td>&#8369;{loanPayments.eighthPaymentAmount}</td>
+                              <td>&#8369;{monify(loanPayments.eighthPaymentAmount)}</td>
                               <td>{moment(loanPayments.eighthPaymentDate).format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{loanPayments.eighthPaymentPenalty}</td>
-                                    <td>&#8369;{loanPayments.eighthPaymentPaid}</td>
-                                    <td>&#8369;{loanPayments.eighthPaymentBalance}</td>
+                                    <td>&#8369;{monify(loanPayments.eighthPaymentPenalty)}</td>
+                                    <td>&#8369;{monify(loanPayments.eighthPaymentPaid)}</td>
+                                    <td>&#8369;{monify(loanPayments.eighthPaymentBalance)}</td>
                                     <td>{loanPayments.eighthPaymentStatus}</td>
                                   </>
                                   : null
@@ -452,14 +502,14 @@ const MainDashboard = () => {
                           loanPayments.ninthPaymentAmount !== 0 ?
                             <tr>
                               <td>9th Payment</td>
-                              <td>&#8369;{loanPayments.ninthPaymentAmount}</td>
+                              <td>&#8369;{monify(loanPayments.ninthPaymentAmount)}</td>
                               <td>{moment(loanPayments.ninthPaymentDate).format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{loanPayments.ninthPaymentPenalty}</td>
-                                    <td>&#8369;{loanPayments.ninthPaymentPaid}</td>
-                                    <td>&#8369;{loanPayments.ninthPaymentBalance}</td>
+                                    <td>&#8369;{monify(loanPayments.ninthPaymentPenalty)}</td>
+                                    <td>&#8369;{monify(loanPayments.ninthPaymentPaid)}</td>
+                                    <td>&#8369;{monify(loanPayments.ninthPaymentBalance)}</td>
                                     <td>{loanPayments.ninthPaymentStatus}</td>
                                   </>
                                   : null
@@ -471,14 +521,14 @@ const MainDashboard = () => {
                           loanPayments.tenthPaymentAmount !== 0 ?
                             <tr>
                               <td>10th Payment</td>
-                              <td>&#8369;{loanPayments.tenthPaymentAmount}</td>
+                              <td>&#8369;{monify(loanPayments.tenthPaymentAmount)}</td>
                               <td>{moment(loanPayments.tenthPaymentDate).format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{loanPayments.tenthPaymentPenalty}</td>
-                                    <td>&#8369;{loanPayments.tenthPaymentPaid}</td>
-                                    <td>&#8369;{loanPayments.tenthPaymentBalance}</td>
+                                    <td>&#8369;{monify(loanPayments.tenthPaymentPenalty)}</td>
+                                    <td>&#8369;{monify(loanPayments.tenthPaymentPaid)}</td>
+                                    <td>&#8369;{monify(loanPayments.tenthPaymentBalance)}</td>
                                     <td>{loanPayments.tenthPaymentStatus}</td>
                                   </>
                                   : null
@@ -490,14 +540,14 @@ const MainDashboard = () => {
                           loanPayments.eleventhPaymentAmount !== 0 ?
                             <tr>
                               <td>11th Payment</td>
-                              <td>&#8369;{loanPayments.eleventhPaymentAmount}</td>
+                              <td>&#8369;{monify(loanPayments.eleventhPaymentAmount)}</td>
                               <td>{moment(loanPayments.eleventhPaymentDate).format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{loanPayments.eleventhPaymentPenalty}</td>
-                                    <td>&#8369;{loanPayments.eleventhPaymentPaid}</td>
-                                    <td>&#8369;{loanPayments.eleventhPaymentBalance}</td>
+                                    <td>&#8369;{monify(loanPayments.eleventhPaymentPenalty)}</td>
+                                    <td>&#8369;{monify(loanPayments.eleventhPaymentPaid)}</td>
+                                    <td>&#8369;{monify(loanPayments.eleventhPaymentBalance)}</td>
                                     <td>{loanPayments.eleventhPaymentStatus}</td>
                                   </>
                                   : null
@@ -509,14 +559,14 @@ const MainDashboard = () => {
                           loanPayments.twelfthPaymentAmount !== 0 ?
                             <tr>
                               <td>12th Payment</td>
-                              <td>&#8369;{loanPayments.twelfthPaymentAmount}</td>
+                              <td>&#8369;{monify(loanPayments.twelfthPaymentAmount)}</td>
                               <td>{moment(loanPayments.twelfthPaymentDate).format('MMMM DD, YYYY')}</td>
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{loanPayments.twelfthPaymentPenalty}</td>
-                                    <td>&#8369;{loanPayments.twelfthPaymentPaid}</td>
-                                    <td>&#8369;{loanPayments.twelfthPaymentBalance}</td>
+                                    <td>&#8369;{monify(loanPayments.twelfthPaymentPenalty)}</td>
+                                    <td>&#8369;{monify(loanPayments.twelfthPaymentPaid)}</td>
+                                    <td>&#8369;{monify(loanPayments.twelfthPaymentBalance)}</td>
                                     <td>{loanPayments.twelfthPaymentStatus}</td>
                                   </>
                                   : null
@@ -535,6 +585,13 @@ const MainDashboard = () => {
                 <div className="buttons">
                   <button className="confirm-btn" type="button" onClick={toggleAcceptModal}>Accept</button>
                   <button className="cancel-btn" type="button" onClick={toggleRefuseModal}>Refuse</button>
+                </div>
+                : null
+            }
+            {
+              (status === 'Fully Paid') || (status === 'Refused') || (status === 'Rejected') ?
+                <div className="buttons">
+                  <button className="confirm-btn" type="button" onClick={toggleNewLoanModal}>Request New Loan</button>
                 </div>
                 : null
             }
@@ -565,6 +622,49 @@ const MainDashboard = () => {
           </div>
         </div>
       </div>
+      {
+        (status === 'Fully Paid') || (status === 'Refused') || (status === 'Rejected') ?
+          <div className="loan-modal" ref={newLoanRef}>
+            <div className="modal-overlay" onClick={toggleNewLoanModal}></div>
+            <div className="modal-content">
+              <div className="modal-header">
+                <p className="modal-title">Apply New Loan</p>
+              </div>
+              <div className="modal-body">
+                <div className="form-inputs form-loan-amount">
+                  <p className="input-label">Loan Amount</p>
+                  <input
+                    type="range"
+                    min="5000"
+                    max="200000"
+                    step="100"
+                    defaultValue={newLoanAmount}
+                    onChange={e => setNewLoanAmount(e.target.value)}
+                  />
+                  <p className="loan-label">&#x20b1;{newLoanAmount}</p>
+                </div>
+                <div className="form-inputs form-loan-amount">
+                  <p className="input-label">Loan Terms</p>
+                  <input
+                    type="range"
+                    min="15"
+                    max="180"
+                    step="15"
+                    defaultValue={newLoanTerms}
+                    onChange={e => setNewLoanTerms(e.target.value)}
+                  />
+                  <p className="loan-label">{newLoanTerms} days</p>
+                </div>
+              </div>
+              <div className="loan-charges-btns">
+                <button type="button" className="confirm-btn" onClick={confirmNewLoan}>Apply Loan</button>
+                <button type="button" className="cancel-btn" onClick={toggleNewLoanModal}>Cancel</button>
+              </div>
+            </div>
+          </div>
+          :
+          null
+      }
     </>
   );
 }
