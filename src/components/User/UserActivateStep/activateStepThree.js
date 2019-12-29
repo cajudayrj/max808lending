@@ -71,6 +71,7 @@ const ActivateStepThree = () => {
     })
       .then(response => {
         const res = response.data;
+        console.log(res);
         if (res.success) {
           const newUserData = { ...userData };
           newUserData.userStatus = 'verified-step-three';
