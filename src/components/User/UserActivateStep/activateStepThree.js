@@ -82,6 +82,7 @@ const ActivateStepThree = () => {
         }
       })
       .catch(err => {
+        console.log('upload error', err);
         setMessage("There's an error uploading files. Please refresh page.")
         setSubmitStatus('Submit Documents');
       })
