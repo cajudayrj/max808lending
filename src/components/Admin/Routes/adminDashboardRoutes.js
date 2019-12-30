@@ -10,6 +10,7 @@ import AcceptedLoans from '../AcceptedLoans/acceptedLoans';
 import NotFound from '../Loan/notFound';
 import FullyPaidLoans from '../FullyPaidLoans/fullyPaidLoans';
 import UserList from '../UserList/userList';
+import UserInfo from '../UserInfo/userInfo';
 
 const AdminDashboardRoutes = () => {
   return (
@@ -23,6 +24,7 @@ const AdminDashboardRoutes = () => {
       <Route exact path="/admin/accepted-loans" component={AcceptedLoans} />
       <Route exact path="/admin/rejected-loans" component={RejectedLoans} />
       <Route exact path="/admin/user-list" component={UserList} />
+      <Route exact path="/admin/user/:id" component={UserInfo} />
       <Route exact path="/admin/*" component={NotFound} />
     </Switch>
   )
