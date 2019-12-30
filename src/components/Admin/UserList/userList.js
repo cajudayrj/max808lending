@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import handleRedirects from '../../../assets/helpers/handleRedirects';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
@@ -42,7 +42,7 @@ const UserList = () => {
               <th>Email</th>
               <th>Contact Number</th>
               <th>User Level</th>
-              {/* <th></th> */}
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -57,6 +57,7 @@ const UserList = () => {
                       <td>{user.email}</td>
                       <td>{user.mobileNum}</td>
                       <td>{toUpper(user.level)}</td>
+                      <td><Link to={`/admin/user/${user.id}`} >View</Link></td>
                     </tr>
                   )
                 })
