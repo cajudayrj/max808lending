@@ -1,5 +1,14 @@
 const queryCallback = require('../connection/queryCallback');
 
+const all = async con => {
+  const query = `SELECT DISTINCT(u.id), 
+  u.username, u.firstName, u.middleName, u.lastName, u.email, u.mobileNum,
+  ul.level FROM Users u, UserLevels ul WHERE u.userLevel = ul.id AND u.accountStatus = "active"`
+
+  const [rows] = await con.execute(query, [], queryCallback);
+  return rows;
+}
+
 const find = async (con, id) => {
   const [rows] = await con.execute(`SELECT * FROM Users where id = ?`, [id], queryCallback);
   return rows;
@@ -65,7 +74,7 @@ const updatePersonalDetails = async (con, id, data) => {
 }
 
 const userCount = async (con) => {
-  const [rows] = await con.execute(`SELECT COUNT(id) as userCount FROM Users`, [], queryCallback);
+  const [rows] = await con.execute(`SELECT COUNT(id) as userCount FROM Users WHERE accountStatus = "active"`, [], queryCallback);
   return rows;
 }
 
@@ -104,6 +113,7 @@ const getDocuments = async (con, id) => {
 }
 
 module.exports = {
+  all,
   find,
   findEmail,
   findUsername,

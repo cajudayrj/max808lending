@@ -32,7 +32,7 @@ const MainAdminDashboard = () => {
     <div className="main-admin-dashboard">
       <h1 className="header-title">Admin Dashboard</h1>
       <div className="dashboard-items-container d-grid">
-        <NavLink className="user-count" to="/admin">
+        <NavLink className="user-count" to="/admin/user-list">
           <div className="items">
             <UserIcon />
             <div className="count-desc">

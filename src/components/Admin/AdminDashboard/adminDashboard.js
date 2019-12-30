@@ -14,6 +14,7 @@ import { ReactComponent as AcceptedLoan } from '../../../assets/svg/accepted-loa
 import { ReactComponent as RejectedLoan } from '../../../assets/svg/rejected-loan.svg';
 import { ReactComponent as Dashboard } from '../../../assets/svg/dashboard.svg';
 import { ReactComponent as Logout } from '../../../assets/svg/logout.svg';
+import { ReactComponent as UserIcon } from '../../../assets/svg/user.svg';
 import AdminDashboardRoutes from '../Routes/adminDashboardRoutes';
 
 const AdminDashboard = ({ handleLogout }) => {
@@ -47,6 +48,7 @@ const AdminDashboard = ({ handleLogout }) => {
             </div>
             <div className="dashboard-sidebar-links">
               <NavLink exact activeClassName="current-page" to="/admin"><Dashboard /> Dashboard</NavLink>
+              <NavLink exact activeClassName="current-page" to="/admin/user-list"><UserIcon /> User List</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/loans"><Loan /> All Loans</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/active-loans"><ActiveLoan /> Active Loans</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/fully-paid-loans"><FullPaid /> Fully Paid Loans</NavLink>

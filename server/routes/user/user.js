@@ -3,9 +3,27 @@ const router = express.Router();
 
 const con = require('../../connection/con');
 const userMiddleware = require('../middleware/middleware');
+const adminMiddleware = require('../middleware/adminMiddleware');
 
 const User = require('../../models/User');
 
+router.get('/all', adminMiddleware, async (req, res) => {
+  const userInfo = await User.all(con);
+
+  if (userInfo.length > 0) {
+    const user = {
+      success: true,
+      users: userInfo
+    }
+    return res.json(user);
+  } else {
+    const error = {
+      success: false,
+      message: "No users found!",
+    }
+    return res.json(error)
+  }
+})
 
 router.get('/:id', userMiddleware, async (req, res) => {
   const { id } = req.params;
