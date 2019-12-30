@@ -1,4 +1,6 @@
 .user-dashboard{
+  max-width: 1600px;
+
   &-container{
     grid-column: set-columns(1,12);
     padding: 60px 20px 30px;
