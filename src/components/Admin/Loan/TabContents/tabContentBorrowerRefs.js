@@ -20,10 +20,16 @@ const TabContentBorrowerRefs = ({ userId }) => {
         if (res.success) {
           setUser(res.user);
           setLoading(false);
+        } else {
+          setUser({});
+          setLoading(false);
         }
         return;
       })
   }, [userData.authToken, userId])
+
+  const ifExists = item => item ? item : '';
+
   if (loading) return <h1>Loading...</h1>
 
   return (
@@ -31,51 +37,51 @@ const TabContentBorrowerRefs = ({ userId }) => {
       <h3 className="title-info">Officemate Reference</h3>
       <div className="info-grid">
         <p className="title">Officemate Name:</p>
-        <p className="value">{user.officemateName}</p>
+        <p className="value">{ifExists(user.officemateName)}</p>
       </div>
       <div className="info-grid">
         <p className="title">Officemate Department:</p>
-        <p className="value">{user.officemateDepartment}</p>
+        <p className="value">{ifExists(user.officemateDepartment)}</p>
       </div>
       <div className="info-grid">
         <p className="title">Officemate Position:</p>
-        <p className="value">{user.officematePosition}</p>
+        <p className="value">{ifExists(user.officematePosition)}</p>
       </div>
       <div className="info-grid">
         <p className="title">Officemate Email:</p>
-        <p className="value">{user.officemateEmail}</p>
+        <p className="value">{ifExists(user.officemateEmail)}</p>
       </div>
       <div className="info-grid">
         <p className="title">Officemate Mobile Number:</p>
-        <p className="value">{user.officemateMobileNum}</p>
+        <p className="value">{ifExists(user.officemateMobileNum)}</p>
       </div>
 
       <h3 className="title-info">Friend Reference</h3>
       <div className="info-grid">
         <p className="title">Friend Name:</p>
-        <p className="value">{user.friendName}</p>
+        <p className="value">{ifExists(user.friendName)}</p>
       </div>
       <div className="info-grid">
         <p className="title">Friend Mobile Number:</p>
-        <p className="value">{user.friendMobileNum}</p>
+        <p className="value">{ifExists(user.friendMobileNum)}</p>
       </div>
       <div className="info-grid">
         <p className="title">Friend Email:</p>
-        <p className="value">{user.friendEmail}</p>
+        <p className="value">{ifExists(user.friendEmail)}</p>
       </div>
 
       <h3 className="title-info">Family Reference</h3>
       <div className="info-grid">
         <p className="title">Family Name:</p>
-        <p className="value">{user.familyName}</p>
+        <p className="value">{ifExists(user.familyName)}</p>
       </div>
       <div className="info-grid">
         <p className="title">Family Mobile Number:</p>
-        <p className="value">{user.familyMobileNum}</p>
+        <p className="value">{ifExists(user.familyMobileNum)}</p>
       </div>
       <div className="info-grid">
         <p className="title">Family Email:</p>
-        <p className="value">{user.familyEmail}</p>
+        <p className="value">{ifExists(user.familyEmail)}</p>
       </div>
     </>
   )

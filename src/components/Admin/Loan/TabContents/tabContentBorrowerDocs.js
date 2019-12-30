@@ -45,6 +45,8 @@ const TabContentBorrowerDocs = ({ userId }) => {
         if (res.success) {
           setUser(res.user);
           setLoading(false);
+        } else {
+          setLoading(false);
         }
         return;
       })
