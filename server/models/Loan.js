@@ -260,7 +260,7 @@ const acceptRefuse = async (con, id, action, date) => {
 }
 
 const userTransactions = async (con, id) => {
-  const query = `SELECT * FROM Loans WHERE (loanStatus = "Active" OR loanStatus = "Fully Paid") AND user_id = ? ORDER BY acceptedDate DESC`;
+  const query = `SELECT * FROM Loans WHERE (loanStatus = "Active" OR loanStatus = "Fully Paid") AND user_id = ? ORDER BY id DESC`;
 
   const [rows] = await con.execute(query, [id], queryCallback);
 
