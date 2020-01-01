@@ -44,7 +44,7 @@ const UserDashboard = ({ handleLogout }) => {
             </div>
             <div className="dashboard-sidebar-links">
               <NavLink exact activeClassName="current-page" to="/dashboard"><Dashboard /> Dashboard</NavLink>
-              <NavLink exact activeClassName="current-page" to="/dashboard/my-loans"><Loan /> My Loans</NavLink>
+              <NavLink exact activeClassName="current-page" to="/dashboard/transaction-history"><Loan /> Transaction History</NavLink>
               <NavLink exact activeClassName="current-page" to="/dashboard/my-account"><UserIcon /> My Account</NavLink>
               <button className="sidebar-logout" onClick={handleLogout}><Logout /> Logout</button>
             </div>

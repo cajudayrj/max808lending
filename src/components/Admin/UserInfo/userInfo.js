@@ -12,6 +12,10 @@ const UserInfo = props => {
   const borrowerDocsBtnRef = useRef(null);
   const borrowerRefsBtnRef = useRef(null);
 
+  const userData = JSON.parse(window.localStorage.getItem('userData'));
+  const userId = props.match.params.id || userData.id;
+  const label = props.match.params.id ? 'Borrower' : 'Account';
+
   const showInfoTabs = (tab) => {
     switch (tab) {
       case 'borrower-info':
@@ -53,19 +57,19 @@ const UserInfo = props => {
     <div className="loan user-info">
       <div className="loan__main-info">
         <div className="loan-tabs">
-          <button ref={borrowerInfoBtnRef} className="tab-btns active" onClick={() => showInfoTabs('borrower-info')}>Borrower Information</button>
-          <button ref={borrowerDocsBtnRef} className="tab-btns" onClick={() => showInfoTabs('borrower-docs')}>Borrower Documents</button>
-          <button ref={borrowerRefsBtnRef} className="tab-btns" onClick={() => showInfoTabs('borrower-refs')}>Borrower References</button>
+          <button ref={borrowerInfoBtnRef} className="tab-btns active" onClick={() => showInfoTabs('borrower-info')}>{label} Information</button>
+          <button ref={borrowerDocsBtnRef} className="tab-btns" onClick={() => showInfoTabs('borrower-docs')}>{label} Documents</button>
+          <button ref={borrowerRefsBtnRef} className="tab-btns" onClick={() => showInfoTabs('borrower-refs')}>{label} References</button>
         </div>
         <div className="loan-tab-contents">
           <div ref={borrowerInfoRef} className="loan-tab-contents__borrower-info">
-            <TabContentBorrowerInfo userId={props.match.params.id} />
+            <TabContentBorrowerInfo userId={userId} />
           </div>
           <div ref={borrowerDocsRef} className="loan-tab-contents__borrower-documents hidden">
-            <TabContentBorrowerDocs userId={props.match.params.id} />
+            <TabContentBorrowerDocs userId={userId} />
           </div>
           <div ref={borrowerRefsRef} className="loan-tab-contents__borrower-references hidden">
-            <TabContentBorrowerRefs userId={props.match.params.id} />
+            <TabContentBorrowerRefs userId={userId} />
           </div>
         </div>
       </div>
