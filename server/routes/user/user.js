@@ -110,9 +110,7 @@ router.get('/documents/:id', userMiddleware, async (req, res) => {
 
 router.get('/loan/transactions', userMiddleware, async (req, res) => {
   const userId = req.user.id;
-  console.log(userId);
   const userTransactions = await Loan.userTransactions(con, userId);
-
   return res.json(userTransactions);
 })
 

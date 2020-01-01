@@ -407,4 +407,9 @@ router.post('/apply-new', userMiddleware, async (req, res) => {
   }
 })
 
+router.get('/transactions', adminMiddleware, async (req, res) => {
+  const allTransactions = await Loan.allTransactions(con);
+  return res.json(allTransactions);
+})
+
 module.exports = router;
