@@ -6,6 +6,7 @@ const userMiddleware = require('../middleware/middleware');
 const adminMiddleware = require('../middleware/adminMiddleware');
 
 const User = require('../../models/User');
+const Loan = require('../../models/Loan');
 
 router.get('/all', adminMiddleware, async (req, res) => {
   const userInfo = await User.all(con);
@@ -105,6 +106,14 @@ router.get('/documents/:id', userMiddleware, async (req, res) => {
     }
     return res.json(error)
   }
+})
+
+router.get('/loan/transactions', userMiddleware, async (req, res) => {
+  const userId = req.user.id;
+  console.log(userId);
+  const userTransactions = await Loan.userTransactions(con, userId);
+
+  return res.json(userTransactions);
 })
 
 module.exports = router;

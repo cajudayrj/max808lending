@@ -259,6 +259,14 @@ const acceptRefuse = async (con, id, action, date) => {
   return rows;
 }
 
+const userTransactions = async (con, id) => {
+  const query = `SELECT * FROM Loans WHERE (loanStatus = "Active" OR loanStatus = "Fully Paid") AND user_id = ? ORDER BY acceptedDate DESC`;
+
+  const [rows] = await con.execute(query, [id], queryCallback);
+
+  return rows;
+}
+
 module.exports = {
   get,
   addNew,
@@ -279,4 +287,5 @@ module.exports = {
   updatePaidPenaltyBalance,
   updatePaidPenaltyBalanceStatus,
   acceptRefuse,
+  userTransactions,
 }
