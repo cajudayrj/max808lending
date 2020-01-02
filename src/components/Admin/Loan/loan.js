@@ -148,6 +148,29 @@ const Loan = ({ match }) => {
     }
   }
 
+  const setBackToActive = () => {
+    axios(`${serverUrl}/loans/back-to-active/${loanResult.id}`, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${userData.authToken}`
+      }
+    })
+      .then(result => {
+        const res = result.data;
+        if (!res.success) {
+          console.log(res.message)
+          return;
+        }
+        setLoanResult(res.loanData[0]);
+        setTerms(res.loanData[0].terms);
+        setStatus(res.loanData[0].loanStatus);
+        setFinanceCharge(res.loanData[0].financeCharge);
+        setServiceFee(res.loanData[0].serviceFee);
+        setAmount(res.loanData[0].amount);
+        setPenaltyCharge(res.loanData[0].penaltyCharge);
+      })
+  }
+
   const approveLoanRequest = (loanRequestData) => {
 
     const today = new Date();
@@ -442,6 +465,7 @@ const Loan = ({ match }) => {
                 approveLoanRequest={approveLoanRequest}
                 rejectLoanRequest={rejectLoanRequest}
                 setActiveLoanStatus={setActiveLoanStatus}
+                setBackToActive={setBackToActive}
                 loanId={loanResult.id}
                 handlePenalties={handlePenalties}
                 handlePayment={setTotalPayment}

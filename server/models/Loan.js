@@ -282,6 +282,15 @@ const allTransactions = async (con) => {
   return rows;
 }
 
+const setBackToActive = async (con, id) => {
+  const query = `UPDATE Loans SET loanStatus = "Active" WHERE id = ?`;
+
+  const [rows] = await con.execute(query, [id], queryCallback);
+
+  return rows;
+}
+
+
 module.exports = {
   get,
   addNew,
@@ -304,4 +313,5 @@ module.exports = {
   acceptRefuse,
   userTransactions,
   allTransactions,
+  setBackToActive,
 }
