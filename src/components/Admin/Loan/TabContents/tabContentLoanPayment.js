@@ -3,7 +3,7 @@ import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../../serverUrl';
 
-const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, rejectLoanRequest, setActiveLoanStatus, loanId, handlePenalties, handlePayment, handleBalance, setLoanStatus }) => {
+const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setBackToActive, rejectLoanRequest, setActiveLoanStatus, loanId, handlePenalties, handlePayment, handleBalance, setLoanStatus }) => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
 
   const [loading, setLoading] = useState(true);
@@ -12,6 +12,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
   const [setActiveModal, setSetActiveModal] = useState(false);
   const [updateLoanModal, setUpdateLoanModal] = useState(false);
   const [fullyPaidModal, setFullyPaidModal] = useState(false);
+  const [activeBackModal, setActiveBackModal] = useState(false);
 
   const [loanTermData, setLoanTermData] = useState({});
 
@@ -116,6 +117,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
   const setActiveRef = useRef(null);
   const updateLoanRef = useRef(null);
   const fullyPaidRef = useRef(null);
+  const activeBackRef = useRef(null);
 
   const monify = (amount) => {
     if (amount) {
@@ -451,6 +453,22 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       updateLoanRef.current.classList.remove('visible');
       setTimeout(() => {
         updateLoanRef.current.classList.remove('opened');
+      }, 300)
+    }
+  }
+
+  const toggleActiveBackModal = e => {
+    e.preventDefault();
+    setActiveBackModal(!activeBackModal);
+    if (!activeBackModal) {
+      activeBackRef.current.classList.add('opened');
+      setTimeout(() => {
+        activeBackRef.current.classList.add('visible');
+      }, 100)
+    } else {
+      activeBackRef.current.classList.remove('visible');
+      setTimeout(() => {
+        activeBackRef.current.classList.remove('opened');
       }, 300)
     }
   }
@@ -897,6 +915,13 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
     }, 400)
   }
 
+  const confirmActiveBack = e => {
+    toggleActiveBackModal(e);
+    setTimeout(() => {
+      setBackToActive();
+    }, 400)
+  }
+
   const confirmUpdateLoan = e => {
     toggleUpdateLoanModal(e);
     setTimeout(() => {
@@ -1206,7 +1231,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setFirstBalance(balance);
       return;
     }
-    const paidAmount = parseInt(val.replace(/\D/, ''), 10);
+    let paidAmount = parseFloat(val);
     balance = (firstAmount + firstPenalty) - paidAmount;
     setFirstPaid(paidAmount);
     setFirstBalance(balance);
@@ -1222,7 +1247,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setFirstBalance(bal);
       return;
     }
-    const penalty = parseInt(val.replace(/\D/, ''), 10);
+    const penalty = parseFloat(val);
     bal = (penalty + currBal) - firstPaid;
     setFirstPenalty(penalty);
     setFirstBalance(bal);
@@ -1237,7 +1262,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setSecondBalance(balance);
       return;
     }
-    const paidAmount = parseInt(val.replace(/\D/, ''), 10);
+    const paidAmount = parseFloat(val);
     balance = (secondAmount + secondPenalty) - paidAmount;
     setSecondPaid(paidAmount);
     setSecondBalance(balance);
@@ -1253,7 +1278,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setSecondBalance(bal);
       return;
     }
-    const penalty = parseInt(val.replace(/\D/, ''), 10);
+    const penalty = parseFloat(val);
     bal = (penalty + currBal) - secondPaid;
     setSecondPenalty(penalty);
     setSecondBalance(bal);
@@ -1268,7 +1293,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setThirdBalance(balance);
       return;
     }
-    const paidAmount = parseInt(val.replace(/\D/, ''), 10);
+    const paidAmount = parseFloat(val);
     balance = (thirdAmount + thirdPenalty) - paidAmount;
     setThirdPaid(paidAmount);
     setThirdBalance(balance);
@@ -1284,7 +1309,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setThirdBalance(bal);
       return;
     }
-    const penalty = parseInt(val.replace(/\D/, ''), 10);
+    const penalty = parseFloat(val);
     bal = (penalty + currBal) - thirdPaid;
     setThirdPenalty(penalty);
     setThirdBalance(bal);
@@ -1299,7 +1324,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setFourthBalance(balance);
       return;
     }
-    const paidAmount = parseInt(val.replace(/\D/, ''), 10);
+    const paidAmount = parseFloat(val);
     balance = (fourthAmount + fourthPenalty) - paidAmount;
     setFourthPaid(paidAmount);
     setFourthBalance(balance);
@@ -1315,7 +1340,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setFourthBalance(bal);
       return;
     }
-    const penalty = parseInt(val.replace(/\D/, ''), 10);
+    const penalty = parseFloat(val);
     bal = (penalty + currBal) - fourthPaid;
     setFourthPenalty(penalty);
     setFourthBalance(bal);
@@ -1330,7 +1355,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setFifthBalance(balance);
       return;
     }
-    const paidAmount = parseInt(val.replace(/\D/, ''), 10);
+    const paidAmount = parseFloat(val);
     balance = (fifthAmount + fifthPenalty) - paidAmount;
     setFifthPaid(paidAmount);
     setFifthBalance(balance);
@@ -1346,7 +1371,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setFifthBalance(bal);
       return;
     }
-    const penalty = parseInt(val.replace(/\D/, ''), 10);
+    const penalty = parseFloat(val);
     bal = (penalty + currBal) - fifthPaid;
     setFifthPenalty(penalty);
     setFifthBalance(bal);
@@ -1361,7 +1386,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setSixthBalance(balance);
       return;
     }
-    const paidAmount = parseInt(val.replace(/\D/, ''), 10);
+    const paidAmount = parseFloat(val);
     balance = (sixthAmount + sixthPenalty) - paidAmount;
     setSixthPaid(paidAmount);
     setSixthBalance(balance);
@@ -1377,7 +1402,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setSixthBalance(bal);
       return;
     }
-    const penalty = parseInt(val.replace(/\D/, ''), 10);
+    const penalty = parseFloat(val);
     bal = (penalty + currBal) - sixthPaid;
     setSixthPenalty(penalty);
     setSixthBalance(bal);
@@ -1392,7 +1417,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setSeventhBalance(balance);
       return;
     }
-    const paidAmount = parseInt(val.replace(/\D/, ''), 10);
+    const paidAmount = parseFloat(val);
     balance = (seventhAmount + seventhPenalty) - paidAmount;
     setSeventhPaid(paidAmount);
     setSeventhBalance(balance);
@@ -1408,7 +1433,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setSeventhBalance(bal);
       return;
     }
-    const penalty = parseInt(val.replace(/\D/, ''), 10);
+    const penalty = parseFloat(val);
     bal = (penalty + currBal) - seventhPaid;
     setSeventhPenalty(penalty);
     setSeventhBalance(bal);
@@ -1423,7 +1448,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setEighthBalance(balance);
       return;
     }
-    const paidAmount = parseInt(val.replace(/\D/, ''), 10);
+    const paidAmount = parseFloat(val);
     balance = (eighthAmount + eighthPenalty) - paidAmount;
     setEighthPaid(paidAmount);
     setEighthBalance(balance);
@@ -1439,7 +1464,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setEighthBalance(bal);
       return;
     }
-    const penalty = parseInt(val.replace(/\D/, ''), 10);
+    const penalty = parseFloat(val);
     bal = (penalty + currBal) - eighthPaid;
     setEighthPenalty(penalty);
     setEighthBalance(bal);
@@ -1454,7 +1479,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setNinthBalance(balance);
       return;
     }
-    const paidAmount = parseInt(val.replace(/\D/, ''), 10);
+    const paidAmount = parseFloat(val);
     balance = (ninthAmount + ninthPenalty) - paidAmount;
     setNinthPaid(paidAmount);
     setNinthBalance(balance);
@@ -1470,7 +1495,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setNinthBalance(bal);
       return;
     }
-    const penalty = parseInt(val.replace(/\D/, ''), 10);
+    const penalty = parseFloat(val);
     bal = (penalty + currBal) - ninthPaid;
     setNinthPenalty(penalty);
     setNinthBalance(bal);
@@ -1485,7 +1510,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setTenthBalance(balance);
       return;
     }
-    const paidAmount = parseInt(val.replace(/\D/, ''), 10);
+    const paidAmount = parseFloat(val);
     balance = (tenthAmount + tenthPenalty) - paidAmount;
     setTenthPaid(paidAmount);
     setTenthBalance(balance);
@@ -1501,7 +1526,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setTenthBalance(bal);
       return;
     }
-    const penalty = parseInt(val.replace(/\D/, ''), 10);
+    const penalty = parseFloat(val);
     bal = (penalty + currBal) - tenthPaid;
     setTenthPenalty(penalty);
     setTenthBalance(bal);
@@ -1516,7 +1541,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setEleventhBalance(balance);
       return;
     }
-    const paidAmount = parseInt(val.replace(/\D/, ''), 10);
+    const paidAmount = parseFloat(val);
     balance = (eleventhAmount + eleventhPenalty) - paidAmount;
     setEleventhPaid(paidAmount);
     setEleventhBalance(balance);
@@ -1532,7 +1557,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setEleventhBalance(bal);
       return;
     }
-    const penalty = parseInt(val.replace(/\D/, ''), 10);
+    const penalty = parseFloat(val);
     bal = (penalty + currBal) - eleventhPaid;
     setEleventhPenalty(penalty);
     setEleventhBalance(bal);
@@ -1547,7 +1572,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setTwelfthBalance(balance);
       return;
     }
-    const paidAmount = parseInt(val.replace(/\D/, ''), 10);
+    const paidAmount = parseFloat(val);
     balance = (twelfthAmount + twelfthPenalty) - paidAmount;
     setTwelfthPaid(paidAmount);
     setTwelfthBalance(balance);
@@ -1563,7 +1588,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
       setTwelfthBalance(bal);
       return;
     }
-    const penalty = parseInt(val.replace(/\D/, ''), 10);
+    const penalty = parseFloat(val);
     bal = (penalty + currBal) - twelfthPaid;
     setTwelfthPenalty(penalty);
     setTwelfthBalance(bal);
@@ -1606,6 +1631,13 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
         }
         {
           status === 'Fully Paid' ?
+            <div className="fully-paid-btn">
+              <button className="set-full-paid" onClick={toggleActiveBackModal}>Set Back Loan as Active</button>
+            </div>
+            : null
+        }
+        {
+          status === 'Fully Paid' ?
             <p className="loan-accepted">Loan has been full paid</p>
             : null
         }
@@ -1640,7 +1672,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value penalty">&#8369;{monify(firstPenalty)}</p>
                       {
                         firstEditMode ?
-                          <input type="text" value={firstPenalty} onChange={handleFirstPenalty} />
+                          <input type="number" step="0.01" min="0" value={firstPenalty} onChange={handleFirstPenalty} />
                           : null
                       }
                     </div>
@@ -1649,7 +1681,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value">&#8369;{monify(firstPaid)}</p>
                       {
                         firstEditMode ?
-                          <input type="text" value={firstPaid} onChange={handleFirstPaid} />
+                          <input type="number" step="0.01" min="0" value={firstPaid} onChange={handleFirstPaid} />
                           : null
                       }
                     </div>
@@ -1740,7 +1772,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value penalty">&#8369;{monify(secondPenalty)}</p>
                       {
                         secondEditMode ?
-                          <input type="text" value={secondPenalty} onChange={handleSecondPenalty} />
+                          <input type="number" step="0.01" min="0" value={secondPenalty} onChange={handleSecondPenalty} />
                           : null
                       }
                     </div>
@@ -1749,7 +1781,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value">&#8369;{monify(secondPaid)}</p>
                       {
                         secondEditMode ?
-                          <input type="text" value={secondPaid} onChange={handleSecondPaid} />
+                          <input type="number" step="0.01" min="0" value={secondPaid} onChange={handleSecondPaid} />
                           : null
                       }
                     </div>
@@ -1839,7 +1871,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value penalty">&#8369;{monify(thirdPenalty)}</p>
                       {
                         thirdEditMode ?
-                          <input type="text" value={thirdPenalty} onChange={handleThirdPenalty} />
+                          <input type="number" step="0.01" min="0" value={thirdPenalty} onChange={handleThirdPenalty} />
                           : null
                       }
                     </div>
@@ -1848,7 +1880,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value">&#8369;{monify(thirdPaid)}</p>
                       {
                         thirdEditMode ?
-                          <input type="text" value={thirdPaid} onChange={handleThirdPaid} />
+                          <input type="number" step="0.01" min="0" value={thirdPaid} onChange={handleThirdPaid} />
                           : null
                       }
                     </div>
@@ -1938,7 +1970,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value penalty">&#8369;{monify(fourthPenalty)}</p>
                       {
                         fourthEditMode ?
-                          <input type="text" value={fourthPenalty} onChange={handleFourthPenalty} />
+                          <input type="number" step="0.01" min="0" value={fourthPenalty} onChange={handleFourthPenalty} />
                           : null
                       }
                     </div>
@@ -1947,7 +1979,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value">&#8369;{monify(fourthPaid)}</p>
                       {
                         fourthEditMode ?
-                          <input type="text" value={fourthPaid} onChange={handleFourthPaid} />
+                          <input type="number" step="0.01" min="0" value={fourthPaid} onChange={handleFourthPaid} />
                           : null
                       }
                     </div>
@@ -2037,7 +2069,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value penalty">&#8369;{monify(fifthPenalty)}</p>
                       {
                         fifthEditMode ?
-                          <input type="text" value={fifthPenalty} onChange={handleFifthPenalty} />
+                          <input type="number" step="0.01" min="0" value={fifthPenalty} onChange={handleFifthPenalty} />
                           : null
                       }
                     </div>
@@ -2046,7 +2078,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value">&#8369;{monify(fifthPaid)}</p>
                       {
                         fifthEditMode ?
-                          <input type="text" value={fifthPaid} onChange={handleFifthPaid} />
+                          <input type="number" step="0.01" min="0" value={fifthPaid} onChange={handleFifthPaid} />
                           : null
                       }
                     </div>
@@ -2136,7 +2168,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value penalty">&#8369;{monify(sixthPenalty)}</p>
                       {
                         sixthEditMode ?
-                          <input type="text" value={sixthPenalty} onChange={handleSixthPenalty} />
+                          <input type="number" step="0.01" min="0" value={sixthPenalty} onChange={handleSixthPenalty} />
                           : null
                       }
                     </div>
@@ -2145,7 +2177,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value">&#8369;{monify(sixthPaid)}</p>
                       {
                         sixthEditMode ?
-                          <input type="text" value={sixthPaid} onChange={handleSixthPaid} />
+                          <input type="number" step="0.01" min="0" value={sixthPaid} onChange={handleSixthPaid} />
                           : null
                       }
                     </div>
@@ -2235,7 +2267,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value penalty">&#8369;{monify(seventhPenalty)}</p>
                       {
                         seventhEditMode ?
-                          <input type="text" value={seventhPenalty} onChange={handleSeventhPenalty} />
+                          <input type="number" step="0.01" min="0" value={seventhPenalty} onChange={handleSeventhPenalty} />
                           : null
                       }
                     </div>
@@ -2244,7 +2276,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value">&#8369;{monify(seventhPaid)}</p>
                       {
                         seventhEditMode ?
-                          <input type="text" value={seventhPaid} onChange={handleSeventhPaid} />
+                          <input type="number" step="0.01" min="0" value={seventhPaid} onChange={handleSeventhPaid} />
                           : null
                       }
                     </div>
@@ -2338,7 +2370,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value penalty">&#8369;{monify(eighthPenalty)}</p>
                       {
                         eighthEditMode ?
-                          <input type="text" value={eighthPenalty} onChange={handleEighthPenalty} />
+                          <input type="number" step="0.01" min="0" value={eighthPenalty} onChange={handleEighthPenalty} />
                           : null
                       }
                     </div>
@@ -2347,7 +2379,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value">&#8369;{monify(eighthPaid)}</p>
                       {
                         eighthEditMode ?
-                          <input type="text" value={eighthPaid} onChange={handleEighthPaid} />
+                          <input type="number" step="0.01" min="0" value={eighthPaid} onChange={handleEighthPaid} />
                           : null
                       }
                     </div>
@@ -2437,7 +2469,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value penalty">&#8369;{monify(ninthPenalty)}</p>
                       {
                         ninthEditMode ?
-                          <input type="text" value={ninthPenalty} onChange={handleNinthPenalty} />
+                          <input type="number" step="0.01" min="0" value={ninthPenalty} onChange={handleNinthPenalty} />
                           : null
                       }
                     </div>
@@ -2446,7 +2478,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value">&#8369;{monify(ninthPaid)}</p>
                       {
                         ninthEditMode ?
-                          <input type="text" value={ninthPaid} onChange={handleNinthPaid} />
+                          <input type="number" step="0.01" min="0" value={ninthPaid} onChange={handleNinthPaid} />
                           : null
                       }
                     </div>
@@ -2536,7 +2568,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value penalty">&#8369;{monify(tenthPenalty)}</p>
                       {
                         tenthEditMode ?
-                          <input type="text" value={tenthPenalty} onChange={handleTenthPenalty} />
+                          <input type="number" step="0.01" min="0" value={tenthPenalty} onChange={handleTenthPenalty} />
                           : null
                       }
                     </div>
@@ -2545,7 +2577,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value">&#8369;{monify(tenthPaid)}</p>
                       {
                         tenthEditMode ?
-                          <input type="text" value={tenthPaid} onChange={handleTenthPaid} />
+                          <input type="number" step="0.01" min="0" value={tenthPaid} onChange={handleTenthPaid} />
                           : null
                       }
                     </div>
@@ -2635,7 +2667,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value penalty">&#8369;{monify(eleventhPenalty)}</p>
                       {
                         eleventhEditMode ?
-                          <input type="text" value={eleventhPenalty} onChange={handleEleventhPenalty} />
+                          <input type="number" step="0.01" min="0" value={eleventhPenalty} onChange={handleEleventhPenalty} />
                           : null
                       }
                     </div>
@@ -2644,7 +2676,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value">&#8369;{monify(eleventhPaid)}</p>
                       {
                         eleventhEditMode ?
-                          <input type="text" value={eleventhPaid} onChange={handleEleventhPaid} />
+                          <input type="number" step="0.01" min="0" value={eleventhPaid} onChange={handleEleventhPaid} />
                           : null
                       }
                     </div>
@@ -2734,7 +2766,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value penalty">&#8369;{monify(twelfthPenalty)}</p>
                       {
                         twelfthEditMode ?
-                          <input type="text" value={twelfthPenalty} onChange={handleTwelfthPenalty} />
+                          <input type="number" step="0.01" min="0" value={twelfthPenalty} onChange={handleTwelfthPenalty} />
                           : null
                       }
                     </div>
@@ -2743,7 +2775,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
                       <p className="value">&#8369;{monify(twelfthPaid)}</p>
                       {
                         twelfthEditMode ?
-                          <input type="text" value={twelfthPaid} onChange={handleTwelfthPaid} />
+                          <input type="number" step="0.01" min="0" value={twelfthPaid} onChange={handleTwelfthPaid} />
                           : null
                       }
                     </div>
@@ -2867,6 +2899,18 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, reje
           <div className="loan-charges-btns">
             <button type="button" className="confirm-btn" onClick={confirmFullyPaid}>Confirm</button>
             <button type="button" className="cancel-btn" onClick={toggleFullyPaidModal}>Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div className="loan-modal" ref={activeBackRef}>
+        <div className="modal-overlay" onClick={toggleActiveBackModal}></div>
+        <div className="modal-content">
+          <div className="modal-header">
+            <p className="modal-title">Set Back Loan as Active? &#40; Please proceed with caution &#41;</p>
+          </div>
+          <div className="loan-charges-btns">
+            <button type="button" className="confirm-btn" onClick={confirmActiveBack}>Set to Active</button>
+            <button type="button" className="cancel-btn" onClick={toggleActiveBackModal}>Cancel</button>
           </div>
         </div>
       </div>

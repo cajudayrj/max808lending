@@ -31,11 +31,16 @@
     margin-left: auto;
     display: block;
     padding: 13px 40px;
+    background: $blue;
+    color: $white;
+
+    &:hover{
+      background: #0c69a5;
+    }
   }
 
   .success{
     background: $green;
-    color: $white;
 
     &:hover{
       background: #389c4a;
@@ -160,7 +165,7 @@
       .inputs-labels{
         margin-bottom: 20px;
 
-        input[type="text"], input[type="date"], input[type="email"], select {
+        input[type="text"], input[type="number"], input[type="date"], input[type="email"], select {
           padding: 8px 15px;
           border: solid 1px #d3d3d3;
           width: 100%;

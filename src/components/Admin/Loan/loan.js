@@ -86,7 +86,7 @@ const Loan = ({ match }) => {
       return;
     }
 
-    setAmount(parseInt(val.replace(/\D/, ''), 10))
+    setAmount(parseFloat(val.replace(/\D/, ''), 10))
   }
 
   const handlePenalties = total => {
@@ -146,6 +146,29 @@ const Loan = ({ match }) => {
         borrowerRefsBtnRef.current.classList.remove('active');
         return;
     }
+  }
+
+  const setBackToActive = () => {
+    axios(`${serverUrl}/loans/back-to-active/${loanResult.id}`, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${userData.authToken}`
+      }
+    })
+      .then(result => {
+        const res = result.data;
+        if (!res.success) {
+          console.log(res.message)
+          return;
+        }
+        setLoanResult(res.loanData[0]);
+        setTerms(res.loanData[0].terms);
+        setStatus(res.loanData[0].loanStatus);
+        setFinanceCharge(res.loanData[0].financeCharge);
+        setServiceFee(res.loanData[0].serviceFee);
+        setAmount(res.loanData[0].amount);
+        setPenaltyCharge(res.loanData[0].penaltyCharge);
+      })
   }
 
   const approveLoanRequest = (loanRequestData) => {
@@ -293,7 +316,7 @@ const Loan = ({ match }) => {
             </div>
             <div className="info">
               <p className="label">Loan Amount:</p>
-              <p className="value">&#8369;{monify(parseInt(amount))}</p>
+              <p className="value">&#8369;{monify(parseFloat(amount))}</p>
             </div>
             <div className="info">
               <p className="label">Loan Terms:</p>
@@ -340,19 +363,19 @@ const Loan = ({ match }) => {
                   <div className="computation-container">
                     <div className="computations">
                       <p className="label">Principal:</p>
-                      <p className="value">{monify(parseInt(amount))}</p>
+                      <p className="value">{monify(parseFloat(amount))}</p>
                     </div>
                     <div className="computations">
                       <p className="label">Finance Charge &#40; {financeCharge}% &#41;:</p>
-                      <p className="value">&#40;{(parseInt(amount) * (financeCharge / 100)).toFixed(2)}&#41;</p>
+                      <p className="value">&#40;{(parseFloat(amount) * (financeCharge / 100)).toFixed(2)}&#41;</p>
                     </div>
                     <div className="computations">
                       <p className="label">Processing Fee &#40; 2% &#41;:</p>
-                      <p className="value">&#40;{(parseInt(amount) * (2 / 100)).toFixed(2)}&#41;</p>
+                      <p className="value">&#40;{(parseFloat(amount) * (2 / 100)).toFixed(2)}&#41;</p>
                     </div>
                     <div className="computations">
                       <p className="label">Service Fee &#40; {serviceFee}% &#41;:</p>
-                      <p className="value">&#40;{(parseInt(amount) * (serviceFee / 100)).toFixed(2)}&#41;</p>
+                      <p className="value">&#40;{(parseFloat(amount) * (serviceFee / 100)).toFixed(2)}&#41;</p>
                     </div>
                     <div className="computations loan-proceeds">
                       <p className="label">Loan Proceeds:</p>
@@ -372,12 +395,12 @@ const Loan = ({ match }) => {
                   <div className="computation-container">
                     <div className="computations">
                       <p className="label">Principal:</p>
-                      <p className="value">&#8369;{monify(parseInt(loanResult.amount))}</p>
+                      <p className="value">&#8369;{monify(parseFloat(loanResult.amount))}</p>
                     </div>
                     <div className="computations">
                       <p className="label">Loan Proceeds:</p>
                       <p className="value">&#8369;{
-                        parseInt(
+                        parseFloat(
                           loanResult.amount
                           - (loanResult.amount * (2 / 100))
                           - (loanResult.amount * (loanResult.serviceFee / 100))
@@ -388,7 +411,7 @@ const Loan = ({ match }) => {
                     <div className="computations">
                       <p className="label">Total Charges:</p>
                       <p className="value">&#8369;{
-                        parseInt(
+                        parseFloat(
                           loanProceedsValue +
                           (amount * (2 / 100))
                           + (amount * (serviceFee / 100))
@@ -399,27 +422,27 @@ const Loan = ({ match }) => {
                     </div>
                     <div className="computations sub-comp">
                       <p className="label">Finance Charge &#40; {financeCharge}% &#41;:</p>
-                      <p className="value">{parseInt(amount * (financeCharge / 100)).toFixed(2)}</p>
+                      <p className="value">{parseFloat(amount * (financeCharge / 100)).toFixed(2)}</p>
                     </div>
                     <div className="computations sub-comp">
                       <p className="label">Processing Fee &#40; 2% &#41;:</p>
-                      <p className="value">{parseInt(amount * (2 / 100)).toFixed(2)}</p>
+                      <p className="value">{parseFloat(amount * (2 / 100)).toFixed(2)}</p>
                     </div>
                     <div className="computations sub-comp">
                       <p className="label">Service Fee &#40; {serviceFee}% &#41;:</p>
-                      <p className="value">{parseInt(amount * (serviceFee / 100)).toFixed(2)}</p>
+                      <p className="value">{parseFloat(amount * (serviceFee / 100)).toFixed(2)}</p>
                     </div>
                     <div className="computations sub-comp">
                       <p className="label">Penalty:</p>
-                      <p className="value">{parseInt(penaltyCharge).toFixed(2)}</p>
+                      <p className="value">{parseFloat(penaltyCharge).toFixed(2)}</p>
                     </div>
                     <div className="computations after-charges">
                       <p className="label">Total Payment:</p>
-                      <p className="value">&#8369;{monify(parseInt(totalPayment))}</p>
+                      <p className="value">&#8369;{monify(parseFloat(totalPayment))}</p>
                     </div>
                     <div className="computations">
                       <p className="label">Balance:</p>
-                      <p className="value">&#8369;{monify(parseInt(totalBalance))}</p>
+                      <p className="value">&#8369;{monify(parseFloat(totalBalance))}</p>
                     </div>
                   </div>
                 </div>
@@ -442,6 +465,7 @@ const Loan = ({ match }) => {
                 approveLoanRequest={approveLoanRequest}
                 rejectLoanRequest={rejectLoanRequest}
                 setActiveLoanStatus={setActiveLoanStatus}
+                setBackToActive={setBackToActive}
                 loanId={loanResult.id}
                 handlePenalties={handlePenalties}
                 handlePayment={setTotalPayment}

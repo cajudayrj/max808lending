@@ -412,4 +412,26 @@ router.get('/transactions', adminMiddleware, async (req, res) => {
   return res.json(allTransactions);
 })
 
+router.put('/back-to-active/:id', adminMiddleware, async (req, res) => {
+  const loanId = req.params.id;
+
+  const loanBackToActive = await Loan.setBackToActive(con, loanId);
+
+  if (loanBackToActive.affectedRows > 0) {
+    const newData = await Loan.getAllData(con, loanId);
+    const data = {
+      success: true,
+      loanData: newData[0]
+    }
+    return res.json(data);
+
+  } else {
+    return res.json({
+      success: false,
+      message: "There's an error updating loan status."
+    })
+  }
+})
+
+
 module.exports = router;
