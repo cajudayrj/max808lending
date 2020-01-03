@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import TabContentBorrowerInfo from '../Loan/TabContents/tabContentBorrowerInfo';
 import TabContentBorrowerDocs from '../Loan/TabContents/tabContentBorrowerDocs';
 import TabContentBorrowerRefs from '../Loan/TabContents/tabContentBorrowerRefs';
+import handleRedirects from '../../../assets/helpers/handleRedirects';
 
 const UserInfo = props => {
 
@@ -13,8 +15,15 @@ const UserInfo = props => {
   const borrowerRefsBtnRef = useRef(null);
 
   const userData = JSON.parse(window.localStorage.getItem('userData'));
+  const history = useHistory();
   const userId = props.match.params.id || userData.id;
   const label = props.match.params.id ? 'Borrower' : 'Account';
+
+  useEffect(() => {
+    if (userData.userLevel === 2) {
+      handleRedirects(history);
+    }
+  }, [history, userData.userLevel])
 
   const showInfoTabs = (tab) => {
     switch (tab) {
