@@ -20,10 +20,10 @@ const UserInfo = props => {
   const label = props.match.params.id ? 'Borrower' : 'Account';
 
   useEffect(() => {
-    if (userData.userLevel === 2) {
+    if (userData.userLevel === 2 && userData.userStatus !== 'active') {
       handleRedirects(history);
     }
-  }, [history, userData.userLevel])
+  }, [history, userData.userLevel, userData.userStatus])
 
   const showInfoTabs = (tab) => {
     switch (tab) {
