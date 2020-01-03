@@ -69,6 +69,46 @@
               color: $white;
             }
           }
+
+          button{
+            padding: 8px 20px;
+            cursor: pointer;
+            border: none;
+            text-transform: uppercase;
+            font-family: "MontserratBold", sans-serif;
+            font-size: 14px;
+          }
+        
+          .confirm-btn{
+            background: $blue;
+            color: $white;
+            margin-right: 5px;
+        
+            &:hover{
+              background: #0c69a5;
+            }
+          }
+        
+          .cancel-btn{
+            background: #ff6868;
+            color: $white;
+        
+            &:hover{
+              background: #df4c4c;
+            }
+          }
+        }
+
+        td.action{
+          text-align: center;
+        }
+
+        td.penalty{
+          color: $red;
+        }
+
+        td.payment{
+          color: $blue;
         }
 
         td.no-loans{

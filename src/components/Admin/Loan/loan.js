@@ -7,6 +7,7 @@ import TabContentLoanPayment from './TabContents/tabContentLoanPayment';
 import TabContentBorrowerInfo from './TabContents/tabContentBorrowerInfo';
 import TabContentBorrowerDocs from './TabContents/tabContentBorrowerDocs';
 import TabContentBorrowerRefs from './TabContents/tabContentBorrowerRefs';
+import TabContentTransactions from './TabContents/tabContentTransaction';
 
 const Loan = ({ match }) => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
@@ -29,10 +30,12 @@ const Loan = ({ match }) => {
   const borrowerInfoRef = useRef(null);
   const borrowerDocsRef = useRef(null);
   const borrowerRefsRef = useRef(null);
+  const transactionsRef = useRef(null);
   const paymentBtnRef = useRef(null);
   const borrowerInfoBtnRef = useRef(null);
   const borrowerDocsBtnRef = useRef(null);
   const borrowerRefsBtnRef = useRef(null);
+  const transactionsBtnRef = useRef(null);
 
   useEffect(() => {
     axios(`${serverUrl}/loans/find/${match.params.id}`, {
@@ -105,6 +108,8 @@ const Loan = ({ match }) => {
         borrowerDocsBtnRef.current.classList.remove('active');
         borrowerRefsRef.current.classList.add('hidden');
         borrowerRefsBtnRef.current.classList.remove('active');
+        transactionsRef.current.classList.add('hidden');
+        transactionsBtnRef.current.classList.remove('active');
         return;
       case 'borrower-info':
         borrowerInfoRef.current.classList.remove('hidden');
@@ -115,6 +120,8 @@ const Loan = ({ match }) => {
         borrowerDocsBtnRef.current.classList.remove('active');
         borrowerRefsRef.current.classList.add('hidden');
         borrowerRefsBtnRef.current.classList.remove('active');
+        transactionsRef.current.classList.add('hidden');
+        transactionsBtnRef.current.classList.remove('active');
         return;
       case 'borrower-docs':
         borrowerDocsRef.current.classList.remove('hidden');
@@ -125,10 +132,26 @@ const Loan = ({ match }) => {
         paymentBtnRef.current.classList.remove('active');
         borrowerRefsRef.current.classList.add('hidden');
         borrowerRefsBtnRef.current.classList.remove('active');
+        transactionsRef.current.classList.add('hidden');
+        transactionsBtnRef.current.classList.remove('active');
         return;
       case 'borrower-refs':
         borrowerRefsRef.current.classList.remove('hidden');
         borrowerRefsBtnRef.current.classList.add('active');
+        borrowerInfoRef.current.classList.add('hidden');
+        borrowerInfoBtnRef.current.classList.remove('active');
+        borrowerDocsRef.current.classList.add('hidden');
+        borrowerDocsBtnRef.current.classList.remove('active');
+        paymentRef.current.classList.add('hidden');
+        paymentBtnRef.current.classList.remove('active');
+        transactionsRef.current.classList.add('hidden');
+        transactionsBtnRef.current.classList.remove('active');
+        return;
+      case 'borrower-transaction':
+        transactionsBtnRef.current.classList.add('active');
+        transactionsRef.current.classList.remove('hidden');
+        borrowerRefsRef.current.classList.add('hidden');
+        borrowerRefsBtnRef.current.classList.remove('active');
         borrowerInfoRef.current.classList.add('hidden');
         borrowerInfoBtnRef.current.classList.remove('active');
         borrowerDocsRef.current.classList.add('hidden');
@@ -145,6 +168,8 @@ const Loan = ({ match }) => {
         borrowerDocsBtnRef.current.classList.remove('active');
         borrowerRefsRef.current.classList.add('hidden');
         borrowerRefsBtnRef.current.classList.remove('active');
+        transactionsRef.current.classList.add('hidden');
+        transactionsBtnRef.current.classList.remove('active');
         return;
     }
   }
@@ -479,6 +504,7 @@ const Loan = ({ match }) => {
             <button ref={borrowerInfoBtnRef} className="tab-btns" onClick={() => showInfoTabs('borrower-info')}>Borrower Information</button>
             <button ref={borrowerDocsBtnRef} className="tab-btns" onClick={() => showInfoTabs('borrower-docs')}>Borrower Documents</button>
             <button ref={borrowerRefsBtnRef} className="tab-btns" onClick={() => showInfoTabs('borrower-refs')}>Borrower References</button>
+            <button ref={transactionsBtnRef} className="tab-btns" onClick={() => showInfoTabs('borrower-transaction')}>Transaction History</button>
           </div>
           <div className="loan-tab-contents">
             <div ref={paymentRef} className="loan-tab-contents__payment active">
@@ -506,6 +532,9 @@ const Loan = ({ match }) => {
             </div>
             <div ref={borrowerRefsRef} className="loan-tab-contents__borrower-references hidden">
               <TabContentBorrowerRefs userId={loanResult.user_id} />
+            </div>
+            <div ref={transactionsRef} className="loan-tab-contents__borrower-transactions hidden">
+              <TabContentTransactions loanId={loanResult.id} totalPenalty={loanResult.penaltyCharge} totalPaid={loanResult.loanPaid} />
             </div>
           </div>
         </div>

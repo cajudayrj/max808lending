@@ -51,7 +51,7 @@ const TabContentBorrowerDocs = ({ userId }) => {
         return;
       })
   }, [userData.authToken, userId])
-  if (loading) return <h1>Loading Documents...</h1>
+  if (loading) return <h1 className="title-info loading">Loading Documents...</h1>
 
   return (
     <>

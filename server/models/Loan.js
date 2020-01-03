@@ -292,6 +292,11 @@ const setBackToActive = async (con, id) => {
   return rows;
 }
 
+const getTransactions = async (con, id) => {
+  const query = `SELECT * FROM UserTransactions WHERE loan_id = ? ORDER BY id DESC`;
+  const [rows] = await con.execute(query, [id], queryCallback);
+  return rows;
+}
 
 module.exports = {
   get,
@@ -316,4 +321,5 @@ module.exports = {
   userTransactions,
   allTransactions,
   setBackToActive,
+  getTransactions,
 }

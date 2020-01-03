@@ -32,7 +32,7 @@ const TabContentBorrowerInfo = ({ userId }) => {
 
   const ifExists = item => item ? item : '';
 
-  if (loading) return <h1>Loading...</h1>
+  if (loading) return <h1 className="title-info loading">Loading...</h1>
 
   return (
     <>

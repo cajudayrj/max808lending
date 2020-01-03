@@ -9,7 +9,7 @@ const SummaryOfTransactions = () => {
   // const userData = JSON.parse(window.localStorage.getItem('userData'));
   const history = useHistory();
   const userData = JSON.parse(localStorage.getItem('userData'));
-  const [loans, setLoans] = useState({});
+  const [transactions, setTransactions] = useState({});
 
   useEffect(() => {
     if (userData.userLevel !== 1) {
@@ -22,7 +22,7 @@ const SummaryOfTransactions = () => {
         "Authorization": `Bearer ${userData.authToken}`
       }
     })
-      .then(({ data }) => setLoans(data))
+      .then(({ data }) => setTransactions(data))
       .catch(err => console.log(err));
   }, []) // eslint-disable-line
   const monify = (amount) => {
@@ -52,15 +52,15 @@ const SummaryOfTransactions = () => {
           </thead>
           <tbody>
             {
-              loans.length > 0 ?
-                loans.map((loan, key) => {
+              transactions.length > 0 ?
+                transactions.map((transaction, key) => {
                   return (
                     <tr key={key}>
-                      <td>{loan.id}</td>
-                      <td>{loan.firstName} {loan.lastName}</td>
-                      <td>{moment(loan.acceptedDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
-                      <td>Payment</td>
-                      <td>&#8369;{monify(loan.loanPaid)}</td>
+                      <td>{transaction.loan_id}</td>
+                      <td>{transaction.firstName} {transaction.lastName}</td>
+                      <td>{moment(transaction.transactionDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
+                      <td className={transaction.description === "Penalty" ? 'penalty' : transaction.description === "Payment" ? 'payment' : ''}>{transaction.description}</td>
+                      <td className={transaction.description === "Penalty" ? 'penalty' : transaction.description === "Payment" ? 'payment' : ''}>&#8369;{monify(transaction.amount)}</td>
                     </tr>
                   )
                 })
