@@ -22,6 +22,7 @@ const con = require('../../connection/con');
 
 const Loan = require('../../models/Loan');
 const LoanPayments = require('../../models/LoanPayments');
+const UserTransactions = require('../../models/UserTransactions');
 
 router.get('/find/:id', userMiddleware, async (req, res) => {
   const loanId = req.params.id;
@@ -268,9 +269,26 @@ router.put('/to-active/:id', adminMiddleware, async (req, res) => {
         return res.json(error);
       }
     });
-    return res.json(data);
-  } else {
 
+    const lData = newData[0][0];
+
+    const transactionData = {
+      loan_id: lData.id,
+      user_id: lData.user_id,
+      description: "Initial Loan",
+      amount: lData.loanBalance,
+      transactionDate: moment(new Date()).tz('Asia/Manila').format('YYYY-MM-DD'),
+    }
+
+    const addNewTransaction = await UserTransactions.add(con, transactionData);
+
+    if (addNewTransaction.affectedRows > 0) {
+      return res.json(data);
+    } else {
+      return res.json(fail);
+    }
+
+  } else {
     return res.json(fail);
   }
 })
@@ -278,6 +296,8 @@ router.put('/to-active/:id', adminMiddleware, async (req, res) => {
 router.put('/update-active-loan/:id', adminMiddleware, async (req, res) => {
   const loanId = req.params.id;
   const updatedLoanPayments = await LoanPayments.updatePayments(con, loanId, req.body);
+  const currentLoanValues = await Loan.getAllData(con, loanId);
+  const oldValue = currentLoanValues[0][0];
 
   const fail = {
     success: false,
@@ -301,6 +321,31 @@ router.put('/update-active-loan/:id', adminMiddleware, async (req, res) => {
         success: true,
         loanData: newData[0]
       }
+
+      if (totalPenalty > oldValue.penaltyCharge) {
+        const transactionData = {
+          loan_id: loanId,
+          user_id: oldValue.user_id,
+          description: "Penalty",
+          amount: totalPenalty - oldValue.penaltyCharge,
+          transactionDate: moment(new Date()).tz('Asia/Manila').format('YYYY-MM-DD'),
+        }
+
+        await UserTransactions.add(con, transactionData);
+      }
+
+      if (totalPaid > oldValue.loanPaid) {
+        const transactionData = {
+          loan_id: loanId,
+          user_id: oldValue.user_id,
+          description: "Payment",
+          amount: totalPaid - oldValue.loanPaid,
+          transactionDate: moment(new Date()).tz('Asia/Manila').format('YYYY-MM-DD'),
+        }
+
+        await UserTransactions.add(con, transactionData);
+      }
+
       return res.json(data);
     } else {
       return res.json(fail);
@@ -314,6 +359,9 @@ router.put('/update-active-loan/:id', adminMiddleware, async (req, res) => {
 router.put('/set-fully-paid/:id', adminMiddleware, async (req, res) => {
   const loanId = req.params.id;
   const updatedLoanPayments = await LoanPayments.updatePayments(con, loanId, req.body);
+
+  const currentLoanValues = await Loan.getAllData(con, loanId);
+  const oldValue = currentLoanValues[0][0];
 
   const fail = {
     success: false,
@@ -337,6 +385,31 @@ router.put('/set-fully-paid/:id', adminMiddleware, async (req, res) => {
         success: true,
         loanData: newData[0]
       }
+
+      if (totalPenalty > oldValue.penaltyCharge) {
+        const transactionData = {
+          loan_id: loanId,
+          user_id: oldValue.user_id,
+          description: "Penalty",
+          amount: totalPenalty - oldValue.penaltyCharge,
+          transactionDate: moment(new Date()).tz('Asia/Manila').format('YYYY-MM-DD'),
+        }
+
+        await UserTransactions.add(con, transactionData);
+      }
+
+      if (totalPaid > oldValue.loanPaid) {
+        const transactionData = {
+          loan_id: loanId,
+          user_id: oldValue.user_id,
+          description: "Payment",
+          amount: totalPaid - oldValue.loanPaid,
+          transactionDate: moment(new Date()).tz('Asia/Manila').format('YYYY-MM-DD'),
+        }
+
+        await UserTransactions.add(con, transactionData);
+      }
+
       return res.json(data);
     } else {
       return res.json(fail);
@@ -409,8 +482,8 @@ router.post('/apply-new', userMiddleware, async (req, res) => {
 })
 
 router.get('/transactions', adminMiddleware, async (req, res) => {
-  const allTransactions = await Loan.allTransactions(con);
-  return res.json(allTransactions);
+  const transactions = await UserTransactions.all(con);
+  return res.json(transactions)
 })
 
 router.put('/back-to-active/:id', adminMiddleware, async (req, res) => {
@@ -434,5 +507,22 @@ router.put('/back-to-active/:id', adminMiddleware, async (req, res) => {
   }
 })
 
+router.get('/transaction-history/:id', adminMiddleware, async (req, res) => {
+  const loanId = req.params.id;
+  const transactions = await Loan.getTransactions(con, loanId);
+  return res.json(transactions)
+})
+
+router.put('/edit-transaction/:id', adminMiddleware, async (req, res) => {
+  const transactionId = req.params.id;
+  const transaction = await UserTransactions.editByLoanId(con, transactionId, req.body);
+
+  if (transaction.affectedRows > 0) {
+    const allTransactions = await Loan.getTransactions(con, req.body.loan_id);
+    return res.json(allTransactions);
+  } else {
+    return res.json({ error: true, message: "There's an error editing transaction." })
+  }
+})
 
 module.exports = router;

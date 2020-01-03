@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.25)
 # Database: max808lending
-# Generation Time: 2020-01-03 04:48:32 +0000
+# Generation Time: 2020-01-03 15:04:12 +0000
 # ************************************************************
 
 
@@ -29,76 +29,76 @@ CREATE TABLE `LoanPayments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `loan_id` varchar(255) NOT NULL DEFAULT '',
   `firstPaymentDate` date DEFAULT NULL,
-  `firstPaymentAmount` double DEFAULT NULL,
-  `firstPaymentBalance` double DEFAULT NULL,
-  `firstPaymentPaid` double DEFAULT NULL,
-  `firstPaymentPenalty` double DEFAULT NULL,
+  `firstPaymentAmount` float DEFAULT NULL,
+  `firstPaymentBalance` float DEFAULT NULL,
+  `firstPaymentPaid` float DEFAULT NULL,
+  `firstPaymentPenalty` float DEFAULT NULL,
   `firstPaymentStatus` varchar(255) DEFAULT NULL,
   `secondPaymentDate` date DEFAULT NULL,
-  `secondPaymentAmount` double DEFAULT NULL,
-  `secondPaymentPenalty` double DEFAULT NULL,
-  `secondPaymentBalance` double DEFAULT NULL,
-  `secondPaymentPaid` double DEFAULT NULL,
+  `secondPaymentAmount` float DEFAULT NULL,
+  `secondPaymentPenalty` float DEFAULT NULL,
+  `secondPaymentBalance` float DEFAULT NULL,
+  `secondPaymentPaid` float DEFAULT NULL,
   `secondPaymentStatus` varchar(255) DEFAULT NULL,
   `thirdPaymentDate` date DEFAULT NULL,
-  `thirdPaymentAmount` double DEFAULT NULL,
-  `thirdPaymentBalance` double DEFAULT NULL,
-  `thirdPaymentPaid` double DEFAULT NULL,
-  `thirdPaymentPenalty` double DEFAULT NULL,
+  `thirdPaymentAmount` float DEFAULT NULL,
+  `thirdPaymentBalance` float DEFAULT NULL,
+  `thirdPaymentPaid` float DEFAULT NULL,
+  `thirdPaymentPenalty` float DEFAULT NULL,
   `thirdPaymentStatus` varchar(255) DEFAULT NULL,
   `fourthPaymentDate` date DEFAULT NULL,
-  `fourthPaymentAmount` double DEFAULT NULL,
-  `fourthPaymentBalance` double DEFAULT NULL,
-  `fourthPaymentPaid` double DEFAULT NULL,
-  `fourthPaymentPenalty` double DEFAULT NULL,
+  `fourthPaymentAmount` float DEFAULT NULL,
+  `fourthPaymentBalance` float DEFAULT NULL,
+  `fourthPaymentPaid` float DEFAULT NULL,
+  `fourthPaymentPenalty` float DEFAULT NULL,
   `fourthPaymentStatus` varchar(255) DEFAULT NULL,
   `fifthPaymentDate` date DEFAULT NULL,
-  `fifthPaymentAmount` double DEFAULT NULL,
-  `fifthPaymentBalance` double DEFAULT NULL,
-  `fifthPaymentPaid` double DEFAULT NULL,
-  `fifthPaymentPenalty` double DEFAULT NULL,
+  `fifthPaymentAmount` float DEFAULT NULL,
+  `fifthPaymentBalance` float DEFAULT NULL,
+  `fifthPaymentPaid` float DEFAULT NULL,
+  `fifthPaymentPenalty` float DEFAULT NULL,
   `fifthPaymentStatus` varchar(255) DEFAULT NULL,
   `sixthPaymentDate` date DEFAULT NULL,
-  `sixthPaymentAmount` double DEFAULT NULL,
-  `sixthPaymentBalance` double DEFAULT NULL,
-  `sixthPaymentPaid` double DEFAULT NULL,
-  `sixthPaymentPenalty` double DEFAULT NULL,
+  `sixthPaymentAmount` float DEFAULT NULL,
+  `sixthPaymentBalance` float DEFAULT NULL,
+  `sixthPaymentPaid` float DEFAULT NULL,
+  `sixthPaymentPenalty` float DEFAULT NULL,
   `sixthPaymentStatus` varchar(255) DEFAULT NULL,
   `seventhPaymentDate` date DEFAULT NULL,
-  `seventhPaymentAmount` double DEFAULT NULL,
-  `seventhPaymentBalance` double DEFAULT NULL,
-  `seventhPaymentPaid` double DEFAULT NULL,
-  `seventhPaymentPenalty` double DEFAULT NULL,
+  `seventhPaymentAmount` float DEFAULT NULL,
+  `seventhPaymentBalance` float DEFAULT NULL,
+  `seventhPaymentPaid` float DEFAULT NULL,
+  `seventhPaymentPenalty` float DEFAULT NULL,
   `seventhPaymentStatus` varchar(255) DEFAULT NULL,
   `eighthPaymentDate` date DEFAULT NULL,
-  `eighthPaymentAmount` double DEFAULT NULL,
-  `eighthPaymentBalance` double DEFAULT NULL,
-  `eighthPaymentPaid` double DEFAULT NULL,
-  `eighthPaymentPenalty` double DEFAULT NULL,
+  `eighthPaymentAmount` float DEFAULT NULL,
+  `eighthPaymentBalance` float DEFAULT NULL,
+  `eighthPaymentPaid` float DEFAULT NULL,
+  `eighthPaymentPenalty` float DEFAULT NULL,
   `eighthPaymentStatus` varchar(255) DEFAULT NULL,
   `ninthPaymentDate` date DEFAULT NULL,
-  `ninthPaymentAmount` double DEFAULT NULL,
-  `ninthPaymentBalance` double DEFAULT NULL,
-  `ninthPaymentPaid` double DEFAULT NULL,
-  `ninthPaymentPenalty` double DEFAULT NULL,
+  `ninthPaymentAmount` float DEFAULT NULL,
+  `ninthPaymentBalance` float DEFAULT NULL,
+  `ninthPaymentPaid` float DEFAULT NULL,
+  `ninthPaymentPenalty` float DEFAULT NULL,
   `ninthPaymentStatus` varchar(255) DEFAULT NULL,
   `tenthPaymentDate` date DEFAULT NULL,
-  `tenthPaymentAmount` double DEFAULT NULL,
-  `tenthPaymentBalance` double DEFAULT NULL,
-  `tenthPaymentPaid` double DEFAULT NULL,
-  `tenthPaymentPenalty` double DEFAULT NULL,
+  `tenthPaymentAmount` float DEFAULT NULL,
+  `tenthPaymentBalance` float DEFAULT NULL,
+  `tenthPaymentPaid` float DEFAULT NULL,
+  `tenthPaymentPenalty` float DEFAULT NULL,
   `tenthPaymentStatus` varchar(255) DEFAULT NULL,
   `eleventhPaymentDate` date DEFAULT NULL,
-  `eleventhPaymentAmount` double DEFAULT NULL,
-  `eleventhPaymentBalance` double DEFAULT NULL,
-  `eleventhPaymentPaid` double DEFAULT NULL,
-  `eleventhPaymentPenalty` double DEFAULT NULL,
+  `eleventhPaymentAmount` float DEFAULT NULL,
+  `eleventhPaymentBalance` float DEFAULT NULL,
+  `eleventhPaymentPaid` float DEFAULT NULL,
+  `eleventhPaymentPenalty` float DEFAULT NULL,
   `eleventhPaymentStatus` varchar(255) DEFAULT NULL,
   `twelfthPaymentDate` date DEFAULT NULL,
-  `twelfthPaymentAmount` double DEFAULT NULL,
-  `twelfthPaymentBalance` double DEFAULT NULL,
-  `twelfthPaymentPaid` double DEFAULT NULL,
-  `twelfthPaymentPenalty` double DEFAULT NULL,
+  `twelfthPaymentAmount` float DEFAULT NULL,
+  `twelfthPaymentBalance` float DEFAULT NULL,
+  `twelfthPaymentPaid` float DEFAULT NULL,
+  `twelfthPaymentPenalty` float DEFAULT NULL,
   `twelfthPaymentStatus` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -118,15 +118,15 @@ CREATE TABLE `Loans` (
   `financeCharge` int(11) DEFAULT '0',
   `processingFee` int(11) DEFAULT '2',
   `serviceFee` int(11) DEFAULT '0',
-  `penaltyCharge` int(11) DEFAULT '0',
+  `penaltyCharge` float DEFAULT '0',
   `loanProceeds` int(11) DEFAULT NULL,
   `loanDate` date DEFAULT NULL,
   `approvedDate` date DEFAULT NULL,
   `acceptedDate` date DEFAULT NULL,
   `dueDate` date DEFAULT NULL,
   `loanStatus` varchar(255) DEFAULT NULL,
-  `loanBalance` int(11) DEFAULT NULL,
-  `loanPaid` int(11) DEFAULT '0',
+  `loanBalance` float DEFAULT NULL,
+  `loanPaid` float DEFAULT '0',
   `loanType` int(11) DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -252,10 +252,27 @@ LOCK TABLES `Users` WRITE;
 
 INSERT INTO `Users` (`id`, `username`, `password`, `email`, `firstName`, `middleName`, `lastName`, `mobileNum`, `gender`, `birthday`, `address`, `town`, `cityProvince`, `maritalStatus`, `accountStatus`, `userLevel`, `accountVerificationToken`)
 VALUES
-	('max1575693551611','max808admin','$2a$10$1otqOcZFl233Sc8KcC7Lk.LobeJEhgvcLxY4vZwStun4V0mXGurXq','freddiefrancisco0205@gmail.com','Freddie',NULL,'Francisco','','',NULL,NULL,NULL,NULL,NULL,'active',1,'2a101otqOcZFl233Sc8KcC7LkoLb4SA7qzKkNmC1o3YKW1jS0MclkMXq');
+	('max1575693551611','max808admin','$2y$10$2SN6d6diB6GydStjJ6vejOmkZvwWNwH9PFEVwRWKIwYDYUlV.s1Qe','freddiefrancisco0205@gmail.com','Freddie',NULL,'Francisco','','',NULL,NULL,NULL,NULL,NULL,'active',1,'2a101otqOcZFl233Sc8KcC7LkoLb4SA7qzKkNmC1o3YKW1jS0MclkMXq');
 
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# Dump of table UserTransactions
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `UserTransactions`;
+
+CREATE TABLE `UserTransactions` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `loan_id` varchar(255) DEFAULT NULL,
+  `user_id` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `amount` float DEFAULT NULL,
+  `transactionDate` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 

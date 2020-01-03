@@ -52,13 +52,13 @@ const TransactionHistory = () => {
           <tbody>
             {
               transactions.length > 0 ?
-                transactions.map((loan, key) => {
+                transactions.map((transaction, key) => {
                   return (
                     <tr key={key}>
-                      <td>{loan.id}</td>
-                      <td>{moment(loan.acceptedDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
-                      <td>Payment</td>
-                      <td>&#8369;{monify(loan.loanPaid)}</td>
+                      <td>{transaction.loan_id}</td>
+                      <td>{moment(transaction.transactionDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
+                      <td className={transaction.description === "Penalty" ? 'penalty' : transaction.description === "Payment" ? 'payment' : ''}>{transaction.description}</td>
+                      <td className={transaction.description === "Penalty" ? 'penalty' : transaction.description === "Payment" ? 'payment' : ''}>&#8369;{monify(transaction.amount)}</td>
                     </tr>
                   )
                 })

@@ -370,8 +370,8 @@ const MainDashboard = () => {
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{monify(loanPayments.firstPaymentPenalty)}</td>
-                                    <td>&#8369;{monify(loanPayments.firstPaymentPaid)}</td>
+                                    <td className="penalty">&#8369;{monify(loanPayments.firstPaymentPenalty)}</td>
+                                    <td className="payment">&#8369;{monify(loanPayments.firstPaymentPaid)}</td>
                                     <td>&#8369;{monify(loanPayments.firstPaymentBalance)}</td>
                                     <td>{loanPayments.firstPaymentStatus}</td>
                                   </>
@@ -389,8 +389,8 @@ const MainDashboard = () => {
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{monify(loanPayments.secondPaymentPenalty)}</td>
-                                    <td>&#8369;{monify(loanPayments.secondPaymentPaid)}</td>
+                                    <td className="penalty">&#8369;{monify(loanPayments.secondPaymentPenalty)}</td>
+                                    <td className="payment">&#8369;{monify(loanPayments.secondPaymentPaid)}</td>
                                     <td>&#8369;{monify(loanPayments.secondPaymentBalance)}</td>
                                     <td>{loanPayments.secondPaymentStatus}</td>
                                   </>
@@ -408,8 +408,8 @@ const MainDashboard = () => {
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{monify(loanPayments.thirdPaymentPenalty)}</td>
-                                    <td>&#8369;{monify(loanPayments.thirdPaymentPaid)}</td>
+                                    <td className="penalty">&#8369;{monify(loanPayments.thirdPaymentPenalty)}</td>
+                                    <td className="payment">&#8369;{monify(loanPayments.thirdPaymentPaid)}</td>
                                     <td>&#8369;{monify(loanPayments.thirdPaymentBalance)}</td>
                                     <td>{loanPayments.thirdPaymentStatus}</td>
                                   </>
@@ -427,8 +427,8 @@ const MainDashboard = () => {
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{monify(loanPayments.fourthPaymentPenalty)}</td>
-                                    <td>&#8369;{monify(loanPayments.fourthPaymentPaid)}</td>
+                                    <td className="penalty">&#8369;{monify(loanPayments.fourthPaymentPenalty)}</td>
+                                    <td className="payment">&#8369;{monify(loanPayments.fourthPaymentPaid)}</td>
                                     <td>&#8369;{monify(loanPayments.fourthPaymentBalance)}</td>
                                     <td>{loanPayments.fourthPaymentStatus}</td>
                                   </>
@@ -446,8 +446,8 @@ const MainDashboard = () => {
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{monify(loanPayments.fifthPaymentPenalty)}</td>
-                                    <td>&#8369;{monify(loanPayments.fifthPaymentPaid)}</td>
+                                    <td className="penalty">&#8369;{monify(loanPayments.fifthPaymentPenalty)}</td>
+                                    <td className="payment">&#8369;{monify(loanPayments.fifthPaymentPaid)}</td>
                                     <td>&#8369;{monify(loanPayments.fifthPaymentBalance)}</td>
                                     <td>{loanPayments.fifthPaymentStatus}</td>
                                   </>
@@ -465,8 +465,8 @@ const MainDashboard = () => {
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{monify(loanPayments.sixthPaymentPenalty)}</td>
-                                    <td>&#8369;{monify(loanPayments.sixthPaymentPaid)}</td>
+                                    <td className="penalty">&#8369;{monify(loanPayments.sixthPaymentPenalty)}</td>
+                                    <td className="payment">&#8369;{monify(loanPayments.sixthPaymentPaid)}</td>
                                     <td>&#8369;{monify(loanPayments.sixthPaymentBalance)}</td>
                                     <td>{loanPayments.sixthPaymentStatus}</td>
                                   </>
@@ -484,8 +484,8 @@ const MainDashboard = () => {
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{monify(loanPayments.seventhPaymentPenalty)}</td>
-                                    <td>&#8369;{monify(loanPayments.seventhPaymentPaid)}</td>
+                                    <td className="penalty">&#8369;{monify(loanPayments.seventhPaymentPenalty)}</td>
+                                    <td className="payment">&#8369;{monify(loanPayments.seventhPaymentPaid)}</td>
                                     <td>&#8369;{monify(loanPayments.seventhPaymentBalance)}</td>
                                     <td>{loanPayments.seventhPaymentStatus}</td>
                                   </>
@@ -503,8 +503,8 @@ const MainDashboard = () => {
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{monify(loanPayments.eighthPaymentPenalty)}</td>
-                                    <td>&#8369;{monify(loanPayments.eighthPaymentPaid)}</td>
+                                    <td className="penalty">&#8369;{monify(loanPayments.eighthPaymentPenalty)}</td>
+                                    <td className="payment">&#8369;{monify(loanPayments.eighthPaymentPaid)}</td>
                                     <td>&#8369;{monify(loanPayments.eighthPaymentBalance)}</td>
                                     <td>{loanPayments.eighthPaymentStatus}</td>
                                   </>
@@ -522,8 +522,8 @@ const MainDashboard = () => {
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{monify(loanPayments.ninthPaymentPenalty)}</td>
-                                    <td>&#8369;{monify(loanPayments.ninthPaymentPaid)}</td>
+                                    <td className="penalty">&#8369;{monify(loanPayments.ninthPaymentPenalty)}</td>
+                                    <td className="payment">&#8369;{monify(loanPayments.ninthPaymentPaid)}</td>
                                     <td>&#8369;{monify(loanPayments.ninthPaymentBalance)}</td>
                                     <td>{loanPayments.ninthPaymentStatus}</td>
                                   </>
@@ -541,8 +541,8 @@ const MainDashboard = () => {
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{monify(loanPayments.tenthPaymentPenalty)}</td>
-                                    <td>&#8369;{monify(loanPayments.tenthPaymentPaid)}</td>
+                                    <td className="penalty">&#8369;{monify(loanPayments.tenthPaymentPenalty)}</td>
+                                    <td className="payment">&#8369;{monify(loanPayments.tenthPaymentPaid)}</td>
                                     <td>&#8369;{monify(loanPayments.tenthPaymentBalance)}</td>
                                     <td>{loanPayments.tenthPaymentStatus}</td>
                                   </>
@@ -560,8 +560,8 @@ const MainDashboard = () => {
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{monify(loanPayments.eleventhPaymentPenalty)}</td>
-                                    <td>&#8369;{monify(loanPayments.eleventhPaymentPaid)}</td>
+                                    <td className="penalty">&#8369;{monify(loanPayments.eleventhPaymentPenalty)}</td>
+                                    <td className="payment">&#8369;{monify(loanPayments.eleventhPaymentPaid)}</td>
                                     <td>&#8369;{monify(loanPayments.eleventhPaymentBalance)}</td>
                                     <td>{loanPayments.eleventhPaymentStatus}</td>
                                   </>
@@ -579,8 +579,8 @@ const MainDashboard = () => {
                               {
                                 (status === 'Active') || (status === 'Fully Paid') ?
                                   <>
-                                    <td>&#8369;{monify(loanPayments.twelfthPaymentPenalty)}</td>
-                                    <td>&#8369;{monify(loanPayments.twelfthPaymentPaid)}</td>
+                                    <td className="penalty">&#8369;{monify(loanPayments.twelfthPaymentPenalty)}</td>
+                                    <td className="payment">&#8369;{monify(loanPayments.twelfthPaymentPaid)}</td>
                                     <td>&#8369;{monify(loanPayments.twelfthPaymentBalance)}</td>
                                     <td>{loanPayments.twelfthPaymentStatus}</td>
                                   </>
