@@ -54,6 +54,7 @@ const Borrow = () => {
         if (data.error) {
           setMessage(data.error.details[0].message);
           setSuccess(false);
+          console.log(data.error);
         }
         if (data.success) {
           setSuccess(true);

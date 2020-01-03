@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
 import moment from 'moment-timezone';
+import handleRedirects from '../../../assets/helpers/handleRedirects';
 
 const MainDashboard = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
+  const history = useHistory();
 
   const [loanId, setLoanId] = useState('');
   const [amount, setAmount] = useState(0);
@@ -21,6 +24,7 @@ const MainDashboard = () => {
   const [loanProceeds, setLoanProceeds] = useState(0);
   const [loanPaid, setLoanPaid] = useState(0);
   const [loanBalance, setLoanBalance] = useState(0);
+  const [loanType, setLoanType] = useState(1);
 
   const [refuseModal, setRefuseModal] = useState(false);
   const [acceptModal, setAcceptModal] = useState(false);
@@ -35,44 +39,47 @@ const MainDashboard = () => {
   const newLoanRef = useRef(null);
 
   useEffect(() => {
-    axios(`${serverUrl}/loans/get-latest`, {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${userData.authToken}`,
-      }
-    })
-      .then(result => {
-        const res = result.data[0];
-        setLoanId(res.id);
-        setAmount(res.amount);
-        setTerms(res.terms);
-        setLoanDate(moment(res.loanDate).tz('Asia/Manila').format('MMMM D, YYYY'));
-        setApprovedDate(res.approvedDate ? moment(res.approvedDate).tz('Asia/Manila').format('MMMM D, YYYY') : '-');
-        setAcceptedDate(res.acceptedDate ? moment(res.acceptedDate).tz('Asia/Manila').format('MMMM D, YYYY') : '-');
-        setDurationDate(res.dueDate ? moment(res.dueDate).tz('Asia/Manila').format('MMMM D, YYYY') : '-');
-        setStatus(res.loanStatus);
-
-        if ((res.loanStatus !== 'Pending') || (res.loanStatus !== 'Rejected')) {
-          axios(`${serverUrl}/loans/loan-payments/${res.id}`, {
-            method: "GET",
-            headers: {
-              "Authorization": `Bearer ${userData.authToken}`,
-            }
-          })
-            .then(result => {
-              const payments = result.data[0];
-              setLoanPayments(payments);
-              setServiceFee(res.serviceFee);
-              setFinanceCharge(res.financeCharge);
-              setPenaltyCharge(res.penaltyCharge);
-              setLoanProceeds(res.loanProceeds);
-              setLoanPaid(res.loanPaid ? res.loanPaid : 0);
-              setLoanBalance(res.loanBalance);
-            })
+    handleRedirects(history);
+    if (userData.userStatus === 'active') {
+      axios(`${serverUrl}/loans/get-latest`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${userData.authToken}`,
         }
       })
+        .then(result => {
+          const res = result.data[0];
+          setLoanId(res.id);
+          setAmount(res.amount);
+          setTerms(res.terms);
+          setLoanDate(moment(res.loanDate).tz('Asia/Manila').format('MMMM D, YYYY'));
+          setApprovedDate(res.approvedDate ? moment(res.approvedDate).tz('Asia/Manila').format('MMMM D, YYYY') : '-');
+          setAcceptedDate(res.acceptedDate ? moment(res.acceptedDate).tz('Asia/Manila').format('MMMM D, YYYY') : '-');
+          setDurationDate(res.dueDate ? moment(res.dueDate).tz('Asia/Manila').format('MMMM D, YYYY') : '-');
+          setStatus(res.loanStatus);
+          setLoanType(res.loanType);
 
-  }, [userData.authToken]);
+          if ((res.loanStatus !== 'Pending') || (res.loanStatus !== 'Rejected')) {
+            axios(`${serverUrl}/loans/loan-payments/${res.id}`, {
+              method: "GET",
+              headers: {
+                "Authorization": `Bearer ${userData.authToken}`,
+              }
+            })
+              .then(result => {
+                const payments = result.data[0];
+                setLoanPayments(payments);
+                setServiceFee(res.serviceFee);
+                setFinanceCharge(res.financeCharge);
+                setPenaltyCharge(res.penaltyCharge);
+                setLoanProceeds(res.loanProceeds);
+                setLoanPaid(res.loanPaid ? res.loanPaid : 0);
+                setLoanBalance(res.loanBalance);
+              })
+          }
+        })
+    }
+  }, [history, userData.authToken, userData.userStatus]);
 
   const toggleRefuseModal = e => {
     e.preventDefault();
@@ -310,15 +317,23 @@ const MainDashboard = () => {
                       <p className="title">Loan Proceeds / Receivable Amount: </p>
                       <p className="value">&#8369;{monify(loanProceeds)}</p>
                       {
+                        ((status === 'Approved') || (status === 'Accepted') || (status === 'Refused')) ?
+                          <>
+                            <p className="title">Total Charges: </p>
+                            <p className="value">&#8369;{monify(loanType === 1 ? (amount + penaltyCharge) : (amount + (amount * (serviceFee / 100)) + (amount * (financeCharge / 100)) + penaltyCharge))}</p>
+                          </>
+                          : null
+                      }
+                      {
                         (status === 'Active') || (status === 'Fully Paid') ?
                           <>
                             <p className="title">Penalty Charge: </p>
                             <p className="value">&#8369;{monify(penaltyCharge)}</p>
                             <p className="title">Total Charges: </p>
-                            <p className="value">&#8369;{monify(amount + penaltyCharge)}</p>
-                            <p className="title">Total Payment: </p>
+                            <p className="value">&#8369;{monify(loanType === 1 ? (amount + penaltyCharge) : (amount + (amount * (serviceFee / 100)) + (amount * (financeCharge / 100)) + penaltyCharge))}</p>
+                            <p className="title">Total Payment Made: </p>
                             <p className="value">&#8369;{monify(loanPaid)}</p>
-                            <p className="title">Loan Balance: </p>
+                            <p className="title">Loan Remaining Balance: </p>
                             <p className="value">&#8369;{monify(loanBalance)}</p>
                           </>
                           : null
