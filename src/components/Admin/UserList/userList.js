@@ -63,7 +63,7 @@ const UserList = () => {
                 })
                 :
                 <tr>
-                  <td className="no-loans" colSpan={7}>No active loans found.</td>
+                  <td className="no-loans" colSpan={7}>No users found.</td>
                 </tr>
             }
           </tbody>
