@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.25)
 # Database: max808lending
-# Generation Time: 2019-12-19 05:24:43 +0000
+# Generation Time: 2020-01-03 04:48:32 +0000
 # ************************************************************
 
 
@@ -103,17 +103,6 @@ CREATE TABLE `LoanPayments` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `LoanPayments` WRITE;
-/*!40000 ALTER TABLE `LoanPayments` DISABLE KEYS */;
-
-INSERT INTO `LoanPayments` (`id`, `loan_id`, `firstPaymentDate`, `firstPaymentAmount`, `firstPaymentBalance`, `firstPaymentPaid`, `firstPaymentPenalty`, `firstPaymentStatus`, `secondPaymentDate`, `secondPaymentAmount`, `secondPaymentPenalty`, `secondPaymentBalance`, `secondPaymentPaid`, `secondPaymentStatus`, `thirdPaymentDate`, `thirdPaymentAmount`, `thirdPaymentBalance`, `thirdPaymentPaid`, `thirdPaymentPenalty`, `thirdPaymentStatus`, `fourthPaymentDate`, `fourthPaymentAmount`, `fourthPaymentBalance`, `fourthPaymentPaid`, `fourthPaymentPenalty`, `fourthPaymentStatus`, `fifthPaymentDate`, `fifthPaymentAmount`, `fifthPaymentBalance`, `fifthPaymentPaid`, `fifthPaymentPenalty`, `fifthPaymentStatus`, `sixthPaymentDate`, `sixthPaymentAmount`, `sixthPaymentBalance`, `sixthPaymentPaid`, `sixthPaymentPenalty`, `sixthPaymentStatus`, `seventhPaymentDate`, `seventhPaymentAmount`, `seventhPaymentBalance`, `seventhPaymentPaid`, `seventhPaymentPenalty`, `seventhPaymentStatus`, `eighthPaymentDate`, `eighthPaymentAmount`, `eighthPaymentBalance`, `eighthPaymentPaid`, `eighthPaymentPenalty`, `eighthPaymentStatus`, `ninthPaymentDate`, `ninthPaymentAmount`, `ninthPaymentBalance`, `ninthPaymentPaid`, `ninthPaymentPenalty`, `ninthPaymentStatus`, `tenthPaymentDate`, `tenthPaymentAmount`, `tenthPaymentBalance`, `tenthPaymentPaid`, `tenthPaymentPenalty`, `tenthPaymentStatus`, `eleventhPaymentDate`, `eleventhPaymentAmount`, `eleventhPaymentBalance`, `eleventhPaymentPaid`, `eleventhPaymentPenalty`, `eleventhPaymentStatus`, `twelfthPaymentDate`, `twelfthPaymentAmount`, `twelfthPaymentBalance`, `twelfthPaymentPaid`, `twelfthPaymentPenalty`, `twelfthPaymentStatus`)
-VALUES
-	(10,'ln1575797235508','2020-01-02',5000,0,5000,0,'Paid','2020-01-17',5000,250,0,5250,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid'),
-	(11,'ln1575507839490','2020-01-02',1000,0,1400,400,'Paid','2020-01-17',1000,0,0,1000,'Paid','2020-02-01',1000,0,1000,0,'Paid','2020-02-16',1000,0,1000,0,'Paid','2020-03-02',1000,0,1000,0,'Paid','2020-03-17',1000,0,1000,0,'Paid','2020-04-01',1000,0,1000,0,'Paid','2020-04-16',1000,0,1000,0,'Paid','2020-05-01',1000,0,1000,0,'Paid','2020-05-16',1000,0,1000,0,'Paid','2020-05-31',1000,0,1000,0,'Paid','2020-06-15',1000,0,1000,0,'Paid'),
-	(15,'ln1576633613878','2020-01-02',4000,0,4000,0,'Paid','2020-01-17',4000,0,0,4000,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid',NULL,0,0,0,0,'Paid');
-
-/*!40000 ALTER TABLE `LoanPayments` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table Loans
@@ -138,20 +127,10 @@ CREATE TABLE `Loans` (
   `loanStatus` varchar(255) DEFAULT NULL,
   `loanBalance` int(11) DEFAULT NULL,
   `loanPaid` int(11) DEFAULT '0',
+  `loanType` int(11) DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `Loans` WRITE;
-/*!40000 ALTER TABLE `Loans` DISABLE KEYS */;
-
-INSERT INTO `Loans` (`id`, `user_id`, `amount`, `terms`, `financeCharge`, `processingFee`, `serviceFee`, `penaltyCharge`, `loanProceeds`, `loanDate`, `approvedDate`, `acceptedDate`, `dueDate`, `loanStatus`, `loanBalance`, `loanPaid`)
-VALUES
-	('ln1575507839490','max1575507316549',12000,180,3,2,5,400,10800,'2019-12-05','2019-12-18','2019-12-18','2020-06-15','Fully Paid',0,12400),
-	('ln1575797235508','max1575722402711',10000,30,0,2,0,250,9800,'2019-12-08','2019-12-18','2019-12-18','2020-01-17','Fully Paid',0,10250),
-	('ln1576633613878','max1576633444299',8000,30,2,2,2,0,7520,'2019-12-18','2019-12-18','2019-12-18','2020-01-17','Fully Paid',0,8000);
-
-/*!40000 ALTER TABLE `Loans` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table UserDocuments
@@ -172,17 +151,6 @@ CREATE TABLE `UserDocuments` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `UserDocuments` WRITE;
-/*!40000 ALTER TABLE `UserDocuments` DISABLE KEYS */;
-
-INSERT INTO `UserDocuments` (`id`, `user_id`, `payslipOne`, `payslipTwo`, `validIdOne`, `validIdTwo`, `coe`, `billingStatement`, `bankTransaction`)
-VALUES
-	(1,'max1575507316549','1575508931144-3.1-Loans-Awaiting-Approval_VD.jpg','1575508931151-3.1-Loans-Awaiting-Approval_VD.jpg','1575508931157-3.1-Loans-Awaiting-Approval_VD.jpg','1575508931161-3.1-Loans-Awaiting-Approval_VD.jpg','1575508931163-3.1-Loans-Awaiting-Approval_VD.jpg','1575508931166-3.1-Loans-Awaiting-Approval_VD.jpg','1575508931169-3.1-Loans-Awaiting-Approval_VD.jpg'),
-	(2,'max1575722402711','1575797321391-3.1-Loans-Awaiting-Approval_VD.jpg','1575797321398-3.1-Loans-Awaiting-Approval_VD.jpg','1575797321404-3.1-Loans-Awaiting-Approval_VD.jpg','1575797321407-3.1-Loans-Awaiting-Approval_VD.jpg','1575797321410-3.1-Loans-Awaiting-Approval_VD.jpg','1575797321412-3.1-Loans-Awaiting-Approval_VD.jpg','1575797321415-3.1-Loans-Awaiting-Approval_VD.jpg'),
-	(3,'max1576633444299','1576633711951-max808logo-footer.png','1576633711953-max808logo-footer.png','1576633711956-max808logo-footer.png','1576633711958-max808logo-footer.png','1576633711959-max808logo-footer.png','1576633711962-max808logo-footer.png','1576633711963-max808logo-footer.png');
-
-/*!40000 ALTER TABLE `UserDocuments` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table UserInformation
@@ -204,17 +172,6 @@ CREATE TABLE `UserInformation` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `UserInformation` WRITE;
-/*!40000 ALTER TABLE `UserInformation` DISABLE KEYS */;
-
-INSERT INTO `UserInformation` (`id`, `user_id`, `officeName`, `officeAddress`, `officeTelephone`, `officePosition`, `dateOfPayout`, `officePayrollAccount`, `bankCheckingAccount`, `existingLoan`)
-VALUES
-	(1,'max1575507316549','CNT','JMT Condominium','1912741724','FE Dev',30,'BDO','BPI',''),
-	(2,'max1575722402711','Congoa International','2A Ground Floor 707 Shaw Boulevard','4812475712','General Accountant',30,'Eastwest','BDO',''),
-	(3,'max1576633444299','Cognoa International','2A Ground Floor 707 Shaw Boulevard','09123456','Accountant',30,'Eastwest','BDO','');
-
-/*!40000 ALTER TABLE `UserInformation` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table UserLevels
@@ -262,17 +219,6 @@ CREATE TABLE `UserReferences` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `UserReferences` WRITE;
-/*!40000 ALTER TABLE `UserReferences` DISABLE KEYS */;
-
-INSERT INTO `UserReferences` (`id`, `user_id`, `officemateName`, `officemateDepartment`, `officematePosition`, `officemateMobileNum`, `officemateEmail`, `friendName`, `friendMobileNum`, `friendEmail`, `familyName`, `familyMobileNum`, `familyEmail`)
-VALUES
-	(1,'max1575507316549','Coach Jr.','Tech Dept.','Sr. FE Dev','01928451234','coach@cnttttesstt.com','Carlo Sarmiento','10294857161','carlo@mail.com','Judy Idanan','01948284412','judyidnan@mail.com'),
-	(2,'max1575722402711','Arra something','Accounting','Assistant Accountant','12491258158','caasdijasid@mail.com','Caryl Salvador','11245678235','carylandshai@mail.com','Pas Somido','09182456783','passomido@mail.com'),
-	(3,'max1576633444299','Arrah Dikolam Apelyido','Accounting','Accountant','10294851241','arrah@cognoa.com','Jonas Surban','12491827412','jonassurban@randommailhere.com','Pas Somido','10294815123','passomido@mailsamplerandom.com');
-
-/*!40000 ALTER TABLE `UserReferences` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table Users
@@ -306,10 +252,7 @@ LOCK TABLES `Users` WRITE;
 
 INSERT INTO `Users` (`id`, `username`, `password`, `email`, `firstName`, `middleName`, `lastName`, `mobileNum`, `gender`, `birthday`, `address`, `town`, `cityProvince`, `maritalStatus`, `accountStatus`, `userLevel`, `accountVerificationToken`)
 VALUES
-	('max1575507316549','rjcajuday','$2a$10$9rlzdogkbraTyFmLPM57O.qrOVlcCl0i.F4/KgHFVgbVZVLIZt1TG','rey_jude100@yahoo.com','Rey Jude','Idanan','Cajuday','09955431780','Male','1996-12-05','433 San Isidro Village','Virac','Catanduanes','Single','active',2,'2a109rlzdogkbraTyFmLPM57OkaP3D9uuiiAiNg64hnf209s6mOkRo6'),
-	('max1575693551611','max808admin','$2a$10$1otqOcZFl233Sc8KcC7Lk.LobeJEhgvcLxY4vZwStun4V0mXGurXq','cajuday.reyjude@gmail.com','Freddie',NULL,'Francisco','','',NULL,NULL,NULL,NULL,NULL,'active',1,'2a101otqOcZFl233Sc8KcC7LkoLb4SA7qzKkNmC1o3YKW1jS0MclkMXq'),
-	('max1575722402711','kenjiball','$2a$10$07ubyorKBMqKYuh3Ao7kKe16pCFVQZtNRaNjn5F59QH5rGejKXJJq','ariahssomido@gmail.com','Shaira','Suarez','Somido','129412747124712','Female','1988-12-03','2A Ground Floor 707 Shaw Boulevard','Pasig','Metro Manila','Single','active',2,'2a1007ubyorKBMqKYuh3Ao7kKelvk2DcQQu3nd2IEE3L23obKiPRsEW'),
-	('max1576633444299','ariahs','$2a$10$U1tZgsG0j6J9IcbpH90Wbe3Bqls5JbLJBcuShtqPb8E0iQ9Eo0xdC','shairasomido@yahoo.com','Shai','Suarez','Somido','09434285766','Female','1995-05-27','2A Ground Floor 707 Shaw Boulevard','Pasig','Metro Manila','Single','active',2,'2a10U1tZgsG0j6J9IcbpH90WbeeUuOAAzof0oFwCAf0P2Uw5OIzu4eO');
+	('max1575693551611','max808admin','$2a$10$1otqOcZFl233Sc8KcC7Lk.LobeJEhgvcLxY4vZwStun4V0mXGurXq','freddiefrancisco0205@gmail.com','Freddie',NULL,'Francisco','','',NULL,NULL,NULL,NULL,NULL,'active',1,'2a101otqOcZFl233Sc8KcC7LkoLb4SA7qzKkNmC1o3YKW1jS0MclkMXq');
 
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;

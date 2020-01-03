@@ -171,7 +171,8 @@ const approveRequest = async (con, data, id) => {
     approvedDate = ?,
     dueDate = ?,
     loanStatus = ?,
-    loanBalance = ?
+    loanBalance = ?,
+    loanType = ?
     WHERE id = ?
   `;
   const variables = [
@@ -184,7 +185,8 @@ const approveRequest = async (con, data, id) => {
     data.approvedDate,
     data.dueDate,
     'Approved',
-    data.amount,
+    data.loanBalance,
+    data.loanType,
     id
   ];
 

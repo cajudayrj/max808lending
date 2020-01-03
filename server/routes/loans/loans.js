@@ -8,7 +8,7 @@ const moment = require('moment-timezone');
 const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   host: 'us2.smtp.mailhostbox.com',
-  port: 25,
+  port: 587,
   secure: false,
   ignoreTLS: true,
   auth: {
@@ -148,6 +148,7 @@ router.post('/approve/:id', adminMiddleware, async (req, res) => {
       <p>Service Fee: <span style="color:#187cbc">&#8369;${loanCharges.amount * (loanCharges.serviceFee / 100)}</span></p>
       <p>Terms: <span style="color:#187cbc">${loanCharges.terms} days</p>
       <p>Due Date: <span style="color:#187cbc">${moment(loanCharges.dueDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</span></p>
+      <p>Total Charges: <span style="color:#187cbc"><b>&#8369;${loanCharges.loanBalance}</b></span></p>
       <p>Loan Proceeds / Receivable Amount: <span style="color:#187cbc"><b>&#8369;${loanCharges.loanProceeds}</b></span></p>
     </div>
     <br />
@@ -236,14 +237,14 @@ router.put('/to-active/:id', adminMiddleware, async (req, res) => {
       html: `
         <p>Good day!</p>
         <p>Your Loan Request with the ID of ${loanId} is now active!</p>
-        <p>We have sent an amount in total of <span style="color:#187cbc"><b>&#8369;${req.body.loanProceeds}</b></span> to your bank account.</p>
+        <p>We have sent an amount in total of <span style="color:#187cbc"><b>&#8369;${data.loanData[0].loanProceeds}</b></span> to your bank account.</p>
         <div style="padding: 10px 40px;">
           <p>Finance Charge: <span style="color:#187cbc">&#8369;${req.body.amount * (req.body.financeCharge / 100)}</span></p>
           <p>Processing Fee: <span style="color:#187cbc">&#8369;${req.body.amount * (2 / 100)}</span></p>
           <p>Service Fee: <span style="color:#187cbc">&#8369;${req.body.amount * (req.body.serviceFee / 100)}</span></p>
           <p>Due Date: <span style="color:#187cbc">${moment(req.body.dueDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</span></p>
-          <p><b>Loan Proceeds: <span style="color:#187cbc">&#8369;${req.body.loanProceeds}</span></b></p>
-          <p><b>Total Loan Payable Amount: <span style="color:#187cbc">&#8369;${req.body.amount}</span></b></p>
+          <p><b>Loan Proceeds: <span style="color:#187cbc">&#8369;${data.loanData[0].loanProceeds}</span></b></p>
+          <p><b>Total Loan Payable Amount: <span style="color:#187cbc">&#8369;${data.loanData[0].loanBalance}</span></b></p>
           </div>
         <p style="color:#ff6868;"><em>**Please note that being unable to pay loan in due date may result to penalties.**</em></p>
         <p>Thank you for choosing Max808 Lending Corporation!</p>
