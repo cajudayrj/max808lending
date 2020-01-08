@@ -302,16 +302,16 @@ const MainDashboard = () => {
                 <>
                   <div className={`loan-computation ${(status === 'Active') || (status === 'Fully Paid') ? 'active' : ''}`}>
                     <div className="title-value">
-                      <p className="title">Finance Charge &#40;{financeCharge}%&#41;: </p>
-                      <p className="value">&#8369;{monify(amount * (financeCharge / 100))}</p>
+                      <p className="title">Finance Charge &#91; {financeCharge}% * &#40; Terms / 30 &#41; &#93;: </p>
+                      <p className="value">&#8369;{monify((amount * (financeCharge / 100)) * (terms / 30))}</p>
                     </div>
                     <div className="title-value">
                       <p className="title">Processing Fee &#40;2%&#41;: </p>
                       <p className="value">&#8369;{monify(amount * (2 / 100))}</p>
                     </div>
                     <div className="title-value">
-                      <p className="title">Service Fee &#40;{serviceFee}%&#41;: </p>
-                      <p className="value">&#8369;{monify(amount * (serviceFee / 100))}</p>
+                      <p className="title">Service Fee &#91; {serviceFee}% * &#40; Terms / 30 &#41; &#93;: </p>
+                      <p className="value">&#8369;{monify((amount * (serviceFee / 100)) * (terms / 30))}</p>
                     </div>
                     <div className="title-value loan-proceeds">
                       <p className="title">Loan Proceeds / Receivable Amount: </p>
@@ -320,7 +320,7 @@ const MainDashboard = () => {
                         ((status === 'Approved') || (status === 'Accepted') || (status === 'Refused')) ?
                           <>
                             <p className="title">Total Charges: </p>
-                            <p className="value">&#8369;{monify(loanType === 1 ? (amount + penaltyCharge) : (amount + (amount * (serviceFee / 100)) + (amount * (financeCharge / 100)) + penaltyCharge))}</p>
+                            <p className="value">&#8369;{monify(loanType === 1 ? (amount + penaltyCharge) : (amount + ((amount * (serviceFee / 100)) * (terms / 30)) + ((amount * (financeCharge / 100)) * (terms / 30)) + penaltyCharge))}</p>
                           </>
                           : null
                       }
@@ -330,7 +330,7 @@ const MainDashboard = () => {
                             <p className="title">Penalty Charge: </p>
                             <p className="value">&#8369;{monify(penaltyCharge)}</p>
                             <p className="title">Total Charges: </p>
-                            <p className="value">&#8369;{monify(loanType === 1 ? (amount + penaltyCharge) : (amount + (amount * (serviceFee / 100)) + (amount * (financeCharge / 100)) + penaltyCharge))}</p>
+                            <p className="value">&#8369;{monify(loanType === 1 ? (amount + penaltyCharge) : (amount + ((amount * (serviceFee / 100)) * (terms / 30)) + ((amount * (financeCharge / 100)) * (terms / 30)) + penaltyCharge))}</p>
                             <p className="title">Total Payment Made: </p>
                             <p className="value">&#8369;{monify(loanPaid)}</p>
                             <p className="title">Loan Remaining Balance: </p>

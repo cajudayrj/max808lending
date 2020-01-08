@@ -144,9 +144,9 @@ router.post('/approve/:id', adminMiddleware, async (req, res) => {
     <p>Your Loan Request with the ID of ${loanId} has been approved with the terms below:</p>
     <div style="padding: 10px 40px;">
       <p>Amount: <span style="color:#187cbc">&#8369;${loanCharges.amount}</span></p>
-      <p>Finance Charge: <span style="color:#187cbc">&#8369;${loanCharges.amount * (loanCharges.financeCharge / 100)}</span></p>
+      <p>Finance Charge: <span style="color:#187cbc">&#8369;${(loanCharges.amount * (loanCharges.financeCharge / 100)) * (loanCharges.terms / 30)}</span></p>
       <p>Processing Fee: <span style="color:#187cbc">&#8369;${loanCharges.amount * (2 / 100)}</span></p>
-      <p>Service Fee: <span style="color:#187cbc">&#8369;${loanCharges.amount * (loanCharges.serviceFee / 100)}</span></p>
+      <p>Service Fee: <span style="color:#187cbc">&#8369;${(loanCharges.amount * (loanCharges.serviceFee / 100)) * (loanCharges.terms / 30)}</span></p>
       <p>Terms: <span style="color:#187cbc">${loanCharges.terms} days</p>
       <p>Due Date: <span style="color:#187cbc">${moment(loanCharges.dueDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</span></p>
       <p>Total Charges: <span style="color:#187cbc"><b>&#8369;${loanCharges.loanBalance}</b></span></p>
@@ -240,9 +240,9 @@ router.put('/to-active/:id', adminMiddleware, async (req, res) => {
         <p>Your Loan Request with the ID of ${loanId} is now active!</p>
         <p>We have sent an amount in total of <span style="color:#187cbc"><b>&#8369;${data.loanData[0].loanProceeds}</b></span> to your bank account.</p>
         <div style="padding: 10px 40px;">
-          <p>Finance Charge: <span style="color:#187cbc">&#8369;${req.body.amount * (req.body.financeCharge / 100)}</span></p>
+          <p>Finance Charge: <span style="color:#187cbc">&#8369;${(req.body.amount * (req.body.financeCharge / 100)) * (req.body.terms / 30)}</span></p>
           <p>Processing Fee: <span style="color:#187cbc">&#8369;${req.body.amount * (2 / 100)}</span></p>
-          <p>Service Fee: <span style="color:#187cbc">&#8369;${req.body.amount * (req.body.serviceFee / 100)}</span></p>
+          <p>Service Fee: <span style="color:#187cbc">&#8369;${(req.body.amount * (req.body.serviceFee / 100)) * (req.body.terms / 30)}</span></p>
           <p>Due Date: <span style="color:#187cbc">${moment(req.body.dueDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</span></p>
           <p><b>Loan Proceeds: <span style="color:#187cbc">&#8369;${data.loanData[0].loanProceeds}</span></b></p>
           <p><b>Total Loan Payable Amount: <span style="color:#187cbc">&#8369;${data.loanData[0].loanBalance}</span></b></p>
