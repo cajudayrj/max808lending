@@ -219,7 +219,7 @@ const Loan = ({ match }) => {
       terms,
       amount,
       loanProceeds,
-      loanBalance: deductProcessOnly ? (amount + (amount * (serviceFee / 100)) + (amount * (financeCharge / 100))) : amount,
+      loanBalance: deductProcessOnly ? (amount + ((amount * (serviceFee / 100)) * (terms / 30)) + ((amount * (financeCharge / 100)) * (terms / 30))) : amount,
       dueDate: requestData[0],
       approvedDate: moment(today).tz('Asia/Manila').format('YYYY-MM-DD'),
       loanType: deductProcessOnly ? 2 : 1,
@@ -287,8 +287,8 @@ const Loan = ({ match }) => {
     :
     (amount
       - (amount * (2 / 100))
-      - (amount * (serviceFee / 100))
-      - (amount * (financeCharge / 100)));
+      - ((amount * (serviceFee / 100)) * (terms / 30))
+      - ((amount * (financeCharge / 100)) * (terms / 30)));
 
   const setActiveLoanStatus = () => {
     axios(`${serverUrl}/loans/to-active/${loanResult.id}`, {
@@ -299,7 +299,8 @@ const Loan = ({ match }) => {
         amount,
         financeCharge,
         serviceFee,
-        dueDate: loanResult.dueDate
+        dueDate: loanResult.dueDate,
+        terms
       },
       headers: {
         "Authorization": `Bearer ${userData.authToken}`
@@ -398,16 +399,16 @@ const Loan = ({ match }) => {
                       <p className="value">{monify(parseFloat(amount))}</p>
                     </div>
                     <div className="computations">
-                      <p className="label">Finance Charge &#40; {financeCharge}% &#41;:</p>
-                      <p className="value">&#40;{(parseFloat(amount) * (financeCharge / 100)).toFixed(2)}&#41;</p>
+                      <p className="label">Finance Charge &#91; {financeCharge}% * &#40; Terms / 30 &#41; &#93;:</p>
+                      <p className="value">&#40;{(parseFloat((amount * (financeCharge / 100)) * (terms / 30))).toFixed(2)}&#41;</p>
                     </div>
                     <div className="computations">
                       <p className="label">Processing Fee &#40; 2% &#41;:</p>
-                      <p className="value">&#40;{(parseFloat(amount) * (2 / 100)).toFixed(2)}&#41;</p>
+                      <p className="value">&#40;{(parseFloat(amount * (2 / 100))).toFixed(2)}&#41;</p>
                     </div>
                     <div className="computations">
-                      <p className="label">Service Fee &#40; {serviceFee}% &#41;:</p>
-                      <p className="value">&#40;{(parseFloat(amount) * (serviceFee / 100)).toFixed(2)}&#41;</p>
+                      <p className="label">Service Fee &#91; {serviceFee}% * &#40; Terms / 30 &#41; &#93;:</p>
+                      <p className="value">&#40;{(parseFloat((amount * (serviceFee / 100)) * (terms / 30))).toFixed(2)}&#41;</p>
                     </div>
                     <div className="computations">
                       <p className="label">Deduct Processing Fee Only:</p>
@@ -415,7 +416,7 @@ const Loan = ({ match }) => {
                     </div>
                     <div className="computations">
                       <p className="label">Total Charges:</p>
-                      <p className="value">{monify(parseFloat(deductProcessOnly ? (amount + (amount * (serviceFee / 100)) + (amount * (financeCharge / 100))) : amount))}</p>
+                      <p className="value">{monify(parseFloat(deductProcessOnly ? (amount + ((amount * (serviceFee / 100)) * (terms / 30)) + ((amount * (financeCharge / 100)) * (terms / 30))) : amount))}</p>
                     </div>
                     <div className="computations loan-proceeds">
                       <p className="label">Loan Proceeds:</p>
@@ -446,8 +447,8 @@ const Loan = ({ match }) => {
                             :
                             (loanResult.amount
                               - (loanResult.amount * (2 / 100))
-                              - (loanResult.amount * (serviceFee / 100))
-                              - (loanResult.amount * (financeCharge / 100)))
+                              - ((loanResult.amount * (serviceFee / 100)) * (terms / 30))
+                              - ((loanResult.amount * (financeCharge / 100)) * (terms / 30)))
                         ).toFixed(2)
                       }</p>
                     </div>
@@ -458,28 +459,28 @@ const Loan = ({ match }) => {
                           loanResult.loanType === 1 ?
                             (loanProceedsValue +
                               (amount * (2 / 100))
-                              + (amount * (serviceFee / 100))
-                              + (amount * (financeCharge / 100))
+                              + ((amount * (serviceFee / 100)) * (terms / 30))
+                              + ((amount * (financeCharge / 100)) * (terms / 30))
                               + penaltyCharge)
                             :
                             (amount
-                              + (amount * (serviceFee / 100))
-                              + (amount * (financeCharge / 100))
+                              + ((amount * (serviceFee / 100)) * (terms / 30))
+                              + ((amount * (financeCharge / 100)) * (terms / 30))
                               + penaltyCharge)
                         ).toFixed(2)
                       }</p>
                     </div>
                     <div className="computations sub-comp">
-                      <p className="label">Finance Charge &#40; {financeCharge}% &#41;:</p>
-                      <p className="value">{parseFloat(amount * (financeCharge / 100)).toFixed(2)}</p>
+                      <p className="label">Finance Charge &#91; {financeCharge}% * &#40; Terms / 30 &#41; &#93;:</p>
+                      <p className="value">{parseFloat((amount * (financeCharge / 100)) * (terms / 30)).toFixed(2)}</p>
                     </div>
                     <div className="computations sub-comp">
                       <p className="label">Processing Fee &#40; 2% &#41;:</p>
                       <p className="value">{parseFloat(amount * (2 / 100)).toFixed(2)}</p>
                     </div>
                     <div className="computations sub-comp">
-                      <p className="label">Service Fee &#40; {serviceFee}% &#41;:</p>
-                      <p className="value">{parseFloat(amount * (serviceFee / 100)).toFixed(2)}</p>
+                      <p className="label">Service Fee &#91; {serviceFee}% * &#40; Terms / 30 &#41; &#93;:</p>
+                      <p className="value">{parseFloat((amount * (serviceFee / 100)) * (terms / 30)).toFixed(2)}</p>
                     </div>
                     <div className="computations sub-comp">
                       <p className="label">Penalty:</p>
@@ -510,8 +511,8 @@ const Loan = ({ match }) => {
             <div ref={paymentRef} className="loan-tab-contents__payment active">
               <TabContentLoanPayment
                 terms={terms}
-                amount={deductProcessOnly ? (amount + (amount * (serviceFee / 100))
-                  + (amount * (financeCharge / 100))) : amount}
+                amount={deductProcessOnly ? (amount + ((amount * (serviceFee / 100)) * (terms / 30))
+                  + ((amount * (financeCharge / 100)) * (terms / 30))) : amount}
                 status={status}
                 approveLoanRequest={approveLoanRequest}
                 rejectLoanRequest={rejectLoanRequest}
