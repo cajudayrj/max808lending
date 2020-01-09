@@ -204,8 +204,8 @@ const Loan = ({ match }) => {
     const loanProceeds = deductProcessOnly ? (amount - (amount * (2 / 100))) :
       (amount
         - (amount * (2 / 100))
-        - (amount * (serviceFee / 100))
-        - (amount * (financeCharge / 100)));
+        - ((amount * (serviceFee / 100)) * (terms / 30))
+        - ((amount * (financeCharge / 100)) * (terms / 30)));
 
     const requestData = Object.keys(loanRequestData).map(key => {
       return loanRequestData[key];
