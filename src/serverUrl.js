@@ -1,2 +1,2 @@
-const serverUrl = process.env.REACT_APP_DEV_ENV === 'production' ? 'https://max808lending.com/api' : 'http://192.168.43.151:1227';
+const serverUrl = process.env.REACT_APP_DEV_ENV === 'production' ? 'https://max808lending.com/api' : 'http://10.64.0.198:1227';
 module.exports = serverUrl;

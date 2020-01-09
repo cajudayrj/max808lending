@@ -475,6 +475,41 @@ router.post('/apply-new', userMiddleware, async (req, res) => {
       message: "Successfully requested for new loan"
     };
 
+    const latestLoan = await Loan.getLatest(con, req.user.id);
+    const loanInfo = await Loan.getAllData(con, latestLoan[0].id)
+
+    // Construct Mail
+    const mailOptions = {
+      from: 'Max808 Lending Corporation <admin@max808lending.com>',
+      to: 'admin@max808lending.com',
+      subject: 'Max808 Lending Corporation - New Loan Request',
+      html: `
+          <h4>New Loan Request</h4>
+          <p>Borrower ID: <span style="color:#187cbc">${loanInfo[0][0].user_id}</span></p>
+          <p>Borrower Name: <span style="color:#187cbc">${loanInfo[0][0].firstName} ${loanInfo[0][0].lastName}</span></p>
+          <p>Loan ID:  <span style="color:#187cbc">${loanInfo[0][0].id}</span></p>
+          <p>Loan Date:  <span style="color:#187cbc">${moment(loanInfo[0][0].loanDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</span></p>
+          <p>Loan Amount:  <span style="color:#187cbc">&#8369;${loanInfo[0][0].amount}</span></p>
+          <p>Terms:  <span style="color:#187cbc">${loanInfo[0][0].terms} days</span><p>
+          <p>Loan Status:  <span style="color:#187cbc">${loanInfo[0][0].loanStatus}</span><p>
+        `
+    };
+
+    // Send Mail
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        const error = {
+          error: {
+            details: [{
+              message: "There's a problem in sending email verification link."
+            }]
+          }
+        }
+
+        return res.json(error);
+      }
+    });
+
     return res.json(data);
   } else {
     return res.json(insertError);
