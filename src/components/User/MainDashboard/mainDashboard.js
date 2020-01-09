@@ -283,7 +283,7 @@ const MainDashboard = () => {
               <p className="values">{acceptedDate}</p>
             </div>
             <div className="loan-detail ln-ddate">
-              <p className="labels">Duration Date:</p>
+              <p className="labels">Final Payment Due Date:</p>
               <p className="values">{durationDate}</p>
             </div>
             <div className="loan-detail ln-status">
