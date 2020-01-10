@@ -481,7 +481,7 @@ router.post('/apply-new', userMiddleware, async (req, res) => {
     // Construct Mail
     const mailOptions = {
       from: 'Max808 Lending Corporation <admin@max808lending.com>',
-      to: 'admin@max808lending.com',
+      to: 'admin@max808lending.com, max808lending@gmail.com',
       subject: 'Max808 Lending Corporation - New Loan Request',
       html: `
           <h4>New Loan Request</h4>

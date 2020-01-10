@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
 
   const mailOptions = {
     from: `Max808 Lending - Contact Us <contactus@max808lending.com>`,
-    to: 'contactus@max808lending.com',
+    to: 'contactus@max808lending.com, max808lending@gmail.com',
     subject: 'Max808 Lending Corporation - Contact Us',
     html: `
     <p><b>From:</b> ${req.body.fullName}</p>
