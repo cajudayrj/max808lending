@@ -3,29 +3,33 @@ import { Link, useHistory } from 'react-router-dom';
 import handleRedirects from '../../../assets/helpers/handleRedirects';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
+import Pagination from '../../Pagination/pagination';
 
 const UserList = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
   const history = useHistory();
   const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
   useEffect(() => {
     if (userData.userLevel !== 1) {
       handleRedirects(history);
       return;
     }
-    axios(`${serverUrl}/user/all`, {
+    axios(`${serverUrl}/user/all/page/${currentPage}`, {
       method: 'GET',
       headers: {
         "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(({ data }) => {
-        const { users } = data;
+        const { users, totalPage } = data;
         setUsers(users);
+        setTotalPage(totalPage);
       })
 
-  }, [history, userData.authToken, userData.userLevel])
+  }, [currentPage, history, userData.authToken, userData.userLevel])
 
   const toUpper = txt => txt.replace(/^\w/, c => c.toUpperCase());
 
@@ -69,6 +73,7 @@ const UserList = () => {
           </tbody>
         </table>
       </div>
+      <Pagination totalPage={totalPage} activePage={currentPage} onPageChange={setCurrentPage} />
     </div>
   )
 }

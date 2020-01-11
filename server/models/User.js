@@ -1,9 +1,20 @@
 const queryCallback = require('../connection/queryCallback');
 
-const all = async con => {
+const all = async (con, page) => {
+  const offset = (page - 1) * 20;
   const query = `SELECT DISTINCT(u.id), 
   u.username, u.firstName, u.middleName, u.lastName, u.email, u.mobileNum,
-  ul.level FROM Users u, UserLevels ul WHERE u.userLevel = ul.id AND u.accountStatus = "active"`
+  ul.level,
+  (
+    SELECT COUNT(u.id)
+    FROM Users u, UserLevels ul
+    WHERE u.userLevel = ul.id
+    AND u.accountStatus = "active"
+  ) as fullCount
+  FROM Users u, UserLevels ul WHERE u.userLevel = ul.id AND u.accountStatus = "active"
+  LIMIT 20
+  OFFSET ${offset}
+  `
 
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
