@@ -70,12 +70,31 @@ const UserHeader = ({ id, token, handleLogout }) => {
         <div className="mobile-sidebar">
           <button type="button" class="close" onClick={toggleSidebarClose}><Close /></button>
           <div className="links-content user-side">
-            <ul className="nav-links">
-              <li><NavLink exact activeClassName="current-page" to="/dashboard">Dashboard</NavLink></li>
-              <li><NavLink exact activeClassName="current-page" to="/dashboard/transaction-history">Transaction History</NavLink></li>
-              <li><NavLink exact activeClassName="current-page" to="/dashboard/my-account">My Account</NavLink></li>
-              <li><button className="sidebar-logout" onClick={handleLogout}>Logout</button></li>
-            </ul>
+            {
+              user.userLevel === 1 ? (
+                <ul className="nav-links">
+                  <li><NavLink exact activeClassName="current-page" to="/admin">Dashboard</NavLink></li>
+                  <li><NavLink exact activeClassName="current-page" to="/admin/user-list">User List</NavLink></li>
+                  <li><NavLink exact activeClassName="current-page" to="/admin/summary-of-transactions">Summary of Transactions</NavLink></li>
+                  <li><NavLink exact activeClassName="current-page" to="/admin/loans">All Loans</NavLink></li>
+                  <li><NavLink exact activeClassName="current-page" to="/admin/active-loans">Active Loans</NavLink></li>
+                  <li><NavLink exact activeClassName="current-page" to="/admin/fully-paid-loans">Fully Paid Loans</NavLink></li>
+                  <li><NavLink exact activeClassName="current-page" to="/admin/pending-loans">Pending Loans</NavLink></li>
+                  <li><NavLink exact activeClassName="current-page" to="/admin/approved-loans">Approved Loans</NavLink></li>
+                  <li><NavLink exact activeClassName="current-page" to="/admin/accepted-loans">User Accepted Loans</NavLink></li>
+                  <li><NavLink exact activeClassName="current-page" to="/admin/rejected-loans">Rejected Loans</NavLink></li>
+                  <li><button className="sidebar-logout" onClick={handleLogout}>Logout</button></li>
+                </ul>
+              ) :
+                (
+                  <ul className="nav-links">
+                    <li><NavLink exact activeClassName="current-page" to="/dashboard">Dashboard</NavLink></li>
+                    <li><NavLink exact activeClassName="current-page" to="/dashboard/transaction-history">Transaction History</NavLink></li>
+                    <li><NavLink exact activeClassName="current-page" to="/dashboard/my-account">My Account</NavLink></li>
+                    <li><button className="sidebar-logout" onClick={handleLogout}>Logout</button></li>
+                  </ul>
+                )
+            }
           </div>
         </div>
       </div>
