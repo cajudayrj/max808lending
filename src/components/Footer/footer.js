@@ -120,9 +120,9 @@ const Footer = () => {
           <a href="mailto:admin@max808lending.com" className="other-info-detail">admin@max808lending.com</a>
           <p className="other-info-label social-media-label">Social Media</p>
           <div className="social-media-svg">
-            <a href="/"><Facebook /></a>
-            <a href="/"><Twitter /></a>
-            <a href="/"><Google /></a>
+            <a href="https://web.facebook.com/Max-808-Lending-Corp-103467941193071"><Facebook /></a>
+            <a href="https://twitter.com/max808lending"><Twitter /></a>
+            <a href="mailto:max808lending@gmail.com"><Google /></a>
           </div>
         </div>
       </div>
