@@ -67,93 +67,146 @@ const rejectedCount = async (con) => {
   return rows;
 }
 
-const all = async (con) => {
+const all = async (con, page) => {
+  const offset = (page - 1) * 20;
   const query = `
-    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
+    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus,
+    (SELECT COUNT(l.id) FROM Loans l, Users u WHERE l.user_id = u.id
+    AND u.accountStatus = 'active') AS fullCount
     FROM Loans l, Users u 
     WHERE l.user_id = u.id
     AND u.accountStatus = 'active'
     ORDER BY l.id
-    DESC;
+    DESC
+    LIMIT 20
+    OFFSET ${offset};
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
 }
 
-const pendingLoans = async (con) => {
+const pendingLoans = async (con, page) => {
+  const offset = (page - 1) * 20;
   const query = `
-    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
+    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus,
+    (
+      SELECT COUNT(l.id)
+      FROM Loans l, Users u 
+      WHERE l.loanStatus = 'Pending'
+      AND l.user_id = u.id
+      AND u.accountStatus = 'active'
+    ) AS fullCount
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Pending'
     AND l.user_id = u.id
     AND u.accountStatus = 'active'
     ORDER BY l.id
-    DESC;
+    DESC
+    LIMIT 20
+    OFFSET ${offset};
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
 }
 
-const activeLoans = async (con) => {
+const activeLoans = async (con, page) => {
+  const offset = (page - 1) * 20;
   const query = `
-    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
+    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus,
+    (SELECT COUNT(l.id) FROM Loans l, Users u 
+    WHERE l.loanStatus = 'Active'
+    AND l.user_id = u.id) AS fullCount 
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Active'
     AND l.user_id = u.id
     ORDER BY l.id
-    DESC;
+    DESC
+    LIMIT 20
+    OFFSET ${offset};
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
 }
 
-const acceptedLoans = async (con) => {
+const acceptedLoans = async (con, page) => {
+  const offset = (page - 1) * 20;
   const query = `
-    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
+    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus,
+    (
+      SELECT COUNT(l.id)
+      FROM Loans l, Users u 
+      WHERE l.loanStatus = 'Accepted'
+      AND l.user_id = u.id
+    ) AS fullCount
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Accepted'
     AND l.user_id = u.id
     ORDER BY l.id
-    DESC;
+    DESC
+    LIMIT 20
+    OFFSET ${offset};
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
 }
 
-const approvedLoans = async (con) => {
+const approvedLoans = async (con, page) => {
+  const offset = (page - 1) * 20;
   const query = `
-    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
+    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus,
+    (
+      SELECT COUNT(l.id) FROM Loans l, Users u 
+      WHERE l.loanStatus = 'Approved'
+      AND l.user_id = u.id
+    ) AS fullCount
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Approved'
     AND l.user_id = u.id
     ORDER BY l.id
-    DESC;
+    DESC
+    LIMIT 20
+    OFFSET ${offset};
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
 }
 
-const fullyPaidLoans = async (con) => {
+const fullyPaidLoans = async (con, page) => {
+  const offset = (page - 1) * 20;
   const query = `
-    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.loanPaid, l.penaltyCharge, l.terms, l.loanDate, l.loanStatus 
+    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.loanPaid, l.penaltyCharge, l.terms, l.loanDate, l.loanStatus,
+    (SELECT COUNT(l.id) FROM Loans l, Users u 
+    WHERE l.loanStatus = 'Fully Paid'
+    AND l.user_id = u.id) AS fullCount 
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Fully Paid'
     AND l.user_id = u.id
     ORDER BY l.id
-    DESC;
+    DESC
+    LIMIT 20
+    OFFSET ${offset};
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
 }
 
-const rejectedLoans = async (con) => {
+const rejectedLoans = async (con, page) => {
+  const offset = (page - 1) * 20;
   const query = `
-    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus 
+    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus,
+    (
+      SELECT COUNT(l.id)
+      FROM Loans l, Users u 
+      WHERE (l.loanStatus = 'Rejected' OR l.loanStatus = 'Refused')
+      AND l.user_id = u.id
+    ) AS fullCount
     FROM Loans l, Users u 
     WHERE (l.loanStatus = 'Rejected' OR l.loanStatus = 'Refused')
     AND l.user_id = u.id
     ORDER BY l.id
-    DESC;
+    DESC
+    LIMIT 20
+    OFFSET ${offset};
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;

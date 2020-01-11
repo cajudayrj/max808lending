@@ -46,71 +46,85 @@ router.get('/count/:status', adminMiddleware, async (req, res) => {
   return res.json(count);
 })
 
-router.get('/all', adminMiddleware, async (req, res) => {
-  const allLoans = await Loan.all(con);
+router.get('/all/page/:pageId', adminMiddleware, async (req, res) => {
+  const allLoans = await Loan.all(con, req.params.pageId);
+  const totalPage = allLoans.length > 0 ? Math.ceil(allLoans[0].fullCount / 20) : 1;
   const data = {
     success: true,
+    totalPage,
     allLoans
   }
 
   return res.json(data);
 })
 
-router.get('/pending', adminMiddleware, async (req, res) => {
-  const pendingLoans = await Loan.pendingLoans(con);
+router.get('/pending/page/:pageId', adminMiddleware, async (req, res) => {
+  const pendingLoans = await Loan.pendingLoans(con, req.params.pageId);
+  const totalPage = pendingLoans.length > 0 ? Math.ceil(pendingLoans[0].fullCount / 20) : 1;
   const data = {
     success: true,
-    pendingLoans
+    pendingLoans,
+    totalPage
   }
 
   return res.json(data);
 })
 
-router.get('/active', adminMiddleware, async (req, res) => {
-  const activeLoans = await Loan.activeLoans(con);
+router.get('/active/page/:pageId', adminMiddleware, async (req, res) => {
+  const activeLoans = await Loan.activeLoans(con, req.params.pageId);
+  const totalPage = activeLoans.length > 0 ? Math.ceil(activeLoans[0].fullCount / 20) : 1;
   const data = {
     success: true,
+    totalPage,
     activeLoans
   }
 
   return res.json(data);
 })
 
-router.get('/approved', adminMiddleware, async (req, res) => {
-  const approvedLoans = await Loan.approvedLoans(con);
+router.get('/approved/page/:pageId', adminMiddleware, async (req, res) => {
+  const approvedLoans = await Loan.approvedLoans(con, req.params.pageId);
+  const totalPage = approvedLoans.length > 0 ? Math.ceil(approvedLoans[0].fullCount / 20) : 1;
   const data = {
     success: true,
-    approvedLoans
+    approvedLoans,
+    totalPage
   }
 
   return res.json(data);
 })
 
-router.get('/accepted', adminMiddleware, async (req, res) => {
-  const acceptedLoans = await Loan.acceptedLoans(con);
+router.get('/accepted/page/:pageId', adminMiddleware, async (req, res) => {
+  const acceptedLoans = await Loan.acceptedLoans(con, req.params.pageId);
+  const totalPage = acceptedLoans.length > 0 ? Math.ceil(acceptedLoans[0].fullCount / 20) : 1;
   const data = {
     success: true,
-    acceptedLoans
+    acceptedLoans,
+    totalPage
   }
 
   return res.json(data);
 })
 
-router.get('/fully-paid', adminMiddleware, async (req, res) => {
-  const fullyPaidLoans = await Loan.fullyPaidLoans(con);
+router.get('/fully-paid/page/:pageId', adminMiddleware, async (req, res) => {
+  const fullyPaidLoans = await Loan.fullyPaidLoans(con, req.params.pageId);
+  const totalPage = fullyPaidLoans.length > 0 ? Math.ceil(fullyPaidLoans[0].fullCount / 20) : 1;
   const data = {
     success: true,
+    totalPage,
     fullyPaidLoans
   }
 
   return res.json(data);
 })
 
-router.get('/rejected', adminMiddleware, async (req, res) => {
-  const rejectedLoans = await Loan.rejectedLoans(con);
+router.get('/rejected/page/:pageId', adminMiddleware, async (req, res) => {
+  const rejectedLoans = await Loan.rejectedLoans(con, req.params.pageId);
+  const totalPage = rejectedLoans.length > 0 ? Math.ceil(rejectedLoans[0].fullCount / 20) : 1;
   const data = {
     success: true,
-    rejectedLoans
+    rejectedLoans,
+    totalPage
   }
 
   return res.json(data);
@@ -516,9 +530,10 @@ router.post('/apply-new', userMiddleware, async (req, res) => {
   }
 })
 
-router.get('/transactions', adminMiddleware, async (req, res) => {
-  const transactions = await UserTransactions.all(con);
-  return res.json(transactions)
+router.get('/transactions/page/:pageId', adminMiddleware, async (req, res) => {
+  const transactions = await UserTransactions.all(con, req.params.pageId);
+  const totalPage = transactions.length > 0 ? Math.ceil(transactions[0].fullCount / 20) : 1;
+  return res.json({ totalPage, transactions })
 })
 
 router.put('/back-to-active/:id', adminMiddleware, async (req, res) => {

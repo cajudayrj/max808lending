@@ -109,10 +109,11 @@ router.get('/documents/:id', userMiddleware, async (req, res) => {
   }
 })
 
-router.get('/loan/transactions', userMiddleware, async (req, res) => {
+router.get('/loan/transactions/page/:pageId', userMiddleware, async (req, res) => {
   const userId = req.user.id;
-  const userTransactions = await UserTransactions.getUserTransactions(con, userId);
-  return res.json(userTransactions);
+  const userTransactions = await UserTransactions.getUserTransactions(con, userId, req.params.pageId);
+  const totalPage = userTransactions.length > 0 ? Math.ceil(userTransactions[0].fullCount / 20) : 1;
+  return res.json({ transactions: userTransactions, totalPage });
 })
 
 module.exports = router;

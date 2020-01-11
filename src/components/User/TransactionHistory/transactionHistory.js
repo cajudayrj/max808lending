@@ -4,16 +4,19 @@ import moment from 'moment-timezone';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
+import Pagination from '../../Pagination/pagination';
 
 const TransactionHistory = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
   const history = useHistory();
 
   const [transactions, setTransactions] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
   useEffect(() => {
     handleVerifiedRedirect(history);
-    axios(`${serverUrl}/user/loan/transactions`, {
+    axios(`${serverUrl}/user/loan/transactions/page/${currentPage}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${userData.authToken}`
@@ -21,9 +24,11 @@ const TransactionHistory = () => {
     })
       .then(result => {
         const res = result.data;
-        setTransactions(res);
+        const { transactions, totalPage } = res
+        setTransactions(transactions);
+        setTotalPage(totalPage);
       })
-  }, []); // eslint-disable-line
+  }, [currentPage]); // eslint-disable-line
 
   const monify = (amount) => {
     if (amount) {
@@ -70,6 +75,7 @@ const TransactionHistory = () => {
           </tbody>
         </table>
       </div>
+      <Pagination totalPage={totalPage} activePage={currentPage} onPageChange={setCurrentPage} />
     </div>
   )
 }

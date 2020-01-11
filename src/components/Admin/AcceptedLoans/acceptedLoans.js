@@ -4,28 +4,32 @@ import handleRedirects from '../../../assets/helpers/handleRedirects';
 import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
+import Pagination from '../../Pagination/pagination';
 
 const AcceptedLoans = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
   const history = useHistory();
   const [acceptedLoans, setAcceptedLoans] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
   useEffect(() => {
     if (userData.userLevel !== 1) {
       handleRedirects(history);
       return;
     }
-    axios(`${serverUrl}/loans/accepted`, {
+    axios(`${serverUrl}/loans/accepted/page/${currentPage}`, {
       method: 'GET',
       headers: {
         "Authorization": `Bearer ${userData.authToken}`
       }
     })
       .then(({ data }) => {
-        const { acceptedLoans } = data;
+        const { acceptedLoans, totalPage } = data;
         setAcceptedLoans(acceptedLoans);
+        setTotalPage(totalPage);
       })
-  }, [history, userData.authToken, userData.userLevel])
+  }, [currentPage, history, userData.authToken, userData.userLevel])
 
   const monify = (amount) => {
     if (amount) {
@@ -78,6 +82,7 @@ const AcceptedLoans = () => {
           </tbody>
         </table>
       </div>
+      <Pagination totalPage={totalPage} activePage={currentPage} onPageChange={setCurrentPage} />
     </div>
   )
 }
