@@ -81,10 +81,15 @@
         justify-content: center;
 
         p{
+          display: none;
           font-family: "MontserratMedium", sans-serif;
           margin-bottom: 0;
           margin-right: 20px;
           align-self: center;
+
+          @include tablet{
+            display: block;
+          }
 
           a{
             color: $blue;
@@ -104,6 +109,11 @@
           font-family: "Montserrat", sans-serif;
           cursor: pointer;
           border: none;
+          display: none;
+
+          @include tablet{
+            display: block;
+          }
 
           &:hover{
             background-color: #de2c2c;
@@ -180,7 +190,7 @@
         li{
           margin: 10px 0px;
 
-          a{
+          a, button{
             padding: 5px 10px;
             color: $black;
             font-family: 'MontserratMedium', sans-serif;
@@ -195,6 +205,20 @@
             color: $blue;
             font-family: 'MontserratSemiBold', sans-serif;
           }
+
+          button{
+            color: $red;
+            border: none;
+            background: none;
+          }
+        }
+      }
+    }
+
+    .links-content.user-side{
+      .nav-links{
+        li{
+          margin: 20px 0px;
         }
       }
     }
