@@ -4,27 +4,33 @@ import handleRedirects from '../../../assets/helpers/handleRedirects';
 import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
+import Pagination from '../../Pagination/pagination';
 
 const SummaryOfTransactions = () => {
   // const userData = JSON.parse(window.localStorage.getItem('userData'));
   const history = useHistory();
   const userData = JSON.parse(localStorage.getItem('userData'));
   const [transactions, setTransactions] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
   useEffect(() => {
     if (userData.userLevel !== 1) {
       handleRedirects(history);
       return;
     }
-    axios(`${serverUrl}/loans/transactions`, {
+    axios(`${serverUrl}/loans/transactions/page/${currentPage}`, {
       method: 'GET',
       headers: {
         "Authorization": `Bearer ${userData.authToken}`
       }
     })
-      .then(({ data }) => setTransactions(data))
+      .then(({ data }) => {
+        setTotalPage(data.totalPage)
+        setTransactions(data.transactions)
+      })
       .catch(err => console.log(err));
-  }, []) // eslint-disable-line
+  }, [currentPage]) // eslint-disable-line
   const monify = (amount) => {
     if (amount) {
       return amount.toLocaleString(undefined, {
@@ -72,6 +78,7 @@ const SummaryOfTransactions = () => {
           </tbody>
         </table>
       </div>
+      <Pagination totalPage={totalPage} activePage={currentPage} onPageChange={setCurrentPage} />
     </div>
   )
 }

@@ -1,12 +1,16 @@
 const queryCallback = require('../connection/queryCallback');
 
-const all = async (con) => {
+const all = async (con, page) => {
+  const offset = (page - 1) * 20;
   const query = `SELECT 
-    ut.*, u.firstName, u.lastName, u.middleName 
+    ut.*, u.firstName, u.lastName, u.middleName,
+    (SELECT COUNT(id) FROM UserTransactions) AS fullCount 
     FROM UserTransactions ut, Users u 
     WHERE ut.user_id = u.id
     AND ut.amount > 0
-    ORDER BY ut.id DESC`;
+    ORDER BY ut.id DESC
+    LIMIT 20
+    OFFSET ${offset}`;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
 }
@@ -31,9 +35,22 @@ const add = async (con, data) => {
   return rows;
 }
 
-const getUserTransactions = async (con, id) => {
-  const query = `SELECT * FROM UserTransactions WHERE user_id = ? AND amount > 0 ORDER BY id DESC`;
-  const [rows] = await con.execute(query, [id], queryCallback);
+const getUserTransactions = async (con, id, page) => {
+  const offset = (page - 1) * 20;
+  const query = `
+    SELECT *,
+    (
+      SELECT COUNT(id)
+      FROM UserTransactions
+      WHERE user_id = ? 
+      AND amount > 0
+    ) AS fullCount 
+    FROM UserTransactions 
+    WHERE user_id = ? 
+    AND amount > 0 ORDER BY id DESC 
+    LIMIT 20 
+    OFFSET ${offset}`;
+  const [rows] = await con.execute(query, [id, id], queryCallback);
   return rows;
 }
 

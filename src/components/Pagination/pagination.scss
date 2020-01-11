@@ -1,0 +1,47 @@
+.pagination {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+  justify-content: flex-end;
+
+  .btn-page {
+    &--numbers {
+      display: flex;
+      margin: 0 15px;
+      color: $black-3;
+
+      .is-active {
+        background-color: $blue;
+        color: $white;
+        border: solid 1px $blue;
+      }
+    }
+
+    & > * {
+      border: solid 1px #efefef;
+      border-radius: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 7px 12px;
+      font-size: 13px;
+      margin: 0 2px;
+      background-color: $gray;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      &[disabled] {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      &::after {
+        content: none;
+      }
+    }
+  }
+}
