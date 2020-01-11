@@ -6,16 +6,17 @@ const userMiddleware = require('../middleware/middleware');
 const adminMiddleware = require('../middleware/adminMiddleware');
 
 const User = require('../../models/User');
-const Loan = require('../../models/Loan');
 const UserTransactions = require('../../models/UserTransactions');
 
-router.get('/all', adminMiddleware, async (req, res) => {
-  const userInfo = await User.all(con);
+router.get('/all/page/:pageId', adminMiddleware, async (req, res) => {
+  const userInfo = await User.all(con, req.params.pageId);
+  const totalPage = userInfo.length > 0 ? Math.ceil(userInfo[0].fullCount / 20) : 1;
 
   if (userInfo.length > 0) {
     const user = {
       success: true,
-      users: userInfo
+      users: userInfo,
+      totalPage
     }
     return res.json(user);
   } else {
