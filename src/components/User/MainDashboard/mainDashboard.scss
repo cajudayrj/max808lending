@@ -125,7 +125,11 @@
         border: solid 1px #fff0b9;
 
         .title-value{
-          grid-column: span 1;
+          grid-column: span 3;
+
+          @include tablet{
+            grid-column: span 1;
+          }
 
           .title{
             font-size: 12px;
