@@ -221,6 +221,16 @@
           margin: 20px 0px;
         }
       }
+
+      .nav-links.admin{
+        li{
+          margin: 15px 0px;
+
+          a, button{
+            font-size: 13px;
+          }
+        }
+      }
     }
   }
 }

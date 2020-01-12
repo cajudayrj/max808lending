@@ -34,6 +34,7 @@ const UserHeader = ({ id, token, handleLogout }) => {
   const toggleSidebarOpen = (e) => {
     e.preventDefault();
 
+    document.body.classList.add('disable-scroll');
     sidebarRef.current.classList.add('visible');
     setTimeout(() => {
       sidebarRef.current.classList.add('shown')
@@ -43,6 +44,7 @@ const UserHeader = ({ id, token, handleLogout }) => {
   const toggleSidebarClose = (e) => {
     e.preventDefault();
 
+    document.body.classList.remove('disable-scroll');
     sidebarRef.current.classList.remove('shown');
     setTimeout(() => {
       sidebarRef.current.classList.remove('visible')
@@ -68,11 +70,11 @@ const UserHeader = ({ id, token, handleLogout }) => {
       <div className="header-sidebar" ref={sidebarRef}>
         <div className="bg-overlay" onClick={toggleSidebarClose}></div>
         <div className="mobile-sidebar">
-          <button type="button" class="close" onClick={toggleSidebarClose}><Close /></button>
+          <button type="button" className="close" onClick={toggleSidebarClose}><Close /></button>
           <div className="links-content user-side">
             {
               user.userLevel === 1 ? (
-                <ul className="nav-links">
+                <ul className="nav-links admin">
                   <li><NavLink exact activeClassName="current-page" to="/admin">Dashboard</NavLink></li>
                   <li><NavLink exact activeClassName="current-page" to="/admin/user-list">User List</NavLink></li>
                   <li><NavLink exact activeClassName="current-page" to="/admin/summary-of-transactions">Summary of Transactions</NavLink></li>
