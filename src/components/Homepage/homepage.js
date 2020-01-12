@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Header/header';
 import Footer from '../Footer/footer';
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 const Homepage = () => {
   return (
@@ -62,6 +63,11 @@ const Homepage = () => {
           </div>
         </div>
       </div>
+      <MessengerCustomerChat
+        pageId="103467941193071"
+        appId="576151426556921"
+        themeColor="#187cbc"
+      />
       <Footer />
     </>
   );
