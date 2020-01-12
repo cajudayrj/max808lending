@@ -46,7 +46,7 @@ const Header = () => {
       <div className="header-sidebar" ref={sidebarRef}>
         <div className="bg-overlay" onClick={toggleSidebarClose}></div>
         <div className="mobile-sidebar">
-          <button type="button" class="close" onClick={toggleSidebarClose}><Close /></button>
+          <button type="button" className="close" onClick={toggleSidebarClose}><Close /></button>
           <div className="links-content">
             <ul className="nav-links">
               <li><NavLink exact activeClassName="current-page" to="/">Home</NavLink></li>
