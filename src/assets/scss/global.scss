@@ -6,6 +6,14 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+body{
+  position: relative;
+}
+
+body.disable-scroll{
+  overflow: hidden;
+}
+
 p{
   margin-bottom: 16px;
 }
