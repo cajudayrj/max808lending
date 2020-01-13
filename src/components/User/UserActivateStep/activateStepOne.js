@@ -26,7 +26,7 @@ const ActivateStepOne = () => {
   const [maritalStatus, setMaritalStatus] = useState('Single');
   const [address, setAddress] = useState('');
   const [mobileNum, setMobileNum] = useState('');
-  const [townMunicipality, setTownMunicipality] = useState(null);
+  const [townMunicipality, setTownMunicipality] = useState('Bangued');
   const [cityProvince, setCityProvince] = useState('Abra');
 
   const [resMessage, setResMessage] = useState('');
@@ -218,7 +218,7 @@ const ActivateStepOne = () => {
           </div>
           <div className="form-inputs form-pi-tm">
             <p className="input-label">City / Municipality</p>
-            <select defaultValue={townMunicipality} onChange={handleTownMunicipality}>
+            <select value={townMunicipality} onChange={handleTownMunicipality}>
               {
                 towns.map((town, i) => <option key={i} value={town}>{town}</option>)
               }
