@@ -64,6 +64,7 @@ const ActivateStepOne = () => {
   const handleCityProvince = (e) => {
     setCityProvince(e.target.value);
     setTowns(citiesData[e.target.value])
+    setTownMunicipality(citiesData[e.target.value][0]);
   }
 
   const handleTownMunicipality = (e) => {
@@ -105,29 +106,30 @@ const ActivateStepOne = () => {
       cityProvince,
     }
 
-    axios(`${serverUrl}/account/activate/step-one`, {
-      method: 'PUT',
-      data,
-      headers: {
-        "Authorization": `Bearer ${userData.authToken}`
-      }
-    })
-      .then(response => {
-        const res = response.data;
-        if (res.error) {
-          setResMessage(res.error.details[0].message);
-          return;
-        }
-        if (res.success) {
-          setResMessage('');
-          const newUserData = { ...userData };
-          newUserData.userStatus = 'verified-step-one';
-          window.localStorage.setItem('userData', JSON.stringify(newUserData));
-          history.push('/activate-account/step-two')
-        } else {
-          setResMessage(res.message);
-        }
-      })
+    // axios(`${serverUrl}/account/activate/step-one`, {
+    //   method: 'PUT',
+    //   data,
+    //   headers: {
+    //     "Authorization": `Bearer ${userData.authToken}`
+    //   }
+    // })
+    //   .then(response => {
+    //     const res = response.data;
+    //     if (res.error) {
+    //       setResMessage(res.error.details[0].message);
+    //       return;
+    //     }
+    //     if (res.success) {
+    //       setResMessage('');
+    //       const newUserData = { ...userData };
+    //       newUserData.userStatus = 'verified-step-one';
+    //       window.localStorage.setItem('userData', JSON.stringify(newUserData));
+    //       history.push('/activate-account/step-two')
+    //     } else {
+    //       setResMessage(res.message);
+    //     }
+    //   })
+    console.log(data);
   }
 
   return (
