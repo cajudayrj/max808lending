@@ -19,6 +19,7 @@ const ActivateStepTwo = () => {
   const [payrollAcc, setPayrollAcc] = useState('');
   const [bankCheckAcc, setBankCheckAcc] = useState('');
   const [existingLoans, setExistingLoans] = useState('');
+  const [fbLink, setFbLink] = useState('');
 
   const [resMessage, setResMessage] = useState('');
 
@@ -38,7 +39,8 @@ const ActivateStepTwo = () => {
       dop,
       payrollAcc,
       bankCheckAcc,
-      existingLoans
+      existingLoans,
+      fbLink,
     }
 
     setResMessage('');
@@ -110,6 +112,10 @@ const ActivateStepTwo = () => {
           <div className="form-inputs form-pi-chacc">
             <p className="input-label">Checking Account Bank Name</p>
             <input type="text" value={bankCheckAcc} onChange={e => setBankCheckAcc(e.target.value)} />
+          </div>
+          <div className="form-inputs form-pi-fbacc">
+            <p className="input-label">Facebook Account Link</p>
+            <input type="text" value={fbLink} onChange={e => setFbLink(e.target.value)} />
           </div>
         </div>
         {

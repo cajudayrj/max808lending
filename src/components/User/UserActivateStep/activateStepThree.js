@@ -26,6 +26,9 @@ const ActivateStepThree = () => {
   const [billingStatement, setBillingStatement] = useState(null);
   const [billingStatementPreview, setBillingStatementPreview] = useState(null);
 
+  const [companyId, setCompanyId] = useState(null);
+  const [companyIdPreview, setCompanyIdPreview] = useState(null);
+
   const [bankTransaction, setBankTransaction] = useState(null);
   const [bankTransactionPreview, setBankTransactionPreview] = useState(null);
 
@@ -49,7 +52,8 @@ const ActivateStepThree = () => {
       !validIdTwo ||
       !coe ||
       !bankTransaction ||
-      !billingStatement
+      !billingStatement ||
+      !companyId
     ) {
       setMessage('Fill up all required documents.')
       return;
@@ -63,6 +67,7 @@ const ActivateStepThree = () => {
     userDocuments.append('coe', coe);
     userDocuments.append('billingStatement', billingStatement);
     userDocuments.append('bankTransaction', bankTransaction);
+    userDocuments.append('companyId', companyId);
     setSubmitStatus('Submitting...');
 
     axios(`${serverUrl}/documents`, {
@@ -166,6 +171,21 @@ const ActivateStepThree = () => {
     setCoePreview(null);
   }
 
+  const handleCompanyId = (e) => {
+    if (e.target.files.length > 0 && (e.target.files[0].type === 'image/jpeg' || e.target.files[0].type === 'image/png')) {
+      setCompanyId(e.target.files[0]);
+      setCompanyIdPreview(URL.createObjectURL(e.target.files[0]));
+    } else {
+      setCompanyId(null);
+      setCompanyIdPreview(null);
+    }
+  }
+
+  const removeCompanyId = () => {
+    setCompanyId(null);
+    setCompanyIdPreview(null);
+  }
+
   const handleBillingStatement = (e) => {
     if (e.target.files.length > 0 && (e.target.files[0].type === 'image/jpeg' || e.target.files[0].type === 'image/png')) {
       setBillingStatement(e.target.files[0]);
@@ -207,9 +227,9 @@ const ActivateStepThree = () => {
            */
         }
         <div className="form-container d-grid">
-          <p className="form-title">Valid ID's</p>
+          <p className="form-title">Government ID's</p>
           <div className="form-payslip form-payslip-1">
-            <p className="input-label">Valid ID 1</p>
+            <p className="input-label">Government ID 1</p>
             <div className="input-layout-container">
               <label htmlFor="validIdOne">
                 <div className="file-name">
@@ -230,7 +250,7 @@ const ActivateStepThree = () => {
             </div>
           </div>
           <div className="form-payslip form-payslip-2">
-            <p className="input-label">Valid ID 2</p>
+            <p className="input-label">Government ID 2</p>
             <div className="input-layout-container">
               <label htmlFor="validIdTwo">
                 <div className="file-name">
@@ -307,7 +327,7 @@ const ActivateStepThree = () => {
            */
         }
         <div className="form-container d-grid">
-          <p className="form-title">COE and Billing Statement</p>
+          <p className="form-title">COE and Company ID</p>
           <div className="form-payslip form-payslip-1">
             <p className="input-label">COE</p>
             <div className="input-layout-container">
@@ -330,20 +350,20 @@ const ActivateStepThree = () => {
             </div>
           </div>
           <div className="form-payslip form-payslip-2">
-            <p className="input-label">Billing Statement</p>
+            <p className="input-label">Company ID</p>
             <div className="input-layout-container">
-              <label htmlFor="billingStatement">
+              <label htmlFor="companyId">
                 <div className="file-name">
-                  <p>{billingStatement ? billingStatement.name : 'No chosen image'}</p>
+                  <p>{companyId ? companyId.name : 'No chosen image'}</p>
                 </div>
                 <button>Choose File</button>
               </label>
-              <input type="file" id="billingStatement" onChange={handleBillingStatement} />
+              <input type="file" id="companyId" onChange={handleCompanyId} />
               {
-                billingStatementPreview ?
+                companyIdPreview ?
                   <div className="image-preview">
-                    <button className="removeImg" type="button" onClick={removeBillingStatement}>&times;</button>
-                    <img src={billingStatementPreview} alt="billingStatement-preview" />
+                    <button className="removeImg" type="button" onClick={removeCompanyId}>&times;</button>
+                    <img src={companyIdPreview} alt="companyId-preview" />
                   </div>
                   :
                   null
@@ -357,7 +377,7 @@ const ActivateStepThree = () => {
            */
         }
         <div className="form-container d-grid">
-          <p className="form-title">Bank Transaction</p>
+          <p className="form-title">Bank Transaction and Billing Statement</p>
           <div className="form-payslip form-payslip-1">
             <p className="input-label">Bank Transaction</p>
             <div className="input-layout-container">
@@ -373,6 +393,27 @@ const ActivateStepThree = () => {
                   <div className="image-preview">
                     <button className="removeImg" type="button" onClick={removeBankTransaction}>&times;</button>
                     <img src={bankTransactionPreview} alt="bankTransaction-preview" />
+                  </div>
+                  :
+                  null
+              }
+            </div>
+          </div>
+          <div className="form-payslip form-payslip-2">
+            <p className="input-label">Billing Statement</p>
+            <div className="input-layout-container">
+              <label htmlFor="billingStatement">
+                <div className="file-name">
+                  <p>{billingStatement ? billingStatement.name : 'No chosen image'}</p>
+                </div>
+                <button>Choose File</button>
+              </label>
+              <input type="file" id="billingStatement" onChange={handleBillingStatement} />
+              {
+                billingStatementPreview ?
+                  <div className="image-preview">
+                    <button className="removeImg" type="button" onClick={removeBillingStatement}>&times;</button>
+                    <img src={billingStatementPreview} alt="billingStatement-preview" />
                   </div>
                   :
                   null

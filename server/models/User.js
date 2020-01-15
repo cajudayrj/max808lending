@@ -93,7 +93,7 @@ const getInfo = async (con, id) => {
   const query = `
     SELECT u.*, 
     ui.officeName, ui.officeAddress, ui.officePosition, ui.officeTelephone,
-    ui.dateOfPayout, ui.officePayrollAccount, ui.bankCheckingAccount, ui.existingLoan
+    ui.dateOfPayout, ui.officePayrollAccount, ui.bankCheckingAccount, ui.existingLoan, ui.fbLink
     FROM Users u, UserInformation ui WHERE u.id = ui.user_id AND u.id = ?`;
 
   const [rows] = await con.execute(query, [id], queryCallback);
@@ -116,10 +116,31 @@ const getDocuments = async (con, id) => {
   const query = `
     SELECT u.*, 
     ud.payslipOne, ud.payslipTwo, ud.validIdOne, ud.validIdTwo,
-    ud.coe, ud.billingStatement, ud.bankTransaction
+    ud.coe, ud.billingStatement, ud.bankTransaction, ud.companyId
     FROM Users u, UserDocuments ud WHERE u.id = ud.user_id AND u.id = ?`;
 
   const [rows] = await con.execute(query, [id], queryCallback);
+  return rows;
+}
+
+const updateUser = async (con, id, data) => {
+  const query = `
+  UPDATE Users SET
+  mobileNum = ?, address = ?, town = ?, cityProvince = ?,
+  maritalStatus = ?
+  WHERE id = ?
+  `
+  const variables = [
+    data.mobileNum,
+    data.address,
+    data.town,
+    data.cityProvince,
+    data.maritalStatus,
+    id
+  ]
+
+  const [rows] = await con.execute(query, variables, queryCallback);
+
   return rows;
 }
 
@@ -136,4 +157,5 @@ module.exports = {
   getInfo,
   getReferences,
   getDocuments,
+  updateUser,
 };

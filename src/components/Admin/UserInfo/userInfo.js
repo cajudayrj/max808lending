@@ -4,6 +4,7 @@ import TabContentBorrowerInfo from '../Loan/TabContents/tabContentBorrowerInfo';
 import TabContentBorrowerDocs from '../Loan/TabContents/tabContentBorrowerDocs';
 import TabContentBorrowerRefs from '../Loan/TabContents/tabContentBorrowerRefs';
 import handleRedirects from '../../../assets/helpers/handleRedirects';
+import EditDocuments from '../../User/EditDocuments/editDocuments';
 
 const UserInfo = props => {
 
@@ -75,7 +76,12 @@ const UserInfo = props => {
             <TabContentBorrowerInfo userId={userId} />
           </div>
           <div ref={borrowerDocsRef} className="loan-tab-contents__borrower-documents hidden">
-            <TabContentBorrowerDocs userId={userId} />
+            {
+              props.match.params.id ?
+                <TabContentBorrowerDocs userId={userId} />
+                :
+                <EditDocuments userId={userId} />
+            }
           </div>
           <div ref={borrowerRefsRef} className="loan-tab-contents__borrower-references hidden">
             <TabContentBorrowerRefs userId={userId} />

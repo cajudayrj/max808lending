@@ -306,6 +306,7 @@ router.post('/activate/step-two', userMiddleware, async (req, res) => {
     officePayrollAccount: validate.value.payrollAcc,
     bankCheckingAccount: validate.value.bankCheckAcc,
     existingLoan: validate.value.existingLoans,
+    fbLink: validate.value.fbLink,
   }
 
   const userInfo = await UserInformation.post(con, otherInfo);

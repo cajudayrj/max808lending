@@ -108,6 +108,38 @@
       background-color: #b51e1ec7;
     }
 
+    .buttons{
+      display: flex;
+
+      button{
+        background-color: $yellow;
+        color: $black;
+        text-transform: uppercase;
+        font-family: 'Futura', sans-serif;
+        border: none;
+        font-size: 16px;
+        padding: 12px 50px 10px;
+        margin-top: 20px;
+        cursor: pointer;
+        display: block;
+        margin-left: 20px;
+        width: 100%;
+
+        &:nth-child(1){
+          margin-left: 0;
+        }
+  
+        @include tablet{
+          width: auto;
+        }
+      }
+
+      .submit-btn{
+        background-color: $blue;
+        color: $white;
+      }
+    }
+
     .submit-btn{
       background-color: $yellow;
       color: $black;
@@ -131,6 +163,10 @@
         width: auto;
       }
     }
+  }
+
+  .steps-container.edit-acc-details{
+    margin: 0;
   }
 
   &-stepone-container, .steps-container{
@@ -287,6 +323,14 @@
 
       .form-inputs.form-pi-chacc{
         grid-column: set-columns(7,6);
+      }
+
+      .form-inputs.form-pi-fbacc{
+        grid-column: set-columns(1,12);
+
+        @include tablet{
+          grid-column: set-columns(1,6);
+        }
       }
 
       .form-inputs.form-pi-exstloan{
