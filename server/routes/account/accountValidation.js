@@ -30,6 +30,7 @@ const stepTwoValidation = data => {
     payrollAcc: Joi.string().required().label("Payroll Account"),
     bankCheckAcc: Joi.string().required().label("Bank Checking Account"),
     existingLoans: Joi.allow(null).label("Existing Loans"),
+    fbLink: Joi.string().regex(/^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/).required().label("Facebook Profile Link").messages({ "string.pattern.base": "Please input a valid facebook account link." }),
   });
 
   const validate = schema.validate(data);
@@ -55,8 +56,31 @@ const stepFourValidation = data => {
   return validate;
 }
 
+
+const updateInfoValidation = data => {
+  const schema = Joi.object({
+    maritalStatus: Joi.string().required().label("Marital Status"),
+    address: Joi.string().required().label("Address"),
+    mobileNum: Joi.string().required().min(11).regex(/^[0-9]+$/).label("Mobile Number").messages({ "string.pattern.base": "Please input a valid mobile number." }),
+    townMunicipality: Joi.string().required().label("Town / Municipality"),
+    cityProvince: Joi.string().required().label("City / Province"),
+    company: Joi.string().required().label("Company Name"),
+    companyAddress: Joi.string().required().label("Company Address"),
+    companyTelNo: Joi.string().min(7).regex(/^\+{0,1}[0-9\-]+$/).required().label("Company Tel No.").messages({ "string.pattern.base": "Please input a valid telephone number." }),
+    position: Joi.string().required().label("Position"),
+    dop: Joi.number().required().label("Date of Payout"),
+    payrollAcc: Joi.string().required().label("Payroll Account"),
+    bankCheckAcc: Joi.string().required().label("Bank Checking Account"),
+    existingLoans: Joi.allow(null).label("Existing Loans"),
+    fbLink: Joi.string().regex(/^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/).required().label("Facebook Profile Link").messages({ "string.pattern.base": "Please input a valid facebook account link." }),
+  })
+  const validate = schema.validate(data);
+  return validate;
+}
+
 module.exports = {
   stepOneValidation,
   stepTwoValidation,
   stepFourValidation,
+  updateInfoValidation,
 }

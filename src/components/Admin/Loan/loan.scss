@@ -431,6 +431,37 @@
         object-fit: contain;
       }
     }
+
+    .buttons{
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+
+      button{
+        align-self: flex-end;
+        padding: 10px 25px;
+        color: $white;
+        background: $blue;
+        border:none;
+        margin-left: 20px;
+        font-size: 13px;
+        font-family: "MontserratMedium", sans-serif;
+      }
+
+      button.cancel{
+        background: $red;
+      }
+    }
+  }
+
+  .modal-content.img.add-doc{
+    height: auto;
+    max-height: 90vh;
+    width: 80vw;
+
+    @include tablet{
+      width: 60vw;
+    }
   }
 }
 

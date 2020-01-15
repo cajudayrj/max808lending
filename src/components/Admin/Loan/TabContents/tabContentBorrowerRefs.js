@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import serverUrl from '../../../../serverUrl';
 
@@ -34,7 +35,13 @@ const TabContentBorrowerRefs = ({ userId }) => {
 
   return (
     <>
-      <h3 className="title-info">Officemate Reference</h3>
+      {/* {
+        userData.id === userId ?
+          <div className="edit-account">
+            <Link to="/dashboard/edit-info">Update References</Link>
+          </div> : null
+      } */}
+      <h3 className={`title-info`}>Officemate Reference</h3>
       <div className="info-grid">
         <p className="title">Officemate Name:</p>
         <p className="value">{ifExists(user.officemateName)}</p>

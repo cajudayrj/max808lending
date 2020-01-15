@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../../serverUrl';
@@ -31,12 +32,23 @@ const TabContentBorrowerInfo = ({ userId }) => {
   }, [userData.authToken, userId])
 
   const ifExists = item => item ? item : '';
+  const renameFbUrl = fb => {
+    if (!fb) return '#';
+    const link = fb.split('facebook.com/')[1];
+    return `https://fb.com/${link}`;
+  }
 
   if (loading) return <h1 className="title-info loading">Loading...</h1>
 
   return (
     <>
-      <h3 className="title-info">Main Information</h3>
+      {
+        userData.id === userId ?
+          <div className="edit-account">
+            <Link to="/dashboard/edit-info">Update Information</Link>
+          </div> : null
+      }
+      <h3 className={`title-info ${userData.id === userId ? 'top' : ''}`}>Main Information</h3>
       <div className="info-grid">
         <p className="title">First Name:</p>
         <p className="value">{ifExists(user.firstName)}</p>
@@ -80,6 +92,10 @@ const TabContentBorrowerInfo = ({ userId }) => {
       <div className="info-grid">
         <p className="title">Gender:</p>
         <p className="value">{ifExists(user.gender)}</p>
+      </div>
+      <div className="info-grid">
+        <p className="title">Facebook Account Link:</p>
+        <a href={renameFbUrl(user.fbLink)} rel="noopener noreferrer" target="_blank" className="value">{renameFbUrl(user.fbLink)}</a>
       </div>
       <h3 className="title-info">Other Information</h3>
       <div className="info-grid">
