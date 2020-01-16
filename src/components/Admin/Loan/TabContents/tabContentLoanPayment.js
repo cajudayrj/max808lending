@@ -3,7 +3,7 @@ import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../../serverUrl';
 
-const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setBackToActive, rejectLoanRequest, setActiveLoanStatus, loanId, handlePenalties, handlePayment, handleBalance, setLoanStatus }) => {
+const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setBackToActive, rejectLoanRequest, setActiveLoanStatus, loanId, handlePenalties, handlePayment, handleBalance, setLoanStatus, timesToPay }) => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
 
   const [loading, setLoading] = useState(true);
@@ -133,8 +133,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
   useEffect(() => {
     setLoading(true);
     if ((status === 'Pending') || (status === 'Rejected')) {
-      const boxes = terms / 15;
-      const eachBoxAmount = amount / boxes;
+      const eachBoxAmount = amount / timesToPay;
       const today = new Date();
 
       setFirstAmount(0);
@@ -162,7 +161,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
       setTwelfthAmount(0);
       setTwelfthDate(null);
 
-      for (let i = 1; i <= boxes; i++) {
+      for (let i = 1; i <= timesToPay; i++) {
         if (i === 1) {
           const dateDeadline = moment(today).add((15 * i), 'd').tz('Asia/Manila').format('YYYY-MM-DD');
           setFirstAmount(eachBoxAmount);
@@ -338,7 +337,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
       setLoading(false);
     }
 
-  }, [amount, loanId, status, terms, userData.authToken])
+  }, [amount, loanId, status, terms, timesToPay, userData.authToken])
 
   useEffect(() => {
     const totalPenalties = (firstPenalty
