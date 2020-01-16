@@ -24,6 +24,7 @@ const Loan = ({ match }) => {
   const [totalPayment, setTotalPayment] = useState(0);
   const [totalBalance, setTotalBalance] = useState(0);
   const [deductProcessOnly, setDeductProcessOnly] = useState(false);
+  const [timesToPay, setTimesToPay] = useState(1);
 
   const approveModalRef = useRef(null);
   const paymentRef = useRef(null);
@@ -523,6 +524,7 @@ const Loan = ({ match }) => {
                 handlePayment={setTotalPayment}
                 handleBalance={setTotalBalance}
                 setLoanStatus={setStatus}
+                timesToPay={timesToPay}
               />
             </div>
             <div ref={borrowerInfoRef} className="loan-tab-contents__borrower-info hidden">
@@ -563,6 +565,10 @@ const Loan = ({ match }) => {
               <option value="165">165 Days</option>
               <option value="180">180 Days</option>
             </select>
+          </div>
+          <div className="fields">
+            <p className="label">Times to Pay</p>
+            <input type="number" min="1" max="12" value={timesToPay} onChange={e => setTimesToPay(e.target.value)} />
           </div>
           <div className="fields">
             <p className="label">Principal</p>
