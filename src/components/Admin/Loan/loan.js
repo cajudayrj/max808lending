@@ -578,6 +578,7 @@ const Loan = ({ match }) => {
             <p className="label">Finance Charge</p>
             <select value={financeCharge} onChange={e => setFinanceCharge(e.target.value)}>
               <option value="0">No Interest</option>
+              <option value="0.5">0.5%</option>
               <option value="1">1%</option>
               <option value="1.5">1.5%</option>
               <option value="2">2%</option>
@@ -607,6 +608,7 @@ const Loan = ({ match }) => {
             <p className="label">Service Charge</p>
             <select value={serviceFee} onChange={e => setServiceFee(e.target.value)}>
               <option value="0">No Service Charge</option>
+              <option value="0.5">0.5%</option>
               <option value="1">1%</option>
               <option value="1.5">1.5%</option>
               <option value="2">2%</option>
