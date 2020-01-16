@@ -112,7 +112,7 @@ const pendingLoans = async (con, page) => {
 const activeLoans = async (con, page) => {
   const offset = (page - 1) * 20;
   const query = `
-    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus,
+    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus, l.dueDate,
     (SELECT COUNT(l.id) FROM Loans l, Users u 
     WHERE l.loanStatus = 'Active'
     AND l.user_id = u.id) AS fullCount 

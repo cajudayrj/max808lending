@@ -55,6 +55,7 @@ const ActiveLoans = () => {
               <th>Amount</th>
               <th>Terms</th>
               <th>Loan Date</th>
+              <th>Due Date</th>
               <th>Status</th>
               <th></th>
             </tr>
@@ -70,6 +71,7 @@ const ActiveLoans = () => {
                       <td>&#8369;{monify(loan.amount)}</td>
                       <td>{loan.terms} days</td>
                       <td>{moment(loan.loanDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
+                      <td>{moment(loan.dueDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                       <td>{loan.loanStatus}</td>
                       <td><Link to={`/admin/loan/${loan.id}`} >View</Link></td>
                     </tr>
