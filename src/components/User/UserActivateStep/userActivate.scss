@@ -317,12 +317,16 @@
         grid-column: set-columns(9,4);
       }
 
+      .form-inputs.form-pi-dop-2{
+        grid-column: set-columns(1,4);
+      }
+
       .form-inputs.form-pi-pracc{
-        grid-column: set-columns(1,6);
+        grid-column: set-columns(5,4);
       }
 
       .form-inputs.form-pi-chacc{
-        grid-column: set-columns(7,6);
+        grid-column: set-columns(9,4);
       }
 
       .form-inputs.form-pi-fbacc{

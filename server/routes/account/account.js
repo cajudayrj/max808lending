@@ -303,6 +303,7 @@ router.post('/activate/step-two', userMiddleware, async (req, res) => {
     officeTelephone: validate.value.companyTelNo,
     officePosition: validate.value.position,
     dateOfPayout: validate.value.dop,
+    dateOfPayoutTwo: validate.value.dopTwo,
     officePayrollAccount: validate.value.payrollAcc,
     bankCheckingAccount: validate.value.bankCheckAcc,
     existingLoan: validate.value.existingLoans,

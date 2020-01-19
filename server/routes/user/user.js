@@ -137,6 +137,7 @@ router.put('/update-info/:id', userMiddleware, async (req, res) => {
     officeTelephone: validation.value.companyTelNo,
     officePosition: validation.value.position,
     dateOfPayout: validation.value.dop,
+    dateOfPayoutTwo: validation.value.dopTwo,
     officePayrollAccount: validation.value.payrollAcc,
     bankCheckingAccount: validation.value.bankCheckAcc,
     existingLoan: validation.value.existingLoans,

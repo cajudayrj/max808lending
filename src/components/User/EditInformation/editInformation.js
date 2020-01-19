@@ -31,6 +31,7 @@ const EditInformation = () => {
   const [companyTelNo, setCompanyTelNo] = useState('');
   const [position, setPosition] = useState('');
   const [dop, setDop] = useState(1);
+  const [dopTwo, setDopTwo] = useState(0);
   const [payrollAcc, setPayrollAcc] = useState('');
   const [bankCheckAcc, setBankCheckAcc] = useState('');
   const [existingLoans, setExistingLoans] = useState('');
@@ -67,6 +68,7 @@ const EditInformation = () => {
           setCompanyTelNo(user.officeTelephone);
           setPosition(user.officePosition);
           setDop(user.dateOfPayout);
+          setDopTwo(user.dateOfPayoutTwo);
           setPayrollAcc(user.officePayrollAccount);
           setBankCheckAcc(user.bankCheckingAccount)
           setExistingLoans(user.existingLoan);
@@ -99,6 +101,7 @@ const EditInformation = () => {
       companyTelNo,
       position,
       dop,
+      dopTwo,
       payrollAcc,
       bankCheckAcc,
       existingLoans,
@@ -145,6 +148,7 @@ const EditInformation = () => {
     setCompanyTelNo(user.officeTelephone);
     setPosition(user.officePosition);
     setDop(user.dateOfPayout);
+    setDopTwo(user.dateOfPayoutTwo);
     setPayrollAcc(user.officePayrollAccount);
     setBankCheckAcc(user.bankCheckingAccount)
     setExistingLoans(user.existingLoan);
@@ -249,6 +253,15 @@ const EditInformation = () => {
           <div className="form-inputs form-pi-dop">
             <p className="input-label">Date of Payout</p>
             <select value={dop} onChange={e => setDop(e.target.value)}>
+              {
+                dopDates.map(d => <option key={d} value={d}>{d}</option>)
+              }
+            </select>
+          </div>
+          <div className="form-inputs form-pi-dop-2">
+            <p className="input-label">Date of Payout 2</p>
+            <select value={dopTwo} onChange={e => setDopTwo(e.target.value)}>
+              <option value="0">N/A</option>
               {
                 dopDates.map(d => <option key={d} value={d}>{d}</option>)
               }

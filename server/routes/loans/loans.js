@@ -221,6 +221,46 @@ router.put('/reject/:id', adminMiddleware, async (req, res) => {
       success: true,
       loanData: newData[0]
     }
+
+    // Construct Mail
+    const mailOptions = {
+      from: 'Max808 Lending Corporation <admin@max808lending.com>',
+      to: newData[0][0].email,
+      subject: 'Max808 Lending Corporation - Loan Request Rejected',
+      html: `
+        <p>Good day, ${newData[0][0].firstName} ${newData[0][0].lastName}!</p>
+        <p>We're sorry. Your Loan Request with the ID of ${loanId} has been rejected.</p>
+        ${
+        req.body.message !== '' ?
+          `
+            <p>Message / Reason:</p>
+            <div style="padding: 10px 0px;">
+              <p><b>${req.body.message}</b></p>
+            </div>
+          ` : ''
+        }
+        <br />
+        <p>You can re-apply for another loan by logging in on your dashboard.</p>
+        <br><br>
+        <p>Regards,</p>
+        <p>Max808 Lending Corporation</p>
+      `
+    };
+
+    // Send Mail
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        const error = {
+          error: {
+            details: [{
+              message: "There's a problem in sending email."
+            }]
+          }
+        }
+
+        return res.json(error);
+      }
+    });
     return res.json(data);
   } else {
 
