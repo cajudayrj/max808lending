@@ -79,6 +79,7 @@ const Loan = ({ match }) => {
 
   const resetLoanCharges = (e) => {
     setTerms(loanResult.terms);
+    setTimesToPay(1);
     setFinanceCharge(loanResult.financeCharge);
     setServiceFee(loanResult.serviceFee);
     setAmount(loanResult.amount);
