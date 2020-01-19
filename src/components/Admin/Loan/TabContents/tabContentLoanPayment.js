@@ -13,6 +13,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
   const [updateLoanModal, setUpdateLoanModal] = useState(false);
   const [fullyPaidModal, setFullyPaidModal] = useState(false);
   const [activeBackModal, setActiveBackModal] = useState(false);
+  const [rejectMessage, setRejectMessage] = useState('');
 
   const [loanTermData, setLoanTermData] = useState({});
 
@@ -508,7 +509,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
   const confirmReject = e => {
     toggleRejectModal(e);
     setTimeout(() => {
-      rejectLoanRequest();
+      rejectLoanRequest(rejectMessage);
     }, 400)
   }
 
@@ -2858,6 +2859,10 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
         <div className="modal-content">
           <div className="modal-header">
             <p className="modal-title">Confirm Reject Loan Request?</p>
+          </div>
+          <div className="reject-message">
+            <label htmlFor="reject-loan" className="reject-label">Message / Reason for reject:</label>
+            <textarea id="reject-loan" value={rejectMessage} onChange={e => setRejectMessage(e.target.value)} rows="4"></textarea>
           </div>
           <div className="loan-charges-btns">
             <button type="button" className="confirm-btn" onClick={confirmReject}>Continue</button>

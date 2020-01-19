@@ -198,6 +198,18 @@ const Loan = ({ match }) => {
       })
   }
 
+  const handleFees = (e, setState) => {
+    let val = e.target.value;
+    if (e.target.value === '') {
+      setState(0);
+      return;
+    }
+    if (val >= 1) {
+      setState(parseFloat(val));
+      return;
+    }
+  }
+
   const approveLoanRequest = (loanRequestData) => {
 
     const today = new Date();
@@ -260,9 +272,12 @@ const Loan = ({ match }) => {
       });
   }
 
-  const rejectLoanRequest = () => {
+  const rejectLoanRequest = message => {
     axios(`${serverUrl}/loans/reject/${loanResult.id}`, {
       method: "PUT",
+      data: {
+        message
+      },
       headers: {
         "Authorization": `Bearer ${userData.authToken}`
       }
@@ -576,29 +591,7 @@ const Loan = ({ match }) => {
           </div>
           <div className="fields">
             <p className="label">Finance Charge</p>
-            <select value={financeCharge} onChange={e => setFinanceCharge(e.target.value)}>
-              <option value="0">No Interest</option>
-              <option value="0.5">0.5%</option>
-              <option value="1">1%</option>
-              <option value="1.5">1.5%</option>
-              <option value="2">2%</option>
-              <option value="2.5">2.5%</option>
-              <option value="3">3%</option>
-              <option value="3.5">3.5%</option>
-              <option value="4">4%</option>
-              <option value="4.5">4.5%</option>
-              <option value="5">5%</option>
-              <option value="5.5">5.5%</option>
-              <option value="6">6%</option>
-              <option value="6.5">6.5%</option>
-              <option value="7">7%</option>
-              <option value="7.5">7.5%</option>
-              <option value="8">8%</option>
-              <option value="8.5">8.5%</option>
-              <option value="9">9%</option>
-              <option value="9.5">9.5%</option>
-              <option value="10">10%</option>
-            </select>
+            <input type="number" step="0.1" min="0" max="10" value={financeCharge} onChange={e => handleFees(e, setFinanceCharge)} />
           </div>
           <div className="fields">
             <p className="label">Processing Fee</p>
@@ -606,29 +599,7 @@ const Loan = ({ match }) => {
           </div>
           <div className="fields">
             <p className="label">Service Charge</p>
-            <select value={serviceFee} onChange={e => setServiceFee(e.target.value)}>
-              <option value="0">No Service Charge</option>
-              <option value="0.5">0.5%</option>
-              <option value="1">1%</option>
-              <option value="1.5">1.5%</option>
-              <option value="2">2%</option>
-              <option value="2.5">2.5%</option>
-              <option value="3">3%</option>
-              <option value="3.5">3.5%</option>
-              <option value="4">4%</option>
-              <option value="4.5">4.5%</option>
-              <option value="5">5%</option>
-              <option value="5.5">5.5%</option>
-              <option value="6">6%</option>
-              <option value="6.5">6.5%</option>
-              <option value="7">7%</option>
-              <option value="7.5">7.5%</option>
-              <option value="8">8%</option>
-              <option value="8.5">8.5%</option>
-              <option value="9">9%</option>
-              <option value="9.5">9.5%</option>
-              <option value="10">10%</option>
-            </select>
+            <input type="number" step="0.1" min="0" max="10" value={serviceFee} onChange={e => handleFees(e, setServiceFee)} />
           </div>
           <div className="fields">
             <p className="label">Deduct Processing Fee Only?</p>

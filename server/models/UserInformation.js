@@ -3,9 +3,9 @@ const queryCallback = require('../connection/queryCallback');
 const post = async (con, data) => {
   const query = `
   INSERT INTO UserInformation
-  (user_id, officeName, officeAddress, officeTelephone, officePosition, dateOfPayout, officePayrollAccount, bankCheckingAccount, existingLoan, fbLink) 
+  (user_id, officeName, officeAddress, officeTelephone, officePosition, dateOfPayout, dateOfPayoutTwo, officePayrollAccount, bankCheckingAccount, existingLoan, fbLink) 
   VALUES 
-  (?, ?, ?, ?, ?, ?, ? ,?, ?, ?)
+  (?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)
   `;
 
   const variables = [
@@ -15,6 +15,7 @@ const post = async (con, data) => {
     data.officeTelephone,
     data.officePosition,
     data.dateOfPayout,
+    data.dateOfPayoutTwo,
     data.officePayrollAccount,
     data.bankCheckingAccount,
     data.existingLoan,
@@ -29,7 +30,7 @@ const update = async (con, id, data) => {
   const query = `
     UPDATE UserInformation SET
     officeName = ?, officeAddress = ?, officeTelephone = ?, officePosition = ?,
-    dateOfPayout = ?, officePayrollAccount = ?, bankCheckingAccount = ?,
+    dateOfPayout = ?, dateOfPayoutTwo = ?, officePayrollAccount = ?, bankCheckingAccount = ?,
     existingLoan = ?, fbLink = ?
     WHERE user_id = ?
   `
@@ -40,6 +41,7 @@ const update = async (con, id, data) => {
     data.officeTelephone,
     data.officePosition,
     data.dateOfPayout,
+    data.dateOfPayoutTwo,
     data.officePayrollAccount,
     data.bankCheckingAccount,
     data.existingLoan,

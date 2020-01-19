@@ -413,6 +413,18 @@
         }
       }
     }
+
+    .reject-message{
+      margin-top: 10px;
+
+      label{
+        font-family: "MontserratMedium", sans-serif;
+      }
+
+      textarea{
+        margin-top: 10px;
+      }
+    }
   }
 
   .modal-content.img{

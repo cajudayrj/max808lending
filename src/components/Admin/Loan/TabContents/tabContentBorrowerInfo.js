@@ -19,6 +19,7 @@ const TabContentBorrowerInfo = ({ userId }) => {
     })
       .then(result => {
         const res = result.data;
+
         if (res.success) {
           setUser(res.user);
           setLoading(false);
@@ -117,6 +118,10 @@ const TabContentBorrowerInfo = ({ userId }) => {
       <div className="info-grid">
         <p className="title">Date of Payout:</p>
         <p className="value">{ifExists(user.dateOfPayout)}</p>
+      </div>
+      <div className="info-grid">
+        <p className="title">Date of Payout 2:</p>
+        <p className="value">{user.dateOfPayoutTwo === 0 ? 'N/A' : user.dateOfPayoutTwo}</p>
       </div>
       <div className="info-grid">
         <p className="title">Office Payroll Account:</p>

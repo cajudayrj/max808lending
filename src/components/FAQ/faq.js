@@ -23,6 +23,19 @@ const Faq = () => {
             <p className="answers">We offer quick online application. Just click BORROW located on the upper right portion of the webpage. Create an account, then complete the online application form and wait for a response within 24 hours.</p>
           </div>
           <div className="faq-items">
+            <h3 className="questions">What are the important requirements to apply for loan?</h3>
+            <div className="answers">
+              <ul>
+                <li>30K Minimum Salary</li>
+                <li>Regular Employee &#40;Metro Manila&#41;</li>
+                <li>Online Banking and Checking Account</li>
+                <li>Certificate of Employment</li>
+                <li>2 Months Payslips &amp; Bank Transaction</li>
+                <li>1 Company &amp; 2 Government ID's</li>
+              </ul>
+            </div>
+          </div>
+          <div className="faq-items">
             <h3 className="questions">How much is the loanable amount?</h3>
             <p className="answers">Max 808 Lending Corp. can provide loan ranging from 50% to 500% of their monthly income. Approved amount will be according to credit investigation and evaluation.</p>
           </div>
