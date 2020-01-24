@@ -11,7 +11,7 @@ const userMiddleware = require('../middleware/middleware');
 // Validation function
 const registerValidation = require('./registerValidation');
 const loginValidation = require('./loginValidation');
-const { stepOneValidation, stepTwoValidation, stepFourValidation } = require('./accountValidation');
+const { stepOneValidation, stepTwoValidation, stepFourValidation, resendValidation } = require('./accountValidation');
 
 // DB Connection
 const con = require('../../connection/con');
@@ -407,5 +407,59 @@ router.post('/activate/step-four', userMiddleware, async (req, res) => {
     return res.json(insertError);
   }
 });
+
+router.get('/validation-resend/:email', async (req, res) => {
+  const validation = resendValidation({ email: req.params.email });
+
+  if (validation.error) {
+    const validateError = {
+      success: false,
+      message: validation.error.details[0].message,
+    }
+    return res.json(validateError)
+  };
+
+  const user = await User.findEmail(con, req.params.email);
+
+  if (user.length > 0) {
+
+    // Construct Mail
+    const mailOptions = {
+      from: 'Max808 Lending Corporation <admin@max808lending.com>',
+      to: req.params.email,
+      subject: 'Max808 Lending Corporation - Account Verification Link',
+      html: `
+        <h4>Verification Link:</h4>
+        <p>Please click this <a href="${siteUrl}/verify-account/${user[0].accountVerificationToken}">link</a>.</p>
+        <p>Or go to: ${siteUrl}/verify-account/${user[0].accountVerificationToken}</p>
+      `
+    };
+
+    // Send Mail
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        const error = {
+          success: false,
+          message: "There's a problem in sending email verification link."
+        }
+
+        return res.json(error);
+      }
+    });
+
+    const data = {
+      success: true,
+      message: "Account verification link has been sent. Please check your email."
+    }
+    return res.json(data);
+  } else {
+    const err = {
+      success: false,
+      message: "No registered account found with the email provided."
+    }
+
+    return res.json(err);
+  }
+})
 
 module.exports = router;

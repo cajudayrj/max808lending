@@ -80,9 +80,18 @@ const updateInfoValidation = data => {
   return validate;
 }
 
+const resendValidation = data => {
+  const schema = Joi.object({
+    email: Joi.string().email().required().label("Email"),
+  })
+  const validate = schema.validate(data);
+  return validate;
+}
+
 module.exports = {
   stepOneValidation,
   stepTwoValidation,
   stepFourValidation,
   updateInfoValidation,
+  resendValidation,
 }
