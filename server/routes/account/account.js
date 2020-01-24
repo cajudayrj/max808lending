@@ -216,7 +216,7 @@ router.put('/verify', async (req, res) => {
 
   const user = { ...account[0] };
 
-  if (user.accountStatus === 'verified') {
+  if (user.accountStatus !== 'notVerified') {
     const alreadyVerified = {
       success: false,
       message: "Account has already been verified.",
