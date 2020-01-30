@@ -180,15 +180,16 @@ router.post('/approve/:id', adminMiddleware, async (req, res) => {
           const error = {
             error: {
               details: [{
-                message: "There's a problem in sending email verification link."
+                message: "There's a problem in sending email to the user."
               }]
             }
           }
 
           return res.json(error);
+        } else {
+          return res.json(data);
         }
       });
-      return res.json(data);
     } else {
       return res.json(fail)
     }
@@ -259,9 +260,10 @@ router.put('/reject/:id', adminMiddleware, async (req, res) => {
         }
 
         return res.json(error);
+      } else {
+        return res.json(data);
       }
     });
-    return res.json(data);
   } else {
 
     return res.json(fail);
@@ -310,7 +312,7 @@ router.put('/to-active/:id', adminMiddleware, async (req, res) => {
     };
 
     // Send Mail
-    transporter.sendMail(mailOptions, (err, info) => {
+    transporter.sendMail(mailOptions, async (err, info) => {
       if (err) {
         const error = {
           error: {
@@ -321,26 +323,26 @@ router.put('/to-active/:id', adminMiddleware, async (req, res) => {
         }
 
         return res.json(error);
+      } else {
+        const lData = newData[0][0];
+
+        const transactionData = {
+          loan_id: lData.id,
+          user_id: lData.user_id,
+          description: "Initial Loan",
+          amount: lData.loanBalance,
+          transactionDate: moment(new Date()).tz('Asia/Manila').format('YYYY-MM-DD'),
+        }
+
+        const addNewTransaction = await UserTransactions.add(con, transactionData);
+
+        if (addNewTransaction.affectedRows > 0) {
+          return res.json(data);
+        } else {
+          return res.json(fail);
+        }
       }
     });
-
-    const lData = newData[0][0];
-
-    const transactionData = {
-      loan_id: lData.id,
-      user_id: lData.user_id,
-      description: "Initial Loan",
-      amount: lData.loanBalance,
-      transactionDate: moment(new Date()).tz('Asia/Manila').format('YYYY-MM-DD'),
-    }
-
-    const addNewTransaction = await UserTransactions.add(con, transactionData);
-
-    if (addNewTransaction.affectedRows > 0) {
-      return res.json(data);
-    } else {
-      return res.json(fail);
-    }
 
   } else {
     return res.json(fail);
@@ -561,10 +563,11 @@ router.post('/apply-new', userMiddleware, async (req, res) => {
         }
 
         return res.json(error);
+      } else {
+        return res.json(data);
       }
     });
 
-    return res.json(data);
   } else {
     return res.json(insertError);
   }
