@@ -125,7 +125,7 @@ router.post('/register', async (req, res) => {
           }]
         }
       }
-
+      console.log('sendmailerr', err);
       return res.json(error);
     } else {
       const successful = {
