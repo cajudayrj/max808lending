@@ -400,11 +400,9 @@ router.post('/activate/step-four', userMiddleware, async (req, res) => {
       transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
           const error = {
-            error: {
-              details: [{
-                message: "There's a problem in sending email verification link."
-              }]
-            }
+            success: true,
+            userReferences: uploadReferences,
+            message: "There's a problem in sending email to admin."
           }
 
           return res.json(error);

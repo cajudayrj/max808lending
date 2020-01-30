@@ -56,10 +56,6 @@ const ActivateStepFour = () => {
     })
       .then(response => {
         const { data } = response;
-        if (data.error) {
-          setResMessage(data.error.details[0].message);
-          return;
-        }
         if (data.success) {
           setResMessage('');
           const newUserData = { ...userData };
@@ -68,6 +64,10 @@ const ActivateStepFour = () => {
           history.push('/dashboard')
         } else {
           setResMessage(data.message);
+        }
+        if (data.error) {
+          setResMessage(data.error.details[0].message);
+          return;
         }
       })
       .catch(err => setResMessage('There\'s an error in submitting your data. Please try again.'))
