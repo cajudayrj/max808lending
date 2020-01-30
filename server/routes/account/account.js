@@ -456,14 +456,14 @@ router.get('/validation-resend/:email', async (req, res) => {
         }
 
         return res.json(error);
+      } else {
+        const data = {
+          success: true,
+          message: "Account verification link has been sent. Please check your email."
+        }
+        return res.json(data);
       }
     });
-
-    const data = {
-      success: true,
-      message: "Account verification link has been sent. Please check your email."
-    }
-    return res.json(data);
   } else {
     const err = {
       success: false,
