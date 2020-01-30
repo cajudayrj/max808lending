@@ -85,8 +85,24 @@ const updatePayments = async (con, id, data) => {
   return rows;
 }
 
+const mailPayments = async con => {
+  const query = `
+    SELECT DISTINCT(lp.id), u.firstName, u.lastName, u.email, l.loanBalance, lp.*
+    FROM Users u, Loans l, LoanPayments lp
+    WHERE
+    lp.loan_id = l.id AND
+    l.user_id = u.id AND
+    l.loanStatus = "Active"
+  `
+
+  const [rows] = await con.execute(query, [], queryCallback);
+
+  return rows;
+}
+
 module.exports = {
   addNew,
   get,
   updatePayments,
+  mailPayments,
 }

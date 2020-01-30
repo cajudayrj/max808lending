@@ -144,6 +144,22 @@ const updateUser = async (con, id, data) => {
   return rows;
 }
 
+const ban = async (con, id, ban) => {
+  const query = `
+  UPDATE Users SET
+  banned = ?
+  WHERE id = ?
+  `
+  const variables = [
+    ban,
+    id
+  ]
+
+  const [rows] = await con.execute(query, variables, queryCallback);
+
+  return rows;
+}
+
 module.exports = {
   all,
   find,
@@ -158,4 +174,5 @@ module.exports = {
   getReferences,
   getDocuments,
   updateUser,
+  ban,
 };

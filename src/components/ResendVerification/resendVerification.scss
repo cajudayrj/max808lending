@@ -1,0 +1,60 @@
+.resend-verification{
+  &-container{
+    margin-top: 80px;
+    margin-bottom: 60px;
+
+    h1{
+      grid-column: span 12;
+      text-align: center;
+      font-size: 30px;
+      font-family: "Futura", sans-serif;
+      color: $blue;
+      text-transform: uppercase;
+    }
+
+    .input-email{
+      grid-column: span 12;
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      justify-content: center;
+
+      input[type="email"]{
+        padding: 8px 15px;
+        border: solid 1px #d3d3d3;
+        width: grid-span(6,12);
+        font-size: 15px;
+        border-radius: 5px;
+        background: $white;
+        margin-right: 15px;
+      }
+  
+      button{
+        padding: 8px 40px;
+        cursor: pointer;
+        border: none;
+        text-transform: uppercase;
+        font-family: "MontserratBold", sans-serif;
+        font-size: 14px;
+        background-color: $yellow;
+      }
+    }
+
+    .resend-response{
+      text-align: center;
+      grid-column: span 12;
+      padding: 10px 60px;
+      margin: 20px auto 0px auto;
+      border-radius: 3px;
+    }
+
+    .resend-response.success{
+      background: #57b76896;
+      border: solid 1px $green;
+    }
+
+    .resend-response.error{
+      background: $red;
+    }
+  }
+}

@@ -7,6 +7,7 @@ const moment = require('moment-timezone');
 
 // middlewares
 const userMiddleware = require('../middleware/middleware');
+const adminMiddleware = require('../middleware/adminMiddleware');
 
 // Validation function
 const registerValidation = require('./registerValidation');
@@ -175,6 +176,18 @@ router.post('/login', async (req, res) => {
       }
 
       return res.json(notVerified)
+    }
+
+    if (users[0].banned === 1) {
+      const bannedAccount = {
+        error: {
+          details: [{
+            message: "Account is banned from logging in. Please contact administrator."
+          }]
+        }
+      }
+
+      return res.json(bannedAccount)
     }
 
     const token = jwt.sign(
@@ -458,6 +471,36 @@ router.get('/validation-resend/:email', async (req, res) => {
       message: "No registered account found with the email provided."
     }
 
+    return res.json(err);
+  }
+})
+
+router.put('/ban/:id', adminMiddleware, async (req, res) => {
+
+  const userBan = await User.ban(con, req.params.id, req.body.ban);
+
+  if (userBan.affectedRows > 0) {
+    const userInfo = await User.getInfo(con, req.params.id);
+
+    if (userInfo.length > 0) {
+      const user = {
+        success: true,
+        message: "Successfully update user status.",
+        user: userInfo[0]
+      }
+      return res.json(user);
+    } else {
+      const error = {
+        success: false,
+        message: "No user found!",
+      }
+      return res.json(error)
+    }
+  } else {
+    const err = {
+      success: false,
+      message: 'There\'s an error on your request.'
+    }
     return res.json(err);
   }
 })
