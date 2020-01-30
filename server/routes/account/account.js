@@ -127,18 +127,17 @@ router.post('/register', async (req, res) => {
       }
 
       return res.json(error);
+    } else {
+      const successful = {
+        success: true,
+        newUser,
+        message: "Successfully registered account. Please check your email for the validation link."
+      }
+
+      // Return successful registration
+      return res.json(successful);
     }
   });
-
-  const successful = {
-    success: true,
-    newUser,
-    message: "Successfully registered account. Please check your email for the validation link."
-  }
-
-  // Return successful registration
-  return res.json(successful);
-
 })
 
 /**
