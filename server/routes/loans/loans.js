@@ -8,7 +8,7 @@ const moment = require('moment-timezone');
 const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   host: 'us2.smtp.mailhostbox.com',
-  port: 587,
+  port: process.env.EMAIL_PORT,
   secure: false,
   ignoreTLS: true,
   auth: {
