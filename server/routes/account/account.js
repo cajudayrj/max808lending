@@ -408,10 +408,11 @@ router.post('/activate/step-four', userMiddleware, async (req, res) => {
           }
 
           return res.json(error);
+        } else {
+          return res.json(success)
         }
       });
 
-      return res.json(success)
     } else {
       return res.json(insertError);
     }
