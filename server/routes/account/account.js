@@ -454,7 +454,7 @@ router.get('/validation-resend/:email', async (req, res) => {
           success: false,
           message: "There's a problem in sending email verification link."
         }
-
+        console.log(err);
         return res.json(error);
       } else {
         const data = {
