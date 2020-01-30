@@ -121,7 +121,7 @@ router.post('/register', async (req, res) => {
       const error = {
         error: {
           details: [{
-            message: "There's a problem in sending email verification link."
+            message: "Account successfully created but failed to send email verification link. Please contact admin."
           }]
         }
       }

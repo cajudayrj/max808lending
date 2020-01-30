@@ -131,7 +131,7 @@ scheduler.scheduleJob('* 8 * * *', async function () {
                 const error = {
                   error: {
                     details: [{
-                      message: "There's a problem in sending email verification link."
+                      message: "There's a problem in sending email to users."
                     }]
                   }
                 }
