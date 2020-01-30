@@ -447,7 +447,7 @@ router.get('/validation-resend/:email', async (req, res) => {
 
     // Construct Mail
     const mailOptions = {
-      from: 'Max808 Lending Corporation <admin@max808lending.com>',
+      from: 'Max808 Lending Corporation <contactus@max808lending.com>',
       to: req.params.email,
       subject: 'Max808 Lending Corporation - Account Verification Link',
       html: `
