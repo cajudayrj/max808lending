@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment-timezone';
 import axios from 'axios';
@@ -8,7 +8,10 @@ import serverUrl from '../../../../serverUrl';
 const TabContentBorrowerInfo = ({ userId }) => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
   const [loading, setLoading] = useState(true);
+  const [banModal, setBanModal] = useState(false);
   const [user, setUser] = useState({});
+
+  const banRef = useRef(null);
 
   useEffect(() => {
     axios(`${serverUrl}/user/info/${userId}`, {
@@ -19,7 +22,6 @@ const TabContentBorrowerInfo = ({ userId }) => {
     })
       .then(result => {
         const res = result.data;
-
         if (res.success) {
           setUser(res.user);
           setLoading(false);
@@ -37,6 +39,48 @@ const TabContentBorrowerInfo = ({ userId }) => {
     if (!fb) return '#';
     const link = fb.split('facebook.com/')[1];
     return `https://fb.com/${link}`;
+  }
+
+  const handleBan = (e, lvl, id) => {
+    e.preventDefault();
+    e.persist();
+    const updateBan = lvl === 0 ? 1 : 0;
+
+    axios(`${serverUrl}/account/ban/${id}`, {
+      method: 'PUT',
+      data: {
+        ban: updateBan
+      },
+      headers: {
+        Authorization: `Bearer ${userData.authToken}`
+      }
+    })
+      .then(result => {
+        const res = result.data;
+        if (res.success) {
+          toggleBanModal(e);
+          setTimeout(() => {
+            setUser(res.user);
+          }, 200)
+        }
+        return;
+      });
+  }
+
+  const toggleBanModal = e => {
+    e.preventDefault();
+    setBanModal(!banModal);
+    if (!banModal) {
+      banRef.current.classList.add('opened');
+      setTimeout(() => {
+        banRef.current.classList.add('visible');
+      }, 100)
+    } else {
+      banRef.current.classList.remove('visible');
+      setTimeout(() => {
+        banRef.current.classList.remove('opened');
+      }, 300)
+    }
   }
 
   if (loading) return <h1 className="title-info loading">Loading...</h1>
@@ -134,6 +178,25 @@ const TabContentBorrowerInfo = ({ userId }) => {
       <div className="info-grid">
         <p className="title">Existing Loans:</p>
         <p className="value">{user.existingLoans ? user.existingLoans : 'None'}</p>
+      </div>
+      {
+        userData.userLevel === 1 ?
+          <button onClick={toggleBanModal} className="ban-btn">{user.banned === 1 ? 'Unban' : 'Ban'} User Account</button>
+          : null
+      }
+
+      <div className="loan-modal" ref={banRef}>
+        <div className="modal-overlay" onClick={toggleBanModal}></div>
+        <div className="modal-content img add-doc">
+          <div className="modal-header">
+            <p className="modal-title">{user.banned === 1 ? 'Unban' : 'Ban'} {user.firstName}'s Account?</p>
+            <span onClick={toggleBanModal}>&times;</span>
+          </div>
+          <div className="buttons">
+            <button type="button" className="cancel" onClick={toggleBanModal}>Cancel</button>
+            <button type="button" onClick={e => handleBan(e, user.banned, user.id)}>Confirm {user.banned === 1 ? 'Unban' : 'Ban'}</button>
+          </div>
+        </div>
       </div>
     </>
   )

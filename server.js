@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('./server/scheduler/payment-scheduler');
 
 const express = require('express');
 const app = express();
