@@ -251,15 +251,7 @@ router.put('/reject/:id', adminMiddleware, async (req, res) => {
     // Send Mail
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
-        const error = {
-          error: {
-            details: [{
-              message: "There's a problem in sending email."
-            }]
-          }
-        }
-
-        return res.json(error);
+        return res.json(data);
       } else {
         return res.json(data);
       }
