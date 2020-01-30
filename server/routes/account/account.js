@@ -433,6 +433,17 @@ router.get('/validation-resend/:email', async (req, res) => {
   const user = await User.findEmail(con, req.params.email);
 
   if (user.length > 0) {
+    //transporter contact
+    const transporter = nodemailer.createTransport({
+      host: 'us2.smtp.mailhostbox.com',
+      port: process.env.EMAIL_PORT,
+      secure: false,
+      ignoreTLS: true,
+      auth: {
+        user: process.env.EMAIL_USER_CONTACT,
+        pass: process.env.EMAIL_PASS_CONTACT,
+      }
+    })
 
     // Construct Mail
     const mailOptions = {
