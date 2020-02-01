@@ -52,8 +52,8 @@ const getLatest = async (con, id) => {
 
 const loanCount = async (con, status) => {
   const query = (status !== 'all') ?
-    `SELECT COUNT(l.id) as loanCount FROM Loans l, Users u WHERE l.loanStatus LIKE '${status}%' AND l.user_id = u.id AND u.accountStatus = 'active'`
-    : `SELECT COUNT(l.id) as loanCount FROM Loans l, Users u WHERE l.user_id = u.id AND u.accountStatus = 'active'`;
+    `SELECT COUNT(l.id) as loanCount FROM Loans l, Users u WHERE l.loanStatus LIKE '${status}%' AND l.user_id = u.id AND u.accountStatus = 'active' AND u.banned = '0'`
+    : `SELECT COUNT(l.id) as loanCount FROM Loans l, Users u WHERE l.user_id = u.id AND u.accountStatus = 'active' AND u.banned = '0'`;
 
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
@@ -76,6 +76,7 @@ const all = async (con, page) => {
     FROM Loans l, Users u 
     WHERE l.user_id = u.id
     AND u.accountStatus = 'active'
+    AND u.banned = '0'
     ORDER BY l.id
     DESC
     LIMIT 20
@@ -100,6 +101,7 @@ const pendingLoans = async (con, page) => {
     WHERE l.loanStatus = 'Pending'
     AND l.user_id = u.id
     AND u.accountStatus = 'active'
+    AND u.banned = '0'
     ORDER BY l.id
     DESC
     LIMIT 20
@@ -119,6 +121,7 @@ const activeLoans = async (con, page) => {
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Active'
     AND l.user_id = u.id
+    AND u.banned = '0'
     ORDER BY l.id
     DESC
     LIMIT 20
@@ -141,6 +144,7 @@ const acceptedLoans = async (con, page) => {
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Accepted'
     AND l.user_id = u.id
+    AND u.banned = '0'
     ORDER BY l.id
     DESC
     LIMIT 20
@@ -162,6 +166,7 @@ const approvedLoans = async (con, page) => {
     FROM Loans l, Users u 
     WHERE l.loanStatus = 'Approved'
     AND l.user_id = u.id
+    AND u.banned = '0'
     ORDER BY l.id
     DESC
     LIMIT 20
