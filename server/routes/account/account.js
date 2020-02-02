@@ -355,7 +355,12 @@ router.post('/activate/step-two', userMiddleware, async (req, res) => {
 
 router.post('/activate/step-four', userMiddleware, async (req, res) => {
   const validate = stepFourValidation(req.body);
-  if (validate.error) return res.json(validate);
+  const validError = {
+    success: false,
+    message: validate.error.details[0].message
+  }
+
+  if (validate.error) return res.json(validError);
 
   const userReferences = validate.value;
 
