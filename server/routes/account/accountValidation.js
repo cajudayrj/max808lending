@@ -31,7 +31,7 @@ const stepTwoValidation = data => {
     payrollAcc: Joi.string().required().label("Payroll Account"),
     bankCheckAcc: Joi.string().required().label("Bank Checking Account"),
     existingLoans: Joi.allow(null).label("Existing Loans"),
-    fbLink: Joi.string().regex(/^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/).required().label("Facebook Profile Link").messages({ "string.pattern.base": "Please input a valid facebook account link." }),
+    fbLink: Joi.string().regex(/^(https?:\/\/)?(((w{3}\.)|m.)?)facebook.com\/.*/).required().label("Facebook Profile Link").messages({ "string.pattern.base": "Please input a valid facebook account link." }),
   });
 
   const validate = schema.validate(data);
@@ -74,7 +74,7 @@ const updateInfoValidation = data => {
     payrollAcc: Joi.string().required().label("Payroll Account"),
     bankCheckAcc: Joi.string().required().label("Bank Checking Account"),
     existingLoans: Joi.allow(null).label("Existing Loans"),
-    fbLink: Joi.string().regex(/^(https?:\/\/)?((w{3}\.)?)facebook.com\/.*/).required().label("Facebook Profile Link").messages({ "string.pattern.base": "Please input a valid facebook account link." }),
+    fbLink: Joi.string().regex(/^(https?:\/\/)?(((w{3}\.)|m.)?)facebook.com\/.*/).required().label("Facebook Profile Link").messages({ "string.pattern.base": "Please input a valid facebook account link." }),
   })
   const validate = schema.validate(data);
   return validate;
