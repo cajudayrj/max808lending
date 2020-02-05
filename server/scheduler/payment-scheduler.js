@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
   }
 })
 
-scheduler.scheduleJob('* 8 * * *', async function () {
+scheduler.scheduleJob('8 * * *', async function () {
   const loans = await LoanPayments.mailPayments(con);
 
   if (loans.length > 0) {
@@ -101,13 +101,12 @@ scheduler.scheduleJob('* 8 * * *', async function () {
 
       if (loanData.length > 0) {
         const inThreeDays = moment().tz('Asia/Manila').add(3, 'd').format('YYYY-MM-DD');
-        const inTwoDays = moment().tz('Asia/Manila').add(2, 'd').format('YYYY-MM-DD');
-        const inOneDay = moment().tz('Asia/Manila').add(1, 'd').format('YYYY-MM-DD');
         const thisDay = moment().tz('Asia/Manila').format('YYYY-MM-DD');
+        const afterThreeDays = moment().tz('Asia/Manila').subtract(3, 'd').format('YYYY-MM-DD');
 
         loanData.forEach(ldata => {
           const penaltyDate = moment(ldata.date).tz('Asia/Manila').format('YYYY-MM-DD');
-          if ((penaltyDate === inThreeDays) || (penaltyDate === inTwoDays) || (penaltyDate === inOneDay) || (penaltyDate <= thisDay)) {
+          if ((penaltyDate === inThreeDays) || (penaltyDate === thisDay)) {
             // Construct Mail
             const mailOptions = {
               from: 'Max808 Lending Corporation <admin@max808lending.com>',
@@ -118,6 +117,38 @@ scheduler.scheduleJob('* 8 * * *', async function () {
                 <p>Please be reminded that you have a payment deadline on <b>${moment(penaltyDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</b> amounting to <b>&#8369;${ldata.balance}</b> from your loan id <b>${l.loan_id}</b>.</p>
                 <p>You also have the option to pay the whole remaining loan balance amounting to <b>&#8369;${l.loanBalance}</b>.</p>
                 <p>Failure of payment on the deadline may result to penalties. If you wish to extend your deadline, please contact the admin.</p>
+                <p></p>
+                <br><br>
+                <p>Regards,</p>
+                <p>Max808 Lending Corporation</p>
+              `
+            };
+
+            // Send Mail
+            transporter.sendMail(mailOptions, (err, info) => {
+              if (err) {
+                const error = {
+                  error: {
+                    details: [{
+                      message: "There's a problem in sending email to users."
+                    }]
+                  }
+                }
+                console.log(error);
+              }
+            });
+          }
+
+          if (penaltyDate === afterThreeDays) {
+            // Construct Mail
+            const mailOptions = {
+              from: 'Max808 Lending Corporation <admin@max808lending.com>',
+              to: l.email,
+              subject: 'Max808 Lending Corporation - Loan Payment Due',
+              html: `
+                <h4>Greetings, ${l.firstName} ${l.lastName}!</h4>
+                <p>You still have an unpaid payment last <b>${moment(penaltyDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</b> amounting to <b>&#8369;${ldata.balance}</b> from your loan id <b>${l.loan_id}</b>.</p>
+                <p>Please note that this may result to penalties. If you wish to extend your deadline, please contact the admin.</p>
                 <p></p>
                 <br><br>
                 <p>Regards,</p>
