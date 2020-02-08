@@ -9,6 +9,7 @@ const Loan = require('../../models/Loan');
 
 router.get('/admin-dashboard-count', adminMiddleware, async (req, res) => {
   const user = await User.userCount(con);
+  const bannedUser = await User.bannedUserCount(con);
   const allLoans = await Loan.loanCount(con, 'all');
   const pendingLoans = await Loan.loanCount(con, 'pending');
   const approvedLoans = await Loan.loanCount(con, 'approved');
@@ -19,6 +20,7 @@ router.get('/admin-dashboard-count', adminMiddleware, async (req, res) => {
 
   const data = {
     userCount: user[0].userCount,
+    bannedUserCount: bannedUser[0].userCount,
     allLoanCount: allLoans[0].loanCount,
     pendingLoanCount: pendingLoans[0].loanCount,
     approvedLoanCount: approvedLoans[0].loanCount,

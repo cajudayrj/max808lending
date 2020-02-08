@@ -11,7 +11,27 @@ const all = async (con, page) => {
     WHERE u.userLevel = ul.id
     AND u.accountStatus = "active"
   ) as fullCount
-  FROM Users u, UserLevels ul WHERE u.userLevel = ul.id AND u.accountStatus = "active"
+  FROM Users u, UserLevels ul WHERE u.userLevel = ul.id AND u.accountStatus = "active" AND u.banned = "0"
+  LIMIT 20
+  OFFSET ${offset}
+  `
+
+  const [rows] = await con.execute(query, [], queryCallback);
+  return rows;
+}
+
+const banned = async (con, page) => {
+  const offset = (page - 1) * 20;
+  const query = `SELECT DISTINCT(u.id), 
+  u.username, u.firstName, u.middleName, u.lastName, u.email, u.mobileNum,
+  ul.level,
+  (
+    SELECT COUNT(u.id)
+    FROM Users u, UserLevels ul
+    WHERE u.userLevel = ul.id
+    AND u.accountStatus = "active"
+  ) as fullCount
+  FROM Users u, UserLevels ul WHERE u.userLevel = ul.id AND u.accountStatus = "active" AND u.banned = "1"
   LIMIT 20
   OFFSET ${offset}
   `
@@ -85,7 +105,12 @@ const updatePersonalDetails = async (con, id, data) => {
 }
 
 const userCount = async (con) => {
-  const [rows] = await con.execute(`SELECT COUNT(id) as userCount FROM Users WHERE accountStatus = "active"`, [], queryCallback);
+  const [rows] = await con.execute(`SELECT COUNT(id) as userCount FROM Users WHERE accountStatus = "active" AND banned = "0"`, [], queryCallback);
+  return rows;
+}
+
+const bannedUserCount = async (con) => {
+  const [rows] = await con.execute(`SELECT COUNT(id) as userCount FROM Users WHERE accountStatus = "active" AND banned = "1"`, [], queryCallback);
   return rows;
 }
 
@@ -175,4 +200,6 @@ module.exports = {
   getDocuments,
   updateUser,
   ban,
+  banned,
+  bannedUserCount,
 };

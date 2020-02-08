@@ -41,6 +41,15 @@ const MainAdminDashboard = () => {
             </div>
           </div>
         </NavLink>
+        <NavLink className="user-count" to="/admin/banned-user-list">
+          <div className="items">
+            <UserIcon />
+            <div className="count-desc">
+              <p className="count">{counts.bannedUserCount}</p>
+              <p className="label">Banned Users</p>
+            </div>
+          </div>
+        </NavLink>
         <NavLink className="all-loans-count" to="/admin/loans">
           <div className="items">
             <AllLoans />

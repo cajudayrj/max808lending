@@ -49,6 +49,7 @@ const AdminDashboard = ({ handleLogout }) => {
             <div className="dashboard-sidebar-links">
               <NavLink exact activeClassName="current-page" to="/admin"><Dashboard /> Dashboard</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/user-list"><UserIcon /> User List</NavLink>
+              <NavLink exact activeClassName="current-page" to="/admin/banned-user-list"><UserIcon /> Banned User List</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/summary-of-transactions"><Loan /> Summary of Transactions</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/loans"><Loan /> All Loans</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/active-loans"><ActiveLoan /> Active Loans</NavLink>

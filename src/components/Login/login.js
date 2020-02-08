@@ -89,7 +89,7 @@ const Login = () => {
                     <input type="password" placeholder="Password" value={password} onChange={handlePassword} />
                     <button type="submit" className="login-btn" onClick={handleLogin}>{button}</button>
                     <p className="notyet-borrower">Not yet a borrower? <Link to="/borrow">Register here.</Link></p>
-                    <p className="resend-borrower">Resend verification link? <Link to="/resend-verification">Click here.</Link></p>
+                    {/* <p className="resend-borrower">Resend verification link? <Link to="/resend-verification">Click here.</Link></p> */}
                     {
                       message !== '' ?
                         <div className={`response-message ${!success ? 'warning' : ''}`}>
