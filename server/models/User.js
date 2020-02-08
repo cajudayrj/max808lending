@@ -10,6 +10,7 @@ const all = async (con, page) => {
     FROM Users u, UserLevels ul
     WHERE u.userLevel = ul.id
     AND u.accountStatus = "active"
+    AND u.banned = "0"
   ) as fullCount
   FROM Users u, UserLevels ul WHERE u.userLevel = ul.id AND u.accountStatus = "active" AND u.banned = "0"
   LIMIT 20
@@ -30,7 +31,8 @@ const banned = async (con, page) => {
     FROM Users u, UserLevels ul
     WHERE u.userLevel = ul.id
     AND u.accountStatus = "active"
-  ) as fullCount
+    AND u.banned = "1"
+    ) as fullCount
   FROM Users u, UserLevels ul WHERE u.userLevel = ul.id AND u.accountStatus = "active" AND u.banned = "1"
   LIMIT 20
   OFFSET ${offset}
