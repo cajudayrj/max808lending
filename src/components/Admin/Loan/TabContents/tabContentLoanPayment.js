@@ -1601,7 +1601,10 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
       <div className={`loan-payment-boxes ${status !== 'Pending' ? 'current' : ''}`}>
         {
           status === 'Approved' ?
-            <p className="loan-approved">LOAN REQUEST APPROVED</p>
+            <>
+              <p className="loan-approved">LOAN REQUEST APPROVED</p>
+              <button className="cancel set-active" onClick={toggleRejectModal}>Reject Loan</button>
+            </>
             : null
         }
         {
