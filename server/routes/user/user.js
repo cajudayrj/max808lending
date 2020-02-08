@@ -31,6 +31,26 @@ router.get('/all/page/:pageId', adminMiddleware, async (req, res) => {
   }
 })
 
+router.get('/banned/page/:pageId', adminMiddleware, async (req, res) => {
+  const userInfo = await User.banned(con, req.params.pageId);
+  const totalPage = userInfo.length > 0 ? Math.ceil(userInfo[0].fullCount / 20) : 1;
+
+  if (userInfo.length > 0) {
+    const user = {
+      success: true,
+      users: userInfo,
+      totalPage
+    }
+    return res.json(user);
+  } else {
+    const error = {
+      success: false,
+      message: "No users found!",
+    }
+    return res.json(error)
+  }
+})
+
 router.get('/:id', userMiddleware, async (req, res) => {
   const { id } = req.params;
 

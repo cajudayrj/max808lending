@@ -12,6 +12,7 @@ import FullyPaidLoans from '../FullyPaidLoans/fullyPaidLoans';
 import UserList from '../UserList/userList';
 import UserInfo from '../UserInfo/userInfo';
 import SummaryOfTransactions from '../SummaryOfTransactions/summaryOfTransactions';
+import BannedUsers from '../BannedUsers/bannedUsers';
 
 const AdminDashboardRoutes = () => {
   return (
@@ -26,6 +27,7 @@ const AdminDashboardRoutes = () => {
       <Route exact path="/admin/rejected-loans" component={RejectedLoans} />
       <Route exact path="/admin/summary-of-transactions" component={SummaryOfTransactions} />
       <Route exact path="/admin/user-list" component={UserList} />
+      <Route exact path="/admin/banned-user-list" component={BannedUsers} />
       <Route exact path="/admin/user/:id" component={UserInfo} />
       <Route exact path="/admin/*" component={NotFound} />
     </Switch>

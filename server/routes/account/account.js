@@ -92,53 +92,22 @@ router.post('/register', async (req, res) => {
     username: req.body.username,
     password: hashedPassword,
     userLevel: 2,
-    accountStatus: 'notVerified',
+    accountStatus: 'verified',
     accountVerificationToken
   }
 
   // Register user to database
   const newUser = await User.register(con, userData);
 
-  // Construct Mail
-  const mailOptions = {
-    from: 'Max808 Lending Corporation <admin@max808lending.com>',
-    to: req.body.email,
-    subject: 'Max808 Lending Corporation - Registration Successful',
-    html: `
-    <h4>Greetings, ${req.body.username}!</h4>
-    <p>Thank you for your registration on our website. To verify and login to your account, please click this <a href="${siteUrl}/verify-account/${accountVerificationToken}">link</a>.</p>
-    <p>Or go to: ${siteUrl}/verify-account/${accountVerificationToken}</p>
-    <p></p>
-    <br><br>
-    <p>Regards,</p>
-    <p>Max808 Lending Corporation</p>
-    `
-  };
+  const successful = {
+    success: true,
+    newUser,
+    message: "Successfully registered account. You may now login on your account."
+  }
 
-  // Send Mail
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      const error = {
-        error: {
-          details: [{
-            message: "Account successfully created but failed to send email verification link. Please contact admin."
-          }]
-        }
-      }
-      console.log('sendmailerr', err);
-      return res.json(error);
-    } else {
-      const successful = {
-        success: true,
-        newUser,
-        message: "Successfully registered account. Please check your email for the validation link."
-      }
-
-      // Return successful registration
-      return res.json(successful);
-    }
-  });
-})
+  // Return successful registration
+  return res.json(successful);
+});
 
 /**
  * 
@@ -469,7 +438,6 @@ router.get('/validation-resend/:email', async (req, res) => {
           success: false,
           message: "There's a problem in sending email verification link."
         }
-        console.log(err);
         return res.json(error);
       } else {
         const data = {

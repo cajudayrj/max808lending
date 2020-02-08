@@ -16,6 +16,7 @@ const ActivateStepOne = () => {
    */
   const [loanAmount, setLoanAmount] = useState('5000');
   const [loanTerms, setLoanTerms] = useState('15');
+  const [submitting, setSubmitting] = useState('Submit');
 
   const [fname, setFname] = useState('');
   const [mname, setMname] = useState('');
@@ -89,6 +90,9 @@ const ActivateStepOne = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (submitting === 'Submitting') return;
+
+    setSubmitting('Submitting');
 
     const data = {
       loanAmount,
@@ -117,6 +121,7 @@ const ActivateStepOne = () => {
         const res = response.data;
         if (res.error) {
           setResMessage(res.error.details[0].message);
+          setSubmitting('Submit');
           return;
         }
         if (res.success) {
@@ -128,6 +133,7 @@ const ActivateStepOne = () => {
         } else {
           setResMessage(res.message);
         }
+        setSubmitting('Submit');
       })
   }
 
@@ -233,7 +239,7 @@ const ActivateStepOne = () => {
             </select>
           </div>
         </div>
-        <button className="submit-btn" type="button" onClick={handleSubmit}>Submit</button>
+        <button className="submit-btn" type="button" onClick={handleSubmit}>{submitting}</button>
         {
           resMessage !== '' ?
             <div className="response-message warning">

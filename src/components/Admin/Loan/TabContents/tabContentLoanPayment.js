@@ -1609,6 +1609,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
             <>
               <p className="loan-accepted">Borrower has accepted the Terms</p>
               <button className="success set-active" onClick={toggleSetActiveModal}>Set Loan as ACTIVE</button>
+              <button className="cancel set-active" onClick={toggleRejectModal}>Reject Loan</button>
             </>
             : null
         }
