@@ -351,7 +351,7 @@ const setBackToActive = async (con, id) => {
 }
 
 const getTransactions = async (con, id) => {
-  const query = `SELECT * FROM UserTransactions WHERE loan_id = ? ORDER BY id DESC`;
+  const query = `SELECT * FROM UserTransactions WHERE loan_id = ? AND amount > 0 ORDER BY id DESC`;
   const [rows] = await con.execute(query, [id], queryCallback);
   return rows;
 }
