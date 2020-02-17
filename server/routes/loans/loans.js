@@ -521,6 +521,10 @@ router.post('/apply-new', userMiddleware, async (req, res) => {
 
     // Send Mail
     transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log('send error', err);
+
+      }
       return res.json(data);
     });
 
