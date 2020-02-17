@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
   }
 })
 
-scheduler.scheduleJob('8 * * *', async function () {
+scheduler.scheduleJob({ hour: 8, minute: 0 }, async function () {
   const loans = await LoanPayments.mailPayments(con);
 
   if (loans.length > 0) {
