@@ -187,6 +187,22 @@ const ban = async (con, id, ban) => {
   return rows;
 }
 
+const resetPassword = async (con, id, password) => {
+  const query = `
+  UPDATE Users SET
+  password = ?
+  WHERE id = ?
+  `
+  const variables = [
+    password,
+    id
+  ]
+
+  const [rows] = await con.execute(query, variables, queryCallback);
+
+  return rows;
+}
+
 module.exports = {
   all,
   find,
@@ -204,4 +220,5 @@ module.exports = {
   ban,
   banned,
   bannedUserCount,
+  resetPassword
 };
