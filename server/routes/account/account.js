@@ -12,7 +12,7 @@ const adminMiddleware = require('../middleware/adminMiddleware');
 // Validation function
 const registerValidation = require('./registerValidation');
 const loginValidation = require('./loginValidation');
-const { stepOneValidation, stepTwoValidation, stepFourValidation, resendValidation } = require('./accountValidation');
+const { stepOneValidation, stepTwoValidation, stepFourValidation, resendValidation, resetPassValidation } = require('./accountValidation');
 
 // DB Connection
 const con = require('../../connection/con');
@@ -485,6 +485,155 @@ router.put('/ban/:id', adminMiddleware, async (req, res) => {
     }
     return res.json(err);
   }
+})
+
+
+/**
+ *  
+ *  RESET PASSWORD VIA EMAIL
+ */
+
+router.get('/reset-password-link/:email', async (req, res) => {
+  const validation = resendValidation({ email: req.params.email });
+
+  if (validation.error) {
+    const validateError = {
+      success: false,
+      message: validation.error.details[0].message,
+    }
+    return res.json(validateError)
+  };
+
+  const user = await User.findEmail(con, req.params.email);
+
+  if (user.length > 0) {
+    //transporter contact
+    const transporter = nodemailer.createTransport({
+      host: 'us2.smtp.mailhostbox.com',
+      port: process.env.EMAIL_PORT,
+      secure: false,
+      ignoreTLS: true,
+      auth: {
+        user: process.env.EMAIL_USER_CONTACT,
+        pass: process.env.EMAIL_PASS_CONTACT,
+      }
+    })
+
+    const userInfo = {
+      id: user[0].id,
+      email: user[0].email,
+      expiry: moment.tz('Asia/Manila').add(30, 'm').format()
+    }
+
+
+    const accountToken = jwt.sign(
+      userInfo,
+      process.env.APP_TOKEN
+    );
+
+    const accSlashed = accountToken.replace(/\//g, "slash");
+
+    // Construct Mail
+    const mailOptions = {
+      from: 'Max808 Lending Corporation <contactus@max808lending.com>',
+      to: req.params.email,
+      subject: 'Max808 Lending Corporation - Password Reset Link',
+      html: `
+        <p>Hello, <b>${user[0].username}</b>!</p>
+        <h4>Password Reset Link:</h4>
+        <p>Please click this <a href="${siteUrl}/reset-password/${accSlashed}">link</a>.</p>
+        <p>Or go to: ${siteUrl}/reset-password/${accSlashed}</p>
+      `
+    };
+
+    // Send Mail
+    transporter.sendMail(mailOptions, (err, info) => {
+
+      if (err) {
+        const error = {
+          success: false,
+          message: "There's a problem in sending password reset link."
+        }
+
+        console.log(err);
+
+        return res.json(error);
+      } else {
+        const data = {
+          success: true,
+          message: "Password reset link has been sent. Please check your email."
+        }
+        return res.json(data);
+      }
+    });
+  } else {
+    const err = {
+      success: false,
+      message: "No registered account found with the email provided."
+    }
+
+    return res.json(err);
+  }
+})
+
+router.post('/verify-reset', async (req, res) => {
+  const { resetToken } = req.body;
+  const token = resetToken.replace("slash", "/");
+  let tokenData;
+  try {
+    const verified = jwt.verify(token, process.env.APP_TOKEN);
+    tokenData = verified;
+  } catch (err) {
+    return res.json({ success: false, caseType: "invalid", error: { message: "Invalid password reset link." } });
+  }
+
+  if (moment(tokenData.expiry).tz('Asia/Manila').isBefore(moment.tz('Asia/Manila'))) {
+    return res.json({ success: false, caseType: "expired", error: { message: "Password reset link expired." } });
+  } else {
+    return res.json({ success: true, message: "Token is valid." });
+  }
+})
+
+router.post('/reset-password', async (req, res) => {
+  const validation = resetPassValidation(req.body);
+
+  if (validation.error) {
+    const validateError = {
+      success: false,
+      message: validation.error.details[0].message,
+    }
+    return res.json(validateError)
+  };
+
+  let tokenData;
+
+  try {
+    const verified = jwt.verify(req.body.token, process.env.APP_TOKEN);
+    tokenData = verified;
+  } catch (err) {
+    return res.json({ success: false, message: "Invalid password reset link." });
+  }
+
+  if (tokenData.email === req.body.email) {
+    if (req.body.password === req.body.confirmPassword) {
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+
+      const updateUserPass = await User.resetPassword(con, tokenData.id, hashedPassword);
+
+      if (updateUserPass.affectedRows > 0) {
+        return res.json({ success: true, message: "Successfully changed password. You may now login with your new password." });
+      } else {
+        return res.json({ success: false, message: "There is an error changing password. Please try again." });
+      }
+
+    } else {
+      return res.json({ success: false, message: "Password doesn't match." });
+    }
+  } else {
+    return res.json({ success: false, message: "Token data doesn't match with the inputted data." });
+  }
+
 })
 
 module.exports = router;

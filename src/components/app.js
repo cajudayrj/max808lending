@@ -10,6 +10,8 @@ import User from './User/user';
 import ActivateAccount from './User/ActivateAccount/activateAccount';
 import Admin from './Admin/admin';
 import ResendVerification from './ResendVerification/resendVerification';
+import SendPasswordReset from './PasswordReset/passwordReset';
+import ResetPassword from './ResetPassword/resetPassword';
 
 const App = () => {
   return (
@@ -20,7 +22,9 @@ const App = () => {
         <Route exact path="/borrow" component={Borrow} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/verify-account" component={Verify} />
+        <Route exact path="/forgot-password" component={SendPasswordReset} />
         <Route exact path="/resend-verification" component={ResendVerification} />
+        <Route exact path="/reset-password/:passwordToken" component={ResetPassword} />
         <Route exact path="/verify-account/:verifyToken" component={Verify} />
         <PrivateRoute path="/dashboard" component={User} />
         <PrivateRoute path="/activate-account" component={ActivateAccount} />

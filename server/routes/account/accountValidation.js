@@ -88,10 +88,23 @@ const resendValidation = data => {
   return validate;
 }
 
+const resetPassValidation = data => {
+  const schema = Joi.object({
+    email: Joi.string().email().required().label("Email"),
+    password: Joi.string().required().min(8).regex(/^\S*$/).max(20).label("Password").messages({ "string.pattern.base": "Password must not contain any spaces." }),
+    confirmPassword: Joi.string().required().min(8).regex(/^\S*$/).max(20).label("Confirm Password").messages({ "string.pattern.base": "Confirm Password must not contain any spaces." }),
+    token: Joi.allow(null).label("Token"),
+  })
+
+  const validate = schema.validate(data);
+  return validate;
+}
+
 module.exports = {
   stepOneValidation,
   stepTwoValidation,
   stepFourValidation,
   updateInfoValidation,
   resendValidation,
+  resetPassValidation
 }
