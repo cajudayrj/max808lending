@@ -64,7 +64,7 @@ const RejectedLoans = () => {
                 rejectedLoans.map((loan, key) => {
                   return (
                     <tr key={key}>
-                      <td>{loan.id}</td>
+                      <td><Link to={`/admin/loan/${loan.id}`} >{loan.id}</Link></td>
                       <td>{loan.firstName} {loan.lastName}</td>
                       <td>&#8369;{monify(loan.amount)}</td>
                       <td>{loan.terms} days</td>
