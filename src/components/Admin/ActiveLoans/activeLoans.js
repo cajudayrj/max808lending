@@ -53,6 +53,7 @@ const ActiveLoans = () => {
               <th>Loan ID</th>
               <th>Borrower</th>
               <th>Amount</th>
+              <th>Balance</th>
               <th>Terms</th>
               <th>Loan Date</th>
               <th>Due Date</th>
@@ -66,9 +67,10 @@ const ActiveLoans = () => {
                 activeLoans.map((loan, key) => {
                   return (
                     <tr key={key}>
-                      <td>{loan.id}</td>
+                      <td><Link to={`/admin/loan/${loan.id}`} >{loan.id}</Link></td>
                       <td>{loan.firstName} {loan.lastName}</td>
                       <td>&#8369;{monify(loan.amount)}</td>
+                      <td>&#8369;{monify(loan.loanBalance)}</td>
                       <td>{loan.terms} days</td>
                       <td>{moment(loan.loanDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
                       <td>{moment(loan.dueDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</td>
