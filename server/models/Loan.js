@@ -72,7 +72,7 @@ const all = async (con, page) => {
   const query = `
     SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus,
     (SELECT COUNT(l.id) FROM Loans l, Users u WHERE l.user_id = u.id
-    AND u.accountStatus = 'active') AS fullCount
+    AND u.accountStatus = 'active' AND u.banned = '0') AS fullCount
     FROM Loans l, Users u 
     WHERE l.user_id = u.id
     AND u.accountStatus = 'active'
