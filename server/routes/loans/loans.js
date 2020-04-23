@@ -55,8 +55,6 @@ router.get('/all/page/:pageId', adminMiddleware, async (req, res) => {
     allLoans
   }
 
-  console.log(allLoans[0].fullCount);
-
   return res.json(data);
 })
 
