@@ -180,17 +180,39 @@ const approvedLoans = async (con, page) => {
 const fullyPaidLoans = async (con, page) => {
   const offset = (page - 1) * 20;
   const query = `
-    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.loanPaid, l.penaltyCharge, l.terms, l.loanDate, l.loanStatus,
-    (SELECT COUNT(l.id) FROM Loans l, Users u 
-    WHERE l.loanStatus = 'Fully Paid'
-    AND l.user_id = u.id) AS fullCount 
-    FROM Loans l, Users u 
-    WHERE l.loanStatus = 'Fully Paid'
-    AND l.user_id = u.id
-    ORDER BY l.id
+    SELECT DISTINCT(loan.id) as loan_id, fp.transactionDate, loan.*, u.firstName, u.lastName
+    FROM Loans loan,
+    (
+      SELECT ut.loan_id, MAX(ut.transactionDate) as transactionDate, l.id, l.loanStatus FROM UserTransactions ut,
+        (SELECT l.id, l.loanStatus FROM Loans l WHERE l.loanStatus = 'Fully Paid') l
+      WHERE ut.loan_id = l.id
+      AND ut.transactionDate >= NOW()- interval 3 month
+      GROUP BY ut.loan_id
+    ) fp,
+    Users u
+    WHERE loan.id = fp.loan_id AND loan.user_id = u.id
+    ORDER BY fp.transactionDate
     DESC
     LIMIT 20
     OFFSET ${offset};
+  `;
+  const [rows] = await con.execute(query, [], queryCallback);
+  return rows;
+}
+
+const fullyPaidLoansCount = async (con) => {
+  const query = `
+    SELECT DISTINCT(loan.id) as loan_id, fp.transactionDate, loan.*, u.firstName, u.lastName
+    FROM Loans loan,
+    (
+      SELECT ut.loan_id, MAX(ut.transactionDate) as transactionDate, l.id, l.loanStatus FROM UserTransactions ut,
+        (SELECT l.id, l.loanStatus FROM Loans l WHERE l.loanStatus = 'Fully Paid') l
+      WHERE ut.loan_id = l.id
+      AND ut.transactionDate >= NOW()- interval 3 month
+      GROUP BY ut.loan_id
+    ) fp,
+    Users u
+    WHERE loan.id = fp.loan_id AND loan.user_id = u.id
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
@@ -369,6 +391,7 @@ module.exports = {
   activeLoans,
   approvedLoans,
   fullyPaidLoans,
+  fullyPaidLoansCount,
   acceptedLoans,
   rejectedLoans,
   approveRequest,

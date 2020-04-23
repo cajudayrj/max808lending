@@ -108,7 +108,8 @@ router.get('/accepted/page/:pageId', adminMiddleware, async (req, res) => {
 
 router.get('/fully-paid/page/:pageId', adminMiddleware, async (req, res) => {
   const fullyPaidLoans = await Loan.fullyPaidLoans(con, req.params.pageId);
-  const totalPage = fullyPaidLoans.length > 0 ? Math.ceil(fullyPaidLoans[0].fullCount / 20) : 1;
+  const fullyPaidLoansCount = await Loan.fullyPaidLoansCount(con);
+  const totalPage = fullyPaidLoansCount.length > 0 ? Math.ceil(fullyPaidLoansCount.length / 20) : 1;
   const data = {
     success: true,
     totalPage,
@@ -535,7 +536,8 @@ router.post('/apply-new', userMiddleware, async (req, res) => {
 
 router.get('/transactions/page/:pageId', adminMiddleware, async (req, res) => {
   const transactions = await UserTransactions.all(con, req.params.pageId);
-  const totalPage = transactions.length > 0 ? Math.ceil(transactions[0].fullCount / 20) : 1;
+  const transactionsCount = await UserTransactions.allCount(con);
+  const totalPage = transactionsCount.length > 0 ? Math.ceil(transactionsCount.length / 20) : 1;
   return res.json({ totalPage, transactions })
 })
 
