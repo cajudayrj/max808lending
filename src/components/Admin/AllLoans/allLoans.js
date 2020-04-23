@@ -26,7 +26,6 @@ const AllLoans = () => {
     })
       .then(({ data }) => {
         const { allLoans, totalPage } = data;
-        console.log('allloan', data);
 
         setAllLoans(allLoans);
         setTotalPage(totalPage);
