@@ -2,15 +2,50 @@ const queryCallback = require('../connection/queryCallback');
 
 const all = async (con, page) => {
   const offset = (page - 1) * 20;
-  const query = `SELECT 
-    ut.*, u.firstName, u.lastName, u.middleName,
-    (SELECT COUNT(id) FROM UserTransactions) AS fullCount 
-    FROM UserTransactions ut, Users u 
-    WHERE ut.user_id = u.id
-    AND ut.amount > 0
-    ORDER BY ut.id DESC
-    LIMIT 20
-    OFFSET ${offset}`;
+  const query = `
+      SELECT trans.*, us.firstName, us.lastName FROM UserTransactions trans, Users us,
+      (
+        SELECT DISTINCT(loan.id) as loan_id, fp.transactionDate, loan.*, u.firstName, u.lastName
+        FROM Loans loan,
+        (
+          SELECT ut.loan_id, MAX(ut.transactionDate) as transactionDate, l.id, l.loanStatus FROM UserTransactions ut,
+            Loans l
+          WHERE ut.loan_id = l.id
+          AND ut.transactionDate >= NOW()- interval 3 month
+          GROUP BY ut.loan_id
+        ) fp,
+        Users u
+        WHERE loan.id = fp.loan_id AND loan.user_id = u.id
+      ) ld
+      WHERE ld.loan_id = trans.loan_id
+      AND us.id = trans.user_id
+      ORDER BY trans.id DESC
+      LIMIT 20
+      OFFSET ${offset}
+    `;
+  const [rows] = await con.execute(query, [], queryCallback);
+  return rows;
+}
+
+const allCount = async (con) => {
+  const query = `
+    SELECT trans.*, us.firstName, us.lastName FROM UserTransactions trans, Users us,
+    (
+      SELECT DISTINCT(loan.id) as loan_id, fp.transactionDate, loan.*, u.firstName, u.lastName
+      FROM Loans loan,
+      (
+        SELECT ut.loan_id, MAX(ut.transactionDate) as transactionDate, l.id, l.loanStatus FROM UserTransactions ut,
+          Loans l
+        WHERE ut.loan_id = l.id
+        AND ut.transactionDate >= NOW()- interval 3 month
+        GROUP BY ut.loan_id
+      ) fp,
+      Users u
+      WHERE loan.id = fp.loan_id AND loan.user_id = u.id
+    ) ld
+    WHERE ld.loan_id = trans.loan_id
+    AND us.id = trans.user_id
+  `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
 }
@@ -62,6 +97,7 @@ const editByLoanId = async (con, id, data) => {
 
 module.exports = {
   all,
+  allCount,
   add,
   getUserTransactions,
   editByLoanId,
