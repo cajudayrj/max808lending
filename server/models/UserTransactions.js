@@ -19,6 +19,7 @@ const all = async (con, page) => {
       ) ld
       WHERE ld.loan_id = trans.loan_id
       AND us.id = trans.user_id
+      AND trans.transactionDate >= NOW()- interval 3 month
       ORDER BY trans.id DESC
       LIMIT 20
       OFFSET ${offset}
@@ -45,6 +46,7 @@ const allCount = async (con) => {
     ) ld
     WHERE ld.loan_id = trans.loan_id
     AND us.id = trans.user_id
+    AND trans.transactionDate >= NOW()- interval 3 month
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
