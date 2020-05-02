@@ -79,6 +79,7 @@ const UserHeader = ({ id, token, handleLogout }) => {
                   <li><NavLink exact activeClassName="current-page" to="/admin/user-list">User List</NavLink></li>
                   <li><NavLink exact activeClassName="current-page" to="/admin/summary-of-transactions">Summary of Transactions</NavLink></li>
                   <li><NavLink exact activeClassName="current-page" to="/admin/loans">All Loans</NavLink></li>
+                  <li><NavLink exact activeClassName="current-page" to="/admin/payment-summary-schedule">Payment Summary Schedule</NavLink></li>
                   <li><NavLink exact activeClassName="current-page" to="/admin/active-loans">Active Loans</NavLink></li>
                   <li><NavLink exact activeClassName="current-page" to="/admin/fully-paid-loans">Fully Paid Loans</NavLink></li>
                   <li><NavLink exact activeClassName="current-page" to="/admin/pending-loans">Pending Loans</NavLink></li>

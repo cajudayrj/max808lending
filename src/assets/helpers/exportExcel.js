@@ -51,8 +51,7 @@ const ExportExcel = props => {
     const blob = new Blob(
       [excelBuffer],
       {
-        type: fileType,
-        charset: "utf-8"
+        type: fileType
       }
     );
 

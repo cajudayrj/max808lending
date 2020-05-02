@@ -80,7 +80,505 @@ router.get('/active/page/:pageId', adminMiddleware, async (req, res) => {
   }
 
   return res.json(data);
-})
+});
+
+router.get('/generate/active', adminMiddleware, async (req, res) => {
+  const activeLoans = await Loan.generateActiveLoans(con);
+  let total = 0;
+  activeLoans.forEach(loan => total += loan.loanBalance);
+
+  activeLoans.push({
+    amount: "TOTAL",
+    loanBalance: total,
+  })
+
+  const data = {
+    success: true,
+    activeLoans
+  }
+
+  return res.json(data);
+});
+
+router.get('/generate/summary-schedule', adminMiddleware, async (req, res) => {
+  const activeLoans = await Loan.generateActiveLoans(con);
+  let paymentScedules = [];
+
+  activeLoans.forEach(loan => {
+    let first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelfth;
+
+    if (loan.firstPaymentAmount > 0) {
+      first = {
+        position: 1,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.firstPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.firstPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.firstPaymentPenalty.toFixed(2),
+        paid: loan.firstPaymentPaid.toFixed(2),
+        balance: loan.firstPaymentBalance.toFixed(2),
+        status: loan.firstPaymentStatus,
+      }
+
+      paymentScedules.push(first);
+    }
+
+    if (loan.secondPaymentAmount > 0) {
+      second = {
+        position: 2,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.secondPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.secondPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.secondPaymentPenalty.toFixed(2),
+        paid: loan.secondPaymentPaid.toFixed(2),
+        balance: loan.secondPaymentBalance.toFixed(2),
+        status: loan.secondPaymentStatus,
+      }
+
+      paymentScedules.push(second);
+    }
+
+    if (loan.thirdPaymentAmount > 0) {
+      third = {
+        position: 3,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.thirdPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.thirdPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.thirdPaymentPenalty.toFixed(2),
+        paid: loan.thirdPaymentPaid.toFixed(2),
+        balance: loan.thirdPaymentBalance.toFixed(2),
+        status: loan.thirdPaymentStatus,
+      }
+
+      paymentScedules.push(third);
+    }
+
+    if (loan.fourthPaymentAmount > 0) {
+      fourth = {
+        position: 4,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.fourthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.fourthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.fourthPaymentPenalty.toFixed(2),
+        paid: loan.fourthPaymentPaid.toFixed(2),
+        balance: loan.fourthPaymentBalance.toFixed(2),
+        status: loan.fourthPaymentStatus,
+      }
+
+      paymentScedules.push(fourth);
+    }
+
+    if (loan.fifthPaymentAmount > 0) {
+      fifth = {
+        position: 5,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.fifthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.fifthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.fifthPaymentPenalty.toFixed(2),
+        paid: loan.fifthPaymentPaid.toFixed(2),
+        balance: loan.fifthPaymentBalance.toFixed(2),
+        status: loan.fifthPaymentStatus,
+      }
+
+      paymentScedules.push(fifth);
+    }
+
+    if (loan.sixthPaymentAmount > 0) {
+      sixth = {
+        position: 6,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.sixthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.sixthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.sixthPaymentPenalty.toFixed(2),
+        paid: loan.sixthPaymentPaid.toFixed(2),
+        balance: loan.sixthPaymentBalance.toFixed(2),
+        status: loan.sixthPaymentStatus,
+      }
+
+      paymentScedules.push(sixth);
+    }
+
+    if (loan.seventhPaymentAmount > 0) {
+      seventh = {
+        position: 7,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.seventhPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.seventhPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.seventhPaymentPenalty.toFixed(2),
+        paid: loan.seventhPaymentPaid.toFixed(2),
+        balance: loan.seventhPaymentBalance.toFixed(2),
+        status: loan.seventhPaymentStatus,
+      }
+
+      paymentScedules.push(seventh);
+    }
+
+
+    if (loan.eighthPaymentAmount > 0) {
+      eighth = {
+        position: 8,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.eighthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.eighthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.eighthPaymentPenalty.toFixed(2),
+        paid: loan.eighthPaymentPaid.toFixed(2),
+        balance: loan.eighthPaymentBalance.toFixed(2),
+        status: loan.eighthPaymentStatus,
+      }
+
+      paymentScedules.push(eighth);
+    }
+
+
+    if (loan.ninthPaymentAmount > 0) {
+      ninth = {
+        position: 9,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.ninthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.ninthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.ninthPaymentPenalty.toFixed(2),
+        paid: loan.ninthPaymentPaid.toFixed(2),
+        balance: loan.ninthPaymentBalance.toFixed(2),
+        status: loan.ninthPaymentStatus,
+      }
+
+      paymentScedules.push(ninth);
+    }
+
+    if (loan.tenthPaymentAmount > 0) {
+      tenth = {
+        position: 10,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.tenthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.tenthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.tenthPaymentPenalty.toFixed(2),
+        paid: loan.tenthPaymentPaid.toFixed(2),
+        balance: loan.tenthPaymentBalance.toFixed(2),
+        status: loan.tenthPaymentStatus,
+      }
+
+      paymentScedules.push(tenth);
+    }
+
+    if (loan.eleventhPaymentAmount > 0) {
+      eleventh = {
+        position: 11,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.eleventhPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.eleventhPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.eleventhPaymentPenalty.toFixed(2),
+        paid: loan.eleventhPaymentPaid.toFixed(2),
+        balance: loan.eleventhPaymentBalance.toFixed(2),
+        status: loan.eleventhPaymentStatus,
+      }
+
+      paymentScedules.push(eleventh);
+    }
+
+    if (loan.twelfthPaymentAmount > 0) {
+      twelfth = {
+        position: 12,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.twelfthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.twelfthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.twelfthPaymentPenalty.toFixed(2),
+        paid: loan.twelfthPaymentPaid.toFixed(2),
+        balance: loan.twelfthPaymentBalance.toFixed(2),
+        status: loan.twelfthPaymentStatus,
+      }
+
+      paymentScedules.push(twelfth);
+    }
+  });
+
+  const sortedPaymentSchedules = paymentScedules.sort((a, b) => new Date(a.amortizationDate) - new Date(b.amortizationDate));
+
+  let total = 0;
+  sortedPaymentSchedules.forEach(loan => total += parseFloat(loan.balance));
+
+  sortedPaymentSchedules.push({
+    paid: "TOTAL",
+    balance: parseInt(total)
+  });
+
+  const data = {
+    success: true,
+    schedules: sortedPaymentSchedules
+  }
+
+  return res.json(data);
+});
+
+router.get('/payment-summary-schedule', adminMiddleware, async (req, res) => {
+  const activeLoans = await Loan.generateActiveLoans(con);
+  let paymentScedules = [];
+
+  activeLoans.forEach(loan => {
+    let first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelfth;
+
+    if (loan.firstPaymentAmount > 0 && loan.firstPaymentStatus !== "Paid") {
+      first = {
+        position: 1,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.firstPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.firstPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.firstPaymentPenalty.toFixed(2),
+        paid: loan.firstPaymentPaid.toFixed(2),
+        balance: loan.firstPaymentBalance.toFixed(2),
+        status: loan.firstPaymentStatus,
+      }
+
+      paymentScedules.push(first);
+    }
+
+    if (loan.secondPaymentAmount > 0 && loan.secondPaymentStatus !== "Paid") {
+      second = {
+        position: 2,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.secondPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.secondPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.secondPaymentPenalty.toFixed(2),
+        paid: loan.secondPaymentPaid.toFixed(2),
+        balance: loan.secondPaymentBalance.toFixed(2),
+        status: loan.secondPaymentStatus,
+      }
+
+      paymentScedules.push(second);
+    }
+
+    if (loan.thirdPaymentAmount > 0 && loan.thirdPaymentStatus !== "Paid") {
+      third = {
+        position: 3,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.thirdPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.thirdPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.thirdPaymentPenalty.toFixed(2),
+        paid: loan.thirdPaymentPaid.toFixed(2),
+        balance: loan.thirdPaymentBalance.toFixed(2),
+        status: loan.thirdPaymentStatus,
+      }
+
+      paymentScedules.push(third);
+    }
+
+    if (loan.fourthPaymentAmount > 0 && loan.fourthPaymentStatus !== "Paid") {
+      fourth = {
+        position: 4,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.fourthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.fourthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.fourthPaymentPenalty.toFixed(2),
+        paid: loan.fourthPaymentPaid.toFixed(2),
+        balance: loan.fourthPaymentBalance.toFixed(2),
+        status: loan.fourthPaymentStatus,
+      }
+
+      paymentScedules.push(fourth);
+    }
+
+    if (loan.fifthPaymentAmount > 0 && loan.fifthPaymentStatus !== "Paid") {
+      fifth = {
+        position: 5,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.fifthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.fifthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.fifthPaymentPenalty.toFixed(2),
+        paid: loan.fifthPaymentPaid.toFixed(2),
+        balance: loan.fifthPaymentBalance.toFixed(2),
+        status: loan.fifthPaymentStatus,
+      }
+
+      paymentScedules.push(fifth);
+    }
+
+    if (loan.sixthPaymentAmount > 0 && loan.sixthPaymentStatus !== "Paid") {
+      sixth = {
+        position: 6,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.sixthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.sixthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.sixthPaymentPenalty.toFixed(2),
+        paid: loan.sixthPaymentPaid.toFixed(2),
+        balance: loan.sixthPaymentBalance.toFixed(2),
+        status: loan.sixthPaymentStatus,
+      }
+
+      paymentScedules.push(sixth);
+    }
+
+    if (loan.seventhPaymentAmount > 0 && loan.seventhPaymentStatus !== "Paid") {
+      seventh = {
+        position: 7,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.seventhPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.seventhPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.seventhPaymentPenalty.toFixed(2),
+        paid: loan.seventhPaymentPaid.toFixed(2),
+        balance: loan.seventhPaymentBalance.toFixed(2),
+        status: loan.seventhPaymentStatus,
+      }
+
+      paymentScedules.push(seventh);
+    }
+
+
+    if (loan.eighthPaymentAmount > 0 && loan.eighthPaymentStatus !== "Paid") {
+      eighth = {
+        position: 8,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.eighthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.eighthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.eighthPaymentPenalty.toFixed(2),
+        paid: loan.eighthPaymentPaid.toFixed(2),
+        balance: loan.eighthPaymentBalance.toFixed(2),
+        status: loan.eighthPaymentStatus,
+      }
+
+      paymentScedules.push(eighth);
+    }
+
+
+    if (loan.ninthPaymentAmount > 0 && loan.ninthPaymentStatus !== "Paid") {
+      ninth = {
+        position: 9,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.ninthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.ninthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.ninthPaymentPenalty.toFixed(2),
+        paid: loan.ninthPaymentPaid.toFixed(2),
+        balance: loan.ninthPaymentBalance.toFixed(2),
+        status: loan.ninthPaymentStatus,
+      }
+
+      paymentScedules.push(ninth);
+    }
+
+    if (loan.tenthPaymentAmount > 0 && loan.tenthPaymentStatus !== "Paid") {
+      tenth = {
+        position: 10,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.tenthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.tenthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.tenthPaymentPenalty.toFixed(2),
+        paid: loan.tenthPaymentPaid.toFixed(2),
+        balance: loan.tenthPaymentBalance.toFixed(2),
+        status: loan.tenthPaymentStatus,
+      }
+
+      paymentScedules.push(tenth);
+    }
+
+    if (loan.eleventhPaymentAmount > 0 && loan.eleventhPaymentStatus !== "Paid") {
+      eleventh = {
+        position: 11,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.eleventhPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.eleventhPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.eleventhPaymentPenalty.toFixed(2),
+        paid: loan.eleventhPaymentPaid.toFixed(2),
+        balance: loan.eleventhPaymentBalance.toFixed(2),
+        status: loan.eleventhPaymentStatus,
+      }
+
+      paymentScedules.push(eleventh);
+    }
+
+    if (loan.twelfthPaymentAmount > 0 && loan.twelfthPaymentStatus !== "Paid") {
+      twelfth = {
+        position: 12,
+        loanPaymentId: loan.id,
+        loanId: loan.loanId,
+        borrower: loan.fullName,
+        amount: loan.amount,
+        amortization: loan.twelfthPaymentAmount.toFixed(2),
+        amortizationDate: moment(loan.twelfthPaymentDate).format('DD-MMMM-YYYY'),
+        penalty: loan.twelfthPaymentPenalty.toFixed(2),
+        paid: loan.twelfthPaymentPaid.toFixed(2),
+        balance: loan.twelfthPaymentBalance.toFixed(2),
+        status: loan.twelfthPaymentStatus,
+      }
+
+      paymentScedules.push(twelfth);
+    }
+  });
+
+  const sortedPaymentSchedules = paymentScedules.sort((a, b) => new Date(a.amortizationDate) - new Date(b.amortizationDate));
+
+  const data = {
+    success: true,
+    schedules: sortedPaymentSchedules
+  }
+
+  return res.json(data);
+});
 
 router.get('/approved/page/:pageId', adminMiddleware, async (req, res) => {
   const approvedLoans = await Loan.approvedLoans(con, req.params.pageId);
@@ -465,6 +963,175 @@ router.put('/accept-refuse/:id', userMiddleware, async (req, res) => {
     return res.json(data);
   } else {
     return res.json(fail);
+  }
+})
+
+router.put('/update-payment/:id', adminMiddleware, async (req, res) => {
+  const loanId = req.params.id;
+  let query;
+  const updateData = [
+    req.body.amortizationDate,
+    req.body.balance,
+    req.body.paid,
+    req.body.penalty,
+    req.body.status,
+    loanId
+  ]
+
+
+  switch (req.body.position) {
+    case 1:
+      query = `
+        UPDATE LoanPayments SET
+        firstPaymentDate = ?, firstPaymentBalance = ?, firstPaymentPaid = ?, firstPaymentPenalty = ?, firstPaymentStatus = ?
+        WHERE id = ?
+      `
+      break;
+    case 2:
+      query = `
+        UPDATE LoanPayments SET
+        secondPaymentDate = ?, secondPaymentBalance = ?, secondPaymentPaid = ?, secondPaymentPenalty = ?, secondPaymentStatus = ?
+        WHERE id = ?
+      `
+      break;
+    case 3:
+      query = `
+        UPDATE LoanPayments SET
+        thirdPaymentDate = ?, thirdPaymentBalance = ?, thirdPaymentPaid = ?, thirdPaymentPenalty = ?, thirdPaymentStatus = ?
+        WHERE id = ?
+      `
+      break;
+    case 4:
+      query = `
+          UPDATE LoanPayments SET
+          fourthPaymentDate = ?, fourthPaymentBalance = ?, fourthPaymentPaid = ?, fourthPaymentPenalty = ?, fourthPaymentStatus = ?
+          WHERE id = ?
+        `
+      break;
+    case 5:
+      query = `
+        UPDATE LoanPayments SET
+        fifthPaymentDate = ?, fifthPaymentBalance = ?, fifthPaymentPaid = ?, fifthPaymentPenalty = ?, fifthPaymentStatus = ?
+        WHERE id = ?
+      `
+      break;
+    case 6:
+      query = `
+        UPDATE LoanPayments SET
+        sixthPaymentDate = ?, sixthPaymentBalance = ?, sixthPaymentPaid = ?, sixthPaymentPenalty = ?, sixthPaymentStatus = ?
+        WHERE id = ?
+      `
+      break;
+    case 7:
+      query = `
+        UPDATE LoanPayments SET
+        seventhPaymentDate = ?, seventhPaymentBalance = ?, seventhPaymentPaid = ?, seventhPaymentPenalty = ?, seventhPaymentStatus = ?
+        WHERE id = ?
+      `
+      break;
+    case 8:
+      query = `
+        UPDATE LoanPayments SET
+        eighthPaymentDate = ?, eighthPaymentBalance = ?, eighthPaymentPaid = ?, eighthPaymentPenalty = ?, eighthPaymentStatus = ?
+        WHERE id = ?
+      `
+      break;
+    case 9:
+      query = `
+        UPDATE LoanPayments SET
+        ninthPaymentDate = ?, ninthPaymentBalance = ?, ninthPaymentPaid = ?, ninthPaymentPenalty = ?, ninthPaymentStatus = ?
+        WHERE id = ?
+      `
+      break;
+    case 10:
+      query = `
+        UPDATE LoanPayments SET
+        tenthPaymentDate = ?, tenthPaymentBalance = ?, tenthPaymentPaid = ?, tenthPaymentPenalty = ?, tenthPaymentStatus = ?
+        WHERE id = ?
+      `
+      break;
+    case 11:
+      query = `
+        UPDATE LoanPayments SET
+        eleventhPaymentDate = ?, eleventhPaymentBalance = ?, eleventhPaymentPaid = ?, eleventhPaymentPenalty = ?, eleventhPaymentStatus = ?
+        WHERE id = ?
+      `
+      break;
+    case 12:
+      query = `
+        UPDATE LoanPayments SET
+        twelfthPaymentDate = ?, twelfthPaymentBalance = ?, twelfthPaymentPaid = ?, twelfthPaymentPenalty = ?, twelfthPaymentStatus = ?
+        WHERE id = ?
+      `
+      break;
+    default:
+      return;
+  }
+
+  const updateLoanSchedule = await LoanPayments.updateSchedule(con, query, updateData);
+
+  const currentLoanValues = await Loan.getAllData(con, req.body.loanId);
+  const oldValue = currentLoanValues[0][0];
+
+  const fail = {
+    success: false,
+    message: "There's an error in approving your request."
+  }
+
+  if (updateLoanSchedule.affectedRows > 0) {
+    const loanPaymentRecord = await LoanPayments.getById(con, loanId);
+
+    if (loanPaymentRecord.length > 0) {
+      const record = loanPaymentRecord[0];
+
+      const totalPaid = record.firstPaymentPaid + record.secondPaymentPaid + record.thirdPaymentPaid + record.fourthPaymentPaid + record.fifthPaymentPaid + record.sixthPaymentPaid + record.seventhPaymentPaid + record.eighthPaymentPaid + record.ninthPaymentPaid + record.tenthPaymentPaid + record.eleventhPaymentPaid + record.twelfthPaymentPaid;
+      const totalPenalty = record.firstPaymentPenalty + record.secondPaymentPenalty + record.thirdPaymentPenalty + record.fourthPaymentPenalty + record.fifthPaymentPenalty + record.sixthPaymentPenalty + record.seventhPaymentPenalty + record.eighthPaymentPenalty + record.ninthPaymentPenalty + record.tenthPaymentPenalty + record.eleventhPaymentPenalty + record.twelfthPaymentPenalty;
+      const totalBalance = record.firstPaymentBalance + record.secondPaymentBalance + record.thirdPaymentBalance + record.fourthPaymentBalance + record.fifthPaymentBalance + record.sixthPaymentBalance + record.seventhPaymentBalance + record.eighthPaymentBalance + record.ninthPaymentBalance + record.tenthPaymentBalance + record.eleventhPaymentBalance + record.twelfthPaymentBalance;
+      const totals = {
+        totalPaid,
+        totalPenalty,
+        totalBalance
+      }
+      const updateLoanData = await Loan.updatePaidPenaltyBalance(con, req.body.loanId, totals);
+
+      if (updateLoanData.affectedRows > 0) {
+        const data = {
+          success: true,
+          message: "Updated amortization data.Z"
+        }
+
+        if (totalPenalty > oldValue.penaltyCharge) {
+          const transactionData = {
+            loan_id: req.body.loanId,
+            user_id: oldValue.user_id,
+            description: "Penalty",
+            amount: totalPenalty - oldValue.penaltyCharge,
+            transactionDate: moment(new Date()).tz('Asia/Manila').format('YYYY-MM-DD'),
+          }
+
+          await UserTransactions.add(con, transactionData);
+        }
+
+        if (totalPaid > oldValue.loanPaid) {
+          const transactionData = {
+            loan_id: req.body.loanId,
+            user_id: oldValue.user_id,
+            description: "Payment",
+            amount: totalPaid - oldValue.loanPaid,
+            transactionDate: moment(new Date()).tz('Asia/Manila').format('YYYY-MM-DD'),
+          }
+
+          await UserTransactions.add(con, transactionData);
+        }
+
+        return res.json(data);
+      } else {
+        return res.json(fail);
+      }
+
+    } else {
+      return res.json(fail);
+    }
   }
 })
 

@@ -51,6 +51,7 @@ const AdminDashboard = ({ handleLogout }) => {
               <NavLink exact activeClassName="current-page" to="/admin/user-list"><UserIcon /> User List</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/banned-user-list"><UserIcon /> Banned User List</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/summary-of-transactions"><Loan /> Summary of Transactions</NavLink>
+              <NavLink exact activeClassName="current-page" to="/admin/payment-summary-schedule"><Loan /> Payment Summary Schedule</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/loans"><Loan /> All Loans</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/active-loans"><ActiveLoan /> Active Loans</NavLink>
               <NavLink exact activeClassName="current-page" to="/admin/fully-paid-loans"><FullPaid /> Fully Paid Loans</NavLink>

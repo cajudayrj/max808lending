@@ -379,6 +379,23 @@ const getTransactions = async (con, id) => {
   return rows;
 }
 
+const generateActiveLoans = async con => {
+  const query = `
+    SELECT l.id AS loanId, CONCAT(u.firstName, ' ', u.lastName) as fullName, l.amount,
+    l.loanBalance, l.terms, DATE_FORMAT(l.loanDate, '%d-%M-%Y') as loanDate,
+    DATE_FORMAT(l.dueDate, '%d-%M-%Y') as dueDate, l.loanStatus, lp.* 
+    FROM LoanPayments lp
+    INNER JOIN Loans l ON
+    lp.loan_id = l.id
+    INNER JOIN Users u ON
+    l.user_id = u.id
+    WHERE l.loanStatus = 'Active';
+  `
+
+  const [rows] = await con.execute(query, [], queryCallback);
+  return rows;
+}
+
 module.exports = {
   get,
   addNew,
@@ -404,4 +421,5 @@ module.exports = {
   allTransactions,
   setBackToActive,
   getTransactions,
+  generateActiveLoans,
 }

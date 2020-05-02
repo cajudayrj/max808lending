@@ -51,6 +51,10 @@
           background: $gray;
         }
 
+        &:hover{
+          background: #e3f4ff;
+        }
+
         td{
           border: solid 1px $gray;
           padding: 10px;

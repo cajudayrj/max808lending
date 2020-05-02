@@ -11,13 +11,13 @@ const ActiveLoans = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
   const history = useHistory();
   const [activeLoans, setActiveLoans] = useState([]);
+  const [activeLoansReport, setActiveLoansReport] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
 
   const fields = {
-    "id": "Loan ID",
-    "firstName": "First Name",
-    "lastName": "Last Name",
+    "loanId": "Loan ID",
+    "fullName": "Borrower",
     "amount": "Loan Amount",
     "loanBalance": "Balance",
     "terms": "Terms",
@@ -41,9 +41,20 @@ const ActiveLoans = () => {
         const { activeLoans, totalPage } = data;
         setActiveLoans(activeLoans);
         setTotalPage(totalPage);
-      })
+      });
 
-  }, [currentPage, history, userData.authToken, userData.userLevel])
+    axios(`${serverUrl}/loans/generate/active`, {
+      method: 'GET',
+      headers: {
+        "Authorization": `Bearer ${userData.authToken}`
+      }
+    })
+      .then(({ data }) => {
+        const { activeLoans } = data;
+        setActiveLoansReport(activeLoans);
+      });
+
+  }, [currentPage, history, totalPage, userData.authToken, userData.userLevel])
 
   const monify = (amount) => {
     if (amount) {
@@ -60,7 +71,7 @@ const ActiveLoans = () => {
     <div className="admin-loans-dashboard active-loan-dashboard">
       <h1 className="header-title">Active Loans</h1>
       <ExportExcel
-        data={activeLoans}
+        data={activeLoansReport}
         fileName="Active Loans"
         fields={fields}
         buttonLabel="Generate Excel"

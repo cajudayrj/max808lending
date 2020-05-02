@@ -48,6 +48,14 @@ const get = async (con, id) => {
   return rows;
 }
 
+const getById = async (con, id) => {
+  const query = `SELECT * FROM LoanPayments WHERE id = ?`;
+
+  const [rows] = await con.execute(query, [id], queryCallback);
+
+  return rows;
+}
+
 const updatePayments = async (con, id, data) => {
   const query = `
   UPDATE LoanPayments SET
@@ -100,9 +108,17 @@ const mailPayments = async con => {
   return rows;
 }
 
+const updateSchedule = async (con, query, data) => {
+  const [rows] = await con.execute(query, data, queryCallback);
+
+  return rows;
+}
+
 module.exports = {
   addNew,
   get,
   updatePayments,
   mailPayments,
+  updateSchedule,
+  getById,
 }
