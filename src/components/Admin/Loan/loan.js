@@ -377,11 +377,11 @@ const Loan = ({ match }) => {
               <p className="value">{moment(loanResult.loanDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
             </div>
             <div className="info">
-              <p className="label">Loan Effectivity Date:</p>
+              <p className="label">Loan Issued Date:</p>
               <p className="value">{loanResult.acceptedDate ? moment(loanResult.acceptedDate).tz('Asia/Manila').format('MMMM DD, YYYY') : '-'}</p>
             </div>
             <div className="info">
-              <p className="label">Loan Due Date:</p>
+              <p className="label">Last Due Date:</p>
               <p className="value">{loanResult.dueDate ? moment(loanResult.dueDate).tz('Asia/Manila').format('MMMM DD, YYYY') : '-'}</p>
             </div>
             <div className="info">

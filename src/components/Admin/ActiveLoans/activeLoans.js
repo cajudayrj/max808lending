@@ -5,6 +5,7 @@ import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
 import Pagination from '../../Pagination/pagination';
+import ExportExcel from '../../../assets/helpers/exportExcel';
 
 const ActiveLoans = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
@@ -12,6 +13,18 @@ const ActiveLoans = () => {
   const [activeLoans, setActiveLoans] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+
+  const fields = {
+    "id": "Loan ID",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "amount": "Loan Amount",
+    "loanBalance": "Balance",
+    "terms": "Terms",
+    "loanDate": "Loan Issued Date",
+    "dueDate": "Last Due Date",
+    "loanStatus": "Status"
+  }
 
   useEffect(() => {
     if (userData.userLevel !== 1) {
@@ -27,7 +40,7 @@ const ActiveLoans = () => {
       .then(({ data }) => {
         const { activeLoans, totalPage } = data;
         setActiveLoans(activeLoans);
-        setTotalPage(totalPage)
+        setTotalPage(totalPage);
       })
 
   }, [currentPage, history, userData.authToken, userData.userLevel])
@@ -46,17 +59,23 @@ const ActiveLoans = () => {
   return (
     <div className="admin-loans-dashboard active-loan-dashboard">
       <h1 className="header-title">Active Loans</h1>
+      <ExportExcel
+        data={activeLoans}
+        fileName="Active Loans"
+        fields={fields}
+        buttonLabel="Generate Excel"
+      />
       <div className="loans-table">
         <table>
           <thead>
             <tr>
               <th>Loan ID</th>
               <th>Borrower</th>
-              <th>Amount</th>
+              <th>Loan Amount</th>
               <th>Balance</th>
               <th>Terms</th>
-              <th>Loan Date</th>
-              <th>Due Date</th>
+              <th>Loan Issued Date</th>
+              <th>Last Due Date</th>
               <th>Status</th>
               <th></th>
             </tr>

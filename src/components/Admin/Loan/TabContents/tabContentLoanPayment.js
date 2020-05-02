@@ -1652,7 +1652,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 <h4>First Payment</h4>
               </div>
               <div className="inputs-labels">
-                <p className="label">Due Date:</p>
+                <p className="label">Amortization Date:</p>
                 <p className="payment-date">{moment(firstDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || firstEditMode ?
@@ -1665,7 +1665,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 }
               </div>
               <div className="inputs-labels">
-                <p className="label">Payment Amount:</p>
+                <p className="label">Amortization:</p>
                 <p className="value">&#8369;{monify(firstAmount)}</p>
               </div>
               {
@@ -1752,7 +1752,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 <h4>Second Payment</h4>
               </div>
               <div className="inputs-labels">
-                <p className="label">Due Date:</p>
+                <p className="label">Amortization Date:</p>
                 <p className="payment-date">{moment(secondDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || secondEditMode ?
@@ -1765,7 +1765,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 }
               </div>
               <div className="inputs-labels">
-                <p className="label">Payment Amount:</p>
+                <p className="label">Amortization:</p>
                 <p className="value">&#8369;{monify(secondAmount)}</p>
               </div>
               {
@@ -1851,7 +1851,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 <h4>Third Payment</h4>
               </div>
               <div className="inputs-labels">
-                <p className="label">Due Date:</p>
+                <p className="label">Amortization Date:</p>
                 <p className="payment-date">{moment(thirdDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || thirdEditMode ?
@@ -1864,7 +1864,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 }
               </div>
               <div className="inputs-labels">
-                <p className="label">Payment Amount:</p>
+                <p className="label">Amortization:</p>
                 <p className="value">&#8369;{monify(thirdAmount)}</p>
               </div>
               {
@@ -1950,7 +1950,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 <h4>Fourth Payment</h4>
               </div>
               <div className="inputs-labels">
-                <p className="label">Due Date:</p>
+                <p className="label">Amortization Date:</p>
                 <p className="payment-date">{moment(fourthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || fourthEditMode ?
@@ -1963,7 +1963,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 }
               </div>
               <div className="inputs-labels">
-                <p className="label">Payment Amount:</p>
+                <p className="label">Amortization:</p>
                 <p className="value">&#8369;{monify(fourthAmount)}</p>
               </div>
               {
@@ -2049,7 +2049,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 <h4>Fifth Payment</h4>
               </div>
               <div className="inputs-labels">
-                <p className="label">Due Date:</p>
+                <p className="label">Amortization Date:</p>
                 <p className="payment-date">{moment(fifthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || fifthEditMode ?
@@ -2062,7 +2062,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 }
               </div>
               <div className="inputs-labels">
-                <p className="label">Payment Amount:</p>
+                <p className="label">Amortization:</p>
                 <p className="value">&#8369;{monify(fifthAmount)}</p>
               </div>
               {
@@ -2148,7 +2148,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 <h4>Sixth Payment</h4>
               </div>
               <div className="inputs-labels">
-                <p className="label">Due Date:</p>
+                <p className="label">Amortization Date:</p>
                 <p className="payment-date">{moment(sixthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || sixthEditMode ?
@@ -2161,7 +2161,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 }
               </div>
               <div className="inputs-labels">
-                <p className="label">Payment Amount:</p>
+                <p className="label">Amortization:</p>
                 <p className="value">&#8369;{monify(sixthAmount)}</p>
               </div>
               {
@@ -2247,7 +2247,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 <h4>Seventh Payment</h4>
               </div>
               <div className="inputs-labels">
-                <p className="label">Due Date:</p>
+                <p className="label">Amortization Date:</p>
                 <p className="payment-date">{moment(seventhDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || seventhEditMode ?
@@ -2260,7 +2260,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 }
               </div>
               <div className="inputs-labels">
-                <p className="label">Payment Amount:</p>
+                <p className="label">Amortization:</p>
                 <p className="value">&#8369;{monify(seventhAmount)}</p>
               </div>
               {
@@ -2350,7 +2350,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 <h4>Eighth Payment</h4>
               </div>
               <div className="inputs-labels">
-                <p className="label">Due Date:</p>
+                <p className="label">Amortization Date:</p>
                 <p className="payment-date">{moment(eighthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || eighthEditMode ?
@@ -2363,7 +2363,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 }
               </div>
               <div className="inputs-labels">
-                <p className="label">Payment Amount:</p>
+                <p className="label">Amortization:</p>
                 <p className="value">&#8369;{monify(eighthAmount)}</p>
               </div>
               {
@@ -2449,7 +2449,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 <h4>Ninth Payment</h4>
               </div>
               <div className="inputs-labels">
-                <p className="label">Due Date:</p>
+                <p className="label">Amortization Date:</p>
                 <p className="payment-date">{moment(ninthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || ninthEditMode ?
@@ -2462,7 +2462,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 }
               </div>
               <div className="inputs-labels">
-                <p className="label">Payment Amount:</p>
+                <p className="label">Amortization:</p>
                 <p className="value">&#8369;{monify(ninthAmount)}</p>
               </div>
               {
@@ -2548,7 +2548,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 <h4>Tenth Payment</h4>
               </div>
               <div className="inputs-labels">
-                <p className="label">Due Date:</p>
+                <p className="label">Amortization Date:</p>
                 <p className="payment-date">{moment(tenthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || tenthEditMode ?
@@ -2561,7 +2561,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 }
               </div>
               <div className="inputs-labels">
-                <p className="label">Payment Amount:</p>
+                <p className="label">Amortization:</p>
                 <p className="value">&#8369;{monify(tenthAmount)}</p>
               </div>
               {
@@ -2647,7 +2647,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 <h4>Eleventh Payment</h4>
               </div>
               <div className="inputs-labels">
-                <p className="label">Due Date:</p>
+                <p className="label">Amortization Date:</p>
                 <p className="payment-date">{moment(eleventhDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || eleventhEditMode ?
@@ -2660,7 +2660,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 }
               </div>
               <div className="inputs-labels">
-                <p className="label">Payment Amount:</p>
+                <p className="label">Amortization:</p>
                 <p className="value">&#8369;{monify(eleventhAmount)}</p>
               </div>
               {
@@ -2746,7 +2746,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 <h4>Twelfth Payment</h4>
               </div>
               <div className="inputs-labels">
-                <p className="label">Due Date:</p>
+                <p className="label">Amortization Date:</p>
                 <p className="payment-date">{moment(twelfthDate).tz('Asia/Manila').format('MMMM DD, YYYY')}</p>
                 {
                   (status === 'Pending') || twelfthEditMode ?
@@ -2759,7 +2759,7 @@ const TabContentLoanPayment = ({ terms, amount, status, approveLoanRequest, setB
                 }
               </div>
               <div className="inputs-labels">
-                <p className="label">Payment Amount:</p>
+                <p className="label">Amortization:</p>
                 <p className="value">&#8369;{monify(twelfthAmount)}</p>
               </div>
               {
