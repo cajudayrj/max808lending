@@ -21,6 +21,25 @@ const all = async (con, page) => {
   return rows;
 }
 
+const allList = async con => {
+  const query = `SELECT DISTINCT(u.id), 
+    u.username, CONCAT(u.firstName, ' ', u.lastName) AS fullName, u.email, u.mobileNum,
+    ul.level,
+    (
+      SELECT COUNT(u.id)
+      FROM Users u, UserLevels ul
+      WHERE u.userLevel = ul.id
+      AND u.accountStatus = "active"
+      AND u.banned = "0"
+    ) as fullCount
+    FROM Users u, UserLevels ul WHERE u.userLevel = ul.id AND u.accountStatus = "active" AND u.banned = "0"
+    ORDER BY u.id DESC
+  `
+
+  const [rows] = await con.execute(query, [], queryCallback);
+  return rows;
+}
+
 const banned = async (con, page) => {
   const offset = (page - 1) * 20;
   const query = `SELECT DISTINCT(u.id), 
@@ -220,5 +239,6 @@ module.exports = {
   ban,
   banned,
   bannedUserCount,
-  resetPassword
+  resetPassword,
+  allList,
 };

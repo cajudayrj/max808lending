@@ -13,13 +13,15 @@ const { updateInfoValidation } = require('../account/accountValidation');
 
 router.get('/all/page/:pageId', adminMiddleware, async (req, res) => {
   const userInfo = await User.all(con, req.params.pageId);
+  const allUsers = await User.allList(con);
   const totalPage = userInfo.length > 0 ? Math.ceil(userInfo[0].fullCount / 20) : 1;
 
   if (userInfo.length > 0) {
     const user = {
       success: true,
       users: userInfo,
-      totalPage
+      totalPage,
+      allUsers
     }
     return res.json(user);
   } else {

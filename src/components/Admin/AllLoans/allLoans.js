@@ -5,13 +5,24 @@ import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
 import Pagination from '../../Pagination/pagination';
+import ExportExcel from '../../../assets/helpers/exportExcel';
 
 const AllLoans = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
   const history = useHistory();
   const [allLoans, setAllLoans] = useState([]);
+  const [allLoanRecord, setAllLoanRecord] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+
+  const fields = {
+    "id": "Loan ID",
+    "fullName": "Borrower",
+    "amount": "Loan Amount",
+    "terms": "Terms",
+    "loanDate": "Loan Request Date",
+    "loanStatus": "Status"
+  }
 
   useEffect(() => {
     if (userData.userLevel !== 1) {
@@ -25,10 +36,12 @@ const AllLoans = () => {
       }
     })
       .then(({ data }) => {
-        const { allLoans, totalPage } = data;
+        const { allLoans, totalPage, allLoanRecord } = data;
+        console.log(allLoanRecord);
 
         setAllLoans(allLoans);
         setTotalPage(totalPage);
+        setAllLoanRecord(allLoanRecord);
       })
       .catch(err => console.log(err));
   }, [currentPage, history, userData.authToken, userData.userLevel])
@@ -47,6 +60,12 @@ const AllLoans = () => {
   return (
     <div className="admin-loans-dashboard pending-loan-dashboard">
       <h1 className="header-title">All Loans</h1>
+      <ExportExcel
+        data={allLoanRecord}
+        fileName="All Loans"
+        fields={fields}
+        buttonLabel="Generate Excel"
+      />
       <div className="loans-table">
         <table>
           <thead>

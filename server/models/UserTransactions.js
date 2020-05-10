@@ -30,7 +30,7 @@ const all = async (con, page) => {
 
 const allCount = async (con) => {
   const query = `
-    SELECT trans.*, us.firstName, us.lastName FROM UserTransactions trans, Users us,
+    SELECT trans.*, CONCAT(us.firstName, ' ', us.lastName) as fullName FROM UserTransactions trans, Users us,
     (
       SELECT DISTINCT(loan.id) as loan_id, fp.transactionDate, loan.*, u.firstName, u.lastName
       FROM Loans loan,
@@ -47,7 +47,8 @@ const allCount = async (con) => {
     WHERE ld.loan_id = trans.loan_id
     AND us.id = trans.user_id
     AND trans.transactionDate >= NOW()- interval 3 month
-  `;
+    ORDER BY trans.transactionDate DESC
+    `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
 }

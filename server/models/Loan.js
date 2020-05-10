@@ -61,7 +61,8 @@ const loanCount = async (con, status) => {
 
 const rejectedCount = async (con) => {
   const query =
-    `SELECT COUNT(id) as loanCount FROM Loans WHERE (loanStatus = ? OR loanStatus = ?)`
+
+    `SELECT COUNT(id) as loanCount FROM Loans WHERE (loanStatus = ? OR loanStatus = ?) AND loanDate >= NOW()- interval 3 month`
 
   const [rows] = await con.execute(query, ['Rejected', 'Refused'], queryCallback);
   return rows;
@@ -70,17 +71,57 @@ const rejectedCount = async (con) => {
 const all = async (con, page) => {
   const offset = (page - 1) * 20;
   const query = `
-    SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus,
-    (SELECT COUNT(l.id) FROM Loans l, Users u WHERE l.user_id = u.id
-    AND u.accountStatus = 'active' AND u.banned = '0') AS fullCount
-    FROM Loans l, Users u 
-    WHERE l.user_id = u.id
-    AND u.accountStatus = 'active'
-    AND u.banned = '0'
+  SELECT DISTINCT(l.id), u.firstName, u.lastName, l.amount, l.terms, l.loanDate, l.loanStatus,
+  (SELECT COUNT(l.id) FROM Loans l, Users u WHERE l.user_id = u.id
+  AND u.accountStatus = 'active' AND u.banned = '0'
+  AND l.id NOT IN (
+    SELECT DISTINCT(ll.id) FROM Loans ll, Users uu 
+    WHERE (ll.loanStatus = 'Rejected' OR ll.loanStatus = 'Refused' OR ll.loanStatus = 'Fully Paid')
+    AND ll.user_id = uu.id
+    AND ll.loanDate <= NOW()- interval 3 month
+  )
+  ) AS fullCount
+  FROM Loans l, Users u 
+  WHERE l.user_id = u.id
+  AND u.accountStatus = 'active'
+  AND u.banned = '0'
+  AND l.id NOT IN (
+    SELECT DISTINCT(ll.id)      FROM Loans ll, Users uu 
+    WHERE (ll.loanStatus = 'Rejected' OR ll.loanStatus = 'Refused' OR ll.loanStatus = 'Fully Paid')
+    AND ll.user_id = uu.id
+    AND ll.loanDate <= NOW()- interval 3 month
+  )
     ORDER BY l.id
     DESC
     LIMIT 20
     OFFSET ${offset};
+  `;
+  const [rows] = await con.execute(query, [], queryCallback);
+  return rows;
+}
+
+const allCount = async (con) => {
+  const query = `
+  SELECT DISTINCT(l.id), CONCAT(u.firstName, ' ', u.lastName) AS fullName, l.amount, l.terms, l.loanDate, l.loanStatus,
+  (SELECT COUNT(l.id) FROM Loans l, Users u WHERE l.user_id = u.id
+  AND u.accountStatus = 'active' AND u.banned = '0'
+  AND l.id NOT IN (
+    SELECT DISTINCT(ll.id) FROM Loans ll, Users uu 
+    WHERE (ll.loanStatus = 'Rejected' OR ll.loanStatus = 'Refused' OR ll.loanStatus = 'Fully Paid')
+    AND ll.user_id = uu.id
+    AND ll.loanDate <= NOW()- interval 3 month
+  )
+  ) AS fullCount
+  FROM Loans l, Users u 
+  WHERE l.user_id = u.id
+  AND u.accountStatus = 'active'
+  AND u.banned = '0'
+  AND l.id NOT IN (
+    SELECT DISTINCT(ll.id)      FROM Loans ll, Users uu 
+    WHERE (ll.loanStatus = 'Rejected' OR ll.loanStatus = 'Refused' OR ll.loanStatus = 'Fully Paid')
+    AND ll.user_id = uu.id
+    AND ll.loanDate <= NOW()- interval 3 month
+  )
   `;
   const [rows] = await con.execute(query, [], queryCallback);
   return rows;
@@ -202,7 +243,7 @@ const fullyPaidLoans = async (con, page) => {
 
 const fullyPaidLoansCount = async (con) => {
   const query = `
-    SELECT DISTINCT(loan.id) as loan_id, fp.transactionDate, loan.*, u.firstName, u.lastName
+    SELECT DISTINCT(loan.id) as loan_id, fp.transactionDate, loan.*, CONCAT(u.firstName, ' ', u.lastName) AS fullName
     FROM Loans loan,
     (
       SELECT ut.loan_id, MAX(ut.transactionDate) as transactionDate, l.id, l.loanStatus FROM UserTransactions ut,
@@ -227,10 +268,12 @@ const rejectedLoans = async (con, page) => {
       FROM Loans l, Users u 
       WHERE (l.loanStatus = 'Rejected' OR l.loanStatus = 'Refused')
       AND l.user_id = u.id
+      AND l.loanDate >= NOW()- interval 3 month
     ) AS fullCount
     FROM Loans l, Users u 
     WHERE (l.loanStatus = 'Rejected' OR l.loanStatus = 'Refused')
     AND l.user_id = u.id
+    AND l.loanDate >= NOW()- interval 3 month
     ORDER BY l.id
     DESC
     LIMIT 20
@@ -396,6 +439,17 @@ const generateActiveLoans = async con => {
   return rows;
 }
 
+const updateDueDate = async (con, id, date) => {
+  const query = `
+    UPDATE Loans SET
+    dueDate = ?
+    WHERE id = ?
+  `;
+  const [rows] = await con.execute(query, [date, id], queryCallback);
+
+  return rows;
+}
+
 module.exports = {
   get,
   addNew,
@@ -422,4 +476,6 @@ module.exports = {
   setBackToActive,
   getTransactions,
   generateActiveLoans,
+  updateDueDate,
+  allCount,
 }

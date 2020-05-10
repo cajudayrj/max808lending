@@ -5,13 +5,25 @@ import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
 import Pagination from '../../Pagination/pagination';
+import ExportExcel from '../../../assets/helpers/exportExcel';
 
 const FullyPaidLoans = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
   const history = useHistory();
   const [fullyPaidLoans, setFullyPaidLoans] = useState([]);
+  const [allFullyPaid, setAllFullyPaid] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+
+  const fields = {
+    "loan_id": "Loan ID",
+    "fullName": "Borrower",
+    "loanDate": "Loan Issued Date",
+    "amount": "Loan Amount",
+    "penaltyCharge": "Penalty",
+    "loanPaid": "Paid Amount",
+    "loanStatus": "Status"
+  }
 
   useEffect(() => {
     if (userData.userLevel !== 1) {
@@ -25,9 +37,10 @@ const FullyPaidLoans = () => {
       }
     })
       .then(({ data }) => {
-        const { fullyPaidLoans, totalPage } = data;
+        const { fullyPaidLoans, totalPage, allFullyPaid } = data;
         setFullyPaidLoans(fullyPaidLoans);
         setTotalPage(totalPage);
+        setAllFullyPaid(allFullyPaid);
       })
   }, [currentPage, history, userData.authToken, userData.userLevel])
 
@@ -45,6 +58,12 @@ const FullyPaidLoans = () => {
   return (
     <div className="admin-loans-dashboard approved-loan-dashboard">
       <h1 className="header-title">Fully Paid Loans</h1>
+      <ExportExcel
+        data={allFullyPaid}
+        fileName="Fully Paid Loans"
+        fields={fields}
+        buttonLabel="Generate Excel"
+      />
       <div className="loans-table">
         <table>
           <thead>

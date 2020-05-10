@@ -4,13 +4,23 @@ import handleRedirects from '../../../assets/helpers/handleRedirects';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
 import Pagination from '../../Pagination/pagination';
+import ExportExcel from '../../../assets/helpers/exportExcel';
 
 const UserList = () => {
   const userData = JSON.parse(window.localStorage.getItem('userData'));
   const history = useHistory();
   const [users, setUsers] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+
+  const fields = {
+    "id": "User ID",
+    "fullName": "Borrower",
+    "username": "Username",
+    "email": "Email",
+    "mobileNum": "Contact Number"
+  }
 
   useEffect(() => {
     if (userData.userLevel !== 1) {
@@ -24,9 +34,12 @@ const UserList = () => {
       }
     })
       .then(({ data }) => {
-        const { users, totalPage } = data;
+        const { users, totalPage, allUsers } = data;
         setUsers(users);
         setTotalPage(totalPage);
+        setAllUsers(allUsers);
+        console.log(allUsers);
+
       })
 
   }, [currentPage, history, userData.authToken, userData.userLevel])
@@ -36,6 +49,12 @@ const UserList = () => {
   return (
     <div className="admin-loans-dashboard active-loan-dashboard">
       <h1 className="header-title">User List</h1>
+      <ExportExcel
+        data={allUsers}
+        fileName="User List"
+        fields={fields}
+        buttonLabel="Generate Excel"
+      />
       <div className="loans-table">
         <table>
           <thead>

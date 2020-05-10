@@ -48,11 +48,15 @@ router.get('/count/:status', adminMiddleware, async (req, res) => {
 
 router.get('/all/page/:pageId', adminMiddleware, async (req, res) => {
   const allLoans = await Loan.all(con, req.params.pageId);
+  const allLoanRecord = await Loan.allCount(con, req.params.pageId);
   const totalPage = allLoans.length > 0 ? Math.ceil(allLoans[0].fullCount / 20) : 1;
+
+  allLoanRecord.forEach(loan => loan.loanDate = moment(loan.loanDate).tz('Asia/Manila').format('YYYY-MMMM-DD'));
   const data = {
     success: true,
     totalPage,
-    allLoans
+    allLoans,
+    allLoanRecord
   }
 
   return res.json(data);
@@ -608,10 +612,20 @@ router.get('/fully-paid/page/:pageId', adminMiddleware, async (req, res) => {
   const fullyPaidLoans = await Loan.fullyPaidLoans(con, req.params.pageId);
   const fullyPaidLoansCount = await Loan.fullyPaidLoansCount(con);
   const totalPage = fullyPaidLoansCount.length > 0 ? Math.ceil(fullyPaidLoansCount.length / 20) : 1;
+  let totalAmount = 0;
+  fullyPaidLoansCount.forEach(loan => {
+    totalAmount += loan.loanPaid;
+    loan.loanDate = moment(loan.loanDate).tz('Asia/Manila').format('YYYY-MMMM-DD')
+  });
+  fullyPaidLoansCount.push({
+    penaltyCharge: "TOTAL",
+    loanPaid: totalAmount
+  })
   const data = {
     success: true,
     totalPage,
-    fullyPaidLoans
+    fullyPaidLoans,
+    allFullyPaid: fullyPaidLoansCount
   }
 
   return res.json(data);
@@ -821,6 +835,17 @@ router.put('/update-active-loan/:id', adminMiddleware, async (req, res) => {
   const updatedLoanPayments = await LoanPayments.updatePayments(con, loanId, req.body);
   const currentLoanValues = await Loan.getAllData(con, loanId);
   const oldValue = currentLoanValues[0][0];
+  let dates = [];
+
+  for (var key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      if (!isNaN(Date.parse(req.body[key]))) dates.push(moment(req.body[key]).tz('Asia/Manila').format('YYYY-MM-DD'));
+    }
+  }
+
+  dates.sort((a, b) => new Date(b) - new Date(a));
+
+  const latestDate = dates[0];
 
   const fail = {
     success: false,
@@ -867,6 +892,10 @@ router.put('/update-active-loan/:id', adminMiddleware, async (req, res) => {
         }
 
         await UserTransactions.add(con, transactionData);
+      }
+
+      if (Date.parse(latestDate) > Date.parse(oldValue.dueDate)) {
+        await Loan.updateDueDate(con, loanId, latestDate);
       }
 
       return res.json(data);
@@ -1124,6 +1153,10 @@ router.put('/update-payment/:id', adminMiddleware, async (req, res) => {
           await UserTransactions.add(con, transactionData);
         }
 
+        if (Date.parse(req.body.amortizationDate) > Date.parse(oldValue.dueDate)) {
+          await Loan.updateDueDate(con, req.body.loanId, req.body.amortizationDate);
+        }
+
         return res.json(data);
       } else {
         return res.json(fail);
@@ -1205,7 +1238,20 @@ router.get('/transactions/page/:pageId', adminMiddleware, async (req, res) => {
   const transactions = await UserTransactions.all(con, req.params.pageId);
   const transactionsCount = await UserTransactions.allCount(con);
   const totalPage = transactionsCount.length > 0 ? Math.ceil(transactionsCount.length / 20) : 1;
-  return res.json({ totalPage, transactions })
+
+  let total = 0;
+  transactionsCount.forEach(loan => {
+    total += +((loan.amount).toFixed(2));
+    loan.transactionDate = moment(loan.transactionDate).tz('Asia/Manila').format('DD-MMMM-YYYY');
+    loan.amount = loan.amount.toFixed(2);
+  });
+
+  transactionsCount.push({
+    description: "TOTAL",
+    amount: total.toFixed(2),
+  });
+
+  return res.json({ totalPage, transactions, allTransactions: transactionsCount })
 })
 
 router.put('/back-to-active/:id', adminMiddleware, async (req, res) => {

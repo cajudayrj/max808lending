@@ -5,14 +5,24 @@ import moment from 'moment-timezone';
 import axios from 'axios';
 import serverUrl from '../../../serverUrl';
 import Pagination from '../../Pagination/pagination';
+import ExportExcel from '../../../assets/helpers/exportExcel';
 
 const SummaryOfTransactions = () => {
   // const userData = JSON.parse(window.localStorage.getItem('userData'));
   const history = useHistory();
   const userData = JSON.parse(localStorage.getItem('userData'));
   const [transactions, setTransactions] = useState({});
+  const [allTransactions, setAllTransactions] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+
+  const fields = {
+    "loan_id": "Loan ID",
+    "fullName": "Borrower",
+    "transactionDate": "Transaction Date",
+    "description": "Description",
+    "amount": "Amount"
+  }
 
   useEffect(() => {
     if (userData.userLevel !== 1) {
@@ -28,6 +38,9 @@ const SummaryOfTransactions = () => {
       .then(({ data }) => {
         setTotalPage(data.totalPage)
         setTransactions(data.transactions)
+        setAllTransactions(data.allTransactions)
+        console.log(data.allTransactions);
+
       })
       .catch(err => console.log(err));
   }, [currentPage]) // eslint-disable-line
@@ -45,6 +58,12 @@ const SummaryOfTransactions = () => {
   return (
     <div className="admin-loans-dashboard pending-loan-dashboard">
       <h1 className="header-title">Summary of Transactions</h1>
+      <ExportExcel
+        data={allTransactions}
+        fileName="Summary Transactions"
+        fields={fields}
+        buttonLabel="Generate Excel"
+      />
       <div className="loans-table">
         <table>
           <thead>
