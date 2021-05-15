@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
 })
 
 // DB Connection
-const con = require('../../connection/con');
+const con = require('../../connection/conn');
 
 const Loan = require('../../models/Loan');
 const LoanPayments = require('../../models/LoanPayments');

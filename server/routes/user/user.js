@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const con = require('../../connection/con');
+const con = require('../../connection/conn');
 const userMiddleware = require('../middleware/middleware');
 const adminMiddleware = require('../middleware/adminMiddleware');
 

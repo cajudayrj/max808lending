@@ -2,7 +2,7 @@ const scheduler = require('node-schedule');
 const LoanPayments = require('../models/LoanPayments');
 const moment = require('moment-timezone');
 
-const con = require('../connection/con');
+const con = require('../connection/conn');
 
 
 const nodemailer = require('nodemailer');

@@ -8,7 +8,7 @@ const fs = require('fs');
 const UserDocuments = require('../../models/UserDocuments');
 const User = require('../../models/User');
 
-const con = require('../../connection/con');
+const con = require('../../connection/conn');
 
 router.post('/', userMiddleware, async (req, res) => {
   const storage = multer.diskStorage({

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const con = require('../../connection/con');
+const con = require('../../connection/conn');
 
 const adminMiddleware = require('../middleware/adminMiddleware');
 

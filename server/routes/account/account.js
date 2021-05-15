@@ -15,7 +15,7 @@ const loginValidation = require('./loginValidation');
 const { stepOneValidation, stepTwoValidation, stepFourValidation, resendValidation, resetPassValidation } = require('./accountValidation');
 
 // DB Connection
-const con = require('../../connection/con');
+const con = require('../../connection/conn');
 
 // Models
 const User = require('../../models/User');
