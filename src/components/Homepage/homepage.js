@@ -17,7 +17,7 @@ const Homepage = () => {
             <div className="banner-content-container max808-container">
               <div className="content">
                 <h1>MAX808 LENDING CORP.</h1>
-                <h3 className="tagline">Personal Loans made easy.</h3>
+                <h3 className="tagline">Personal Loan for Filipinos Made Easy.</h3>
                 <Link to="/borrow" className="cta-borrow">APPLY NOW</Link>
                 <p className="cta-login">Already a borrower? <Link to="/login" className="login">Login here.</Link></p>
               </div>

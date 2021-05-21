@@ -103,7 +103,7 @@ const Login = () => {
                 </div>
                 <div className="login-information">
                   <p className="login-headline">Max808 Lending</p>
-                  <p className="login-tagline">Personal Loans made easy.</p>
+                  <p className="login-tagline">Personal Loan for Filipinos Made Easy.</p>
                   <ul className="login-benefits">
                     <li>Online application</li>
                     <li>Borrow from P5,000 up to P200,000</li>

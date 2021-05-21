@@ -96,7 +96,7 @@ const Borrow = () => {
                 </div>
                 <div className="borrow-information">
                   <p className="borrow-headline">Max808 Lending</p>
-                  <p className="borrow-tagline">Personal Loans made easy.</p>
+                  <p className="borrow-tagline">Personal Loan for Filipinos Made Easy.</p>
                   <ul className="borrow-benefits">
                     <li>Online application</li>
                     <li>Borrow from P5,000 up to P200,000</li>
